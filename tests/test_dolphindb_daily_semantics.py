@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 import unittest
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -209,8 +209,9 @@ class TestDailyKSemanticProfiler(unittest.TestCase):
         )
 
     def test_calendar_lag_is_calculated(self) -> None:
+        utc_today = datetime.now(timezone.utc).date()
         lag = DolphinDBDailyKSemanticProfiler._calendar_lag_days(
-            date.today()
+            utc_today
         )
         self.assertEqual(lag, 0)
 
