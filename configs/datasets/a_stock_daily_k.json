@@ -1,0 +1,788 @@
+{
+  "dataset_id": "a_stock_daily_k",
+  "source_type": "DOLPHINDB",
+  "source_locator": {
+    "database_uri": "dfs://A_STOCK_DAILY_K_DB",
+    "table_name": "stock_daily_k"
+  },
+  "dataset_mode": "SNAPSHOT",
+  "coverage_version": "a_stock_daily_k@2026-05-29",
+  "schema_version": "1.0.0",
+  "mapping_version": "0.1.0",
+  "dictionary_revision": "0.5",
+  "date_field": "trade_date",
+  "entity_field": "stock_code",
+  "primary_key_fields": [
+    "stock_code",
+    "trade_date"
+  ],
+  "source_fields": [
+    "stock_code",
+    "trade_date",
+    "open",
+    "high",
+    "low",
+    "close",
+    "amount",
+    "volume",
+    "BS",
+    "chanlun",
+    "turnover_rate",
+    "pct_change",
+    "price_change",
+    "pct_3d",
+    "pct_5d",
+    "pct_10d",
+    "pct_20d",
+    "pct_30d",
+    "ma5",
+    "ma10",
+    "ma20",
+    "ma30",
+    "ma60",
+    "ma120",
+    "ma250",
+    "macd",
+    "dif",
+    "dea",
+    "k",
+    "d",
+    "j",
+    "rsi6",
+    "rsi12",
+    "rsi24",
+    "bias",
+    "boll",
+    "boll_up",
+    "boll_down",
+    "float_shares",
+    "total_shares",
+    "adj_factor",
+    "deduct_value",
+    "adj_price",
+    "dividend",
+    "bonus_share",
+    "convert_share",
+    "allot_share",
+    "allot_price"
+  ],
+  "canonical_objects": [
+    "DailyBar",
+    "OwnershipSnapshot",
+    "CorporateAction"
+  ],
+  "field_mappings": [
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "instrument_id",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "trade_date"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "trade_date",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "open"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "open_raw_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "CNY",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "high"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "high_raw_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "CNY",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "low"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "low_raw_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "CNY",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "close"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "close_raw_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "CNY",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "volume"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "volume_shares",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "shares",
+      "canonical_unit": "shares",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "amount"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "amount_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "CNY",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "turnover_rate"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "turnover_rate_pct",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "percent_points",
+      "canonical_unit": "percent_points",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "price_change"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "change_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "CNY",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "adj_factor"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "adj_factor",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "instrument_id",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "trade_date"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "as_of_date",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "float_shares"
+      ],
+      "status": "MAPPED",
+      "transform_id": "multiply",
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "float_shares",
+      "transform_params": {
+        "factor": 10000
+      },
+      "required": false,
+      "source_unit": "10k_shares",
+      "canonical_unit": "shares",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "total_shares"
+      ],
+      "status": "MAPPED",
+      "transform_id": "multiply",
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "total_shares",
+      "transform_params": {
+        "factor": 10000
+      },
+      "required": false,
+      "source_unit": "10k_shares",
+      "canonical_unit": "shares",
+      "notes": null
+    },
+    {
+      "source_fields": [
+        "pct_change"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": "DailyBar",
+      "canonical_field": "pct_change_pct",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源字段为常规涨跌幅取反；标准 pct_change_pct 将由 close 与前收盘重新计算。"
+    },
+    {
+      "source_fields": [
+        "adj_price"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "已确认公式，但前复权/后复权方向和基准尚未固化，暂不映射到前复权或后复权字段。"
+    },
+    {
+      "source_fields": [
+        "deduct_value"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源复权价加法修正项；统一字段字典当前无直接对应字段，保留来源扩展。"
+    },
+    {
+      "source_fields": [
+        "BS"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "chanlun"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "pct_3d"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "pct_5d"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "pct_10d"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "pct_20d"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "pct_30d"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "ma5"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "ma10"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "ma20"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "ma30"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "ma60"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "ma120"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "ma250"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "macd"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "dif"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "dea"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "k"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "d"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "j"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "rsi6"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "rsi12"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "rsi24"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "bias"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "boll"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "boll_up"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "boll_down"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": null,
+      "canonical_field": null,
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源技术指标或专有信号；待技术特征标准对象和口径合同固化。"
+    },
+    {
+      "source_fields": [
+        "dividend"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": "CorporateAction",
+      "canonical_field": "cash_dividend_per_share_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "公司行为字段的每股/每10股单位尚未最终确认。"
+    },
+    {
+      "source_fields": [
+        "bonus_share"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": "CorporateAction",
+      "canonical_field": "bonus_share_ratio",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "公司行为字段的每股/每10股单位尚未最终确认。"
+    },
+    {
+      "source_fields": [
+        "convert_share"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": "CorporateAction",
+      "canonical_field": "capital_reserve_transfer_ratio",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "公司行为字段的每股/每10股单位尚未最终确认。"
+    },
+    {
+      "source_fields": [
+        "allot_share"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": "CorporateAction",
+      "canonical_field": "rights_issue_ratio",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "公司行为字段的每股/每10股单位尚未最终确认。"
+    },
+    {
+      "source_fields": [
+        "allot_price"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "target_object": "CorporateAction",
+      "canonical_field": "rights_issue_price_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "公司行为字段的每股/每10股单位尚未最终确认。"
+    }
+  ],
+  "enabled": true,
+  "tags": [
+    "a_share",
+    "daily",
+    "dolphindb",
+    "snapshot"
+  ],
+  "description": "A股日K快照数据集首个正式注册配置。"
+}
