@@ -1,0 +1,3578 @@
+{
+  "dataset_id": "a_stock_daily_k",
+  "coverage_version": "a_stock_daily_k@2026-05-29",
+  "mapping_version": "0.2.0",
+  "dictionary_revision": "0.5",
+  "generated_at": "2026-06-23T01:24:02.629068+08:00",
+  "request": {
+    "instrument_ids": [
+      "000001",
+      "001332",
+      "300622",
+      "600694",
+      "688012",
+      "920029"
+    ],
+    "start_date": "2026-05-26",
+    "end_date": "2026-05-29",
+    "limit_per_instrument": 20
+  },
+  "source_row_count": 24,
+  "standardized_record_count": 24,
+  "batch_warnings": [],
+  "daily_bar_coverage": {
+    "object_name": "DailyBar",
+    "record_count": 24,
+    "required_fields": [
+      "instrument_id",
+      "trade_date",
+      "open_raw_cny",
+      "high_raw_cny",
+      "low_raw_cny",
+      "close_raw_cny",
+      "volume_shares",
+      "amount_cny"
+    ],
+    "expected_cell_count": 192,
+    "present_cell_count": 192,
+    "coverage": 1.0,
+    "field_present_counts": {
+      "amount_cny": 24,
+      "close_raw_cny": 24,
+      "high_raw_cny": 24,
+      "instrument_id": 24,
+      "low_raw_cny": 24,
+      "open_raw_cny": 24,
+      "trade_date": 24,
+      "volume_shares": 24
+    },
+    "missing_examples": []
+  },
+  "ownership_coverage": {
+    "object_name": "OwnershipSnapshot",
+    "record_count": 24,
+    "required_fields": [
+      "instrument_id",
+      "as_of_date",
+      "float_shares",
+      "total_shares"
+    ],
+    "expected_cell_count": 96,
+    "present_cell_count": 96,
+    "coverage": 1.0,
+    "field_present_counts": {
+      "as_of_date": 24,
+      "float_shares": 24,
+      "instrument_id": 24,
+      "total_shares": 24
+    },
+    "missing_examples": []
+  },
+  "pending_extension_coverage": {
+    "pending_field_count": 35,
+    "pending_fields": [
+      "BS",
+      "adj_price",
+      "allot_price",
+      "allot_share",
+      "bias",
+      "boll",
+      "boll_down",
+      "boll_up",
+      "bonus_share",
+      "chanlun",
+      "convert_share",
+      "d",
+      "dea",
+      "deduct_value",
+      "dif",
+      "dividend",
+      "j",
+      "k",
+      "ma10",
+      "ma120",
+      "ma20",
+      "ma250",
+      "ma30",
+      "ma5",
+      "ma60",
+      "macd",
+      "pct_10d",
+      "pct_20d",
+      "pct_30d",
+      "pct_3d",
+      "pct_5d",
+      "pct_change",
+      "rsi12",
+      "rsi24",
+      "rsi6"
+    ],
+    "expected_cell_count": 840,
+    "present_cell_count": 840,
+    "coverage": 1.0,
+    "field_present_counts": {
+      "BS": 24,
+      "adj_price": 24,
+      "allot_price": 24,
+      "allot_share": 24,
+      "bias": 24,
+      "boll": 24,
+      "boll_down": 24,
+      "boll_up": 24,
+      "bonus_share": 24,
+      "chanlun": 24,
+      "convert_share": 24,
+      "d": 24,
+      "dea": 24,
+      "deduct_value": 24,
+      "dif": 24,
+      "dividend": 24,
+      "j": 24,
+      "k": 24,
+      "ma10": 24,
+      "ma120": 24,
+      "ma20": 24,
+      "ma250": 24,
+      "ma30": 24,
+      "ma5": 24,
+      "ma60": 24,
+      "macd": 24,
+      "pct_10d": 24,
+      "pct_20d": 24,
+      "pct_30d": 24,
+      "pct_3d": 24,
+      "pct_5d": 24,
+      "pct_change": 24,
+      "rsi12": 24,
+      "rsi24": 24,
+      "rsi6": 24
+    },
+    "missing_examples": []
+  },
+  "lineage_coverage": {
+    "record_count": 24,
+    "records_with_lineage": 24,
+    "coverage": 1.0,
+    "invalid_lineage_count": 0,
+    "invalid_examples": []
+  },
+  "computed_consistency": {
+    "checked_counts": {
+      "float_market_cap_cny": 24,
+      "pct_change_pct": 24,
+      "total_market_cap_cny": 24,
+      "volume_lots": 24,
+      "vwap_raw_cny": 24
+    },
+    "mismatch_counts": {},
+    "total_mismatch_count": 0,
+    "mismatch_examples": {}
+  },
+  "quality_flag_summary": {
+    "flag_counts": {
+      "SOURCE_PCT_CHANGE_SIGN_INVERTED": 24
+    },
+    "blocking_flag_count": 0,
+    "informational_flag_count": 24,
+    "blocking_flags": [
+      "SOURCE_ADJ_FORMULA_MISMATCH",
+      "SOURCE_PCT_CHANGE_SEMANTIC_MISMATCH",
+      "SOURCE_PRICE_CHANGE_MISMATCH"
+    ],
+    "informational_flags": [
+      "MISSING_PRE_CLOSE",
+      "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+    ]
+  },
+  "checks": [
+    {
+      "check_name": "标准化记录数量",
+      "passed": true,
+      "blocking": true,
+      "details": {
+        "source_row_count": 24,
+        "standardized_record_count": 24,
+        "actual_record_count": 24,
+        "minimum_record_count": 1
+      }
+    },
+    {
+      "check_name": "DailyBar核心字段覆盖",
+      "passed": true,
+      "blocking": true,
+      "details": {
+        "object_name": "DailyBar",
+        "record_count": 24,
+        "required_fields": [
+          "instrument_id",
+          "trade_date",
+          "open_raw_cny",
+          "high_raw_cny",
+          "low_raw_cny",
+          "close_raw_cny",
+          "volume_shares",
+          "amount_cny"
+        ],
+        "expected_cell_count": 192,
+        "present_cell_count": 192,
+        "coverage": 1.0,
+        "field_present_counts": {
+          "amount_cny": 24,
+          "close_raw_cny": 24,
+          "high_raw_cny": 24,
+          "instrument_id": 24,
+          "low_raw_cny": 24,
+          "open_raw_cny": 24,
+          "trade_date": 24,
+          "volume_shares": 24
+        },
+        "missing_examples": []
+      }
+    },
+    {
+      "check_name": "OwnershipSnapshot核心字段覆盖",
+      "passed": true,
+      "blocking": true,
+      "details": {
+        "object_name": "OwnershipSnapshot",
+        "record_count": 24,
+        "required_fields": [
+          "instrument_id",
+          "as_of_date",
+          "float_shares",
+          "total_shares"
+        ],
+        "expected_cell_count": 96,
+        "present_cell_count": 96,
+        "coverage": 1.0,
+        "field_present_counts": {
+          "as_of_date": 24,
+          "float_shares": 24,
+          "instrument_id": 24,
+          "total_shares": 24
+        },
+        "missing_examples": []
+      }
+    },
+    {
+      "check_name": "待确认来源字段保留",
+      "passed": true,
+      "blocking": true,
+      "details": {
+        "pending_field_count": 35,
+        "pending_fields": [
+          "BS",
+          "adj_price",
+          "allot_price",
+          "allot_share",
+          "bias",
+          "boll",
+          "boll_down",
+          "boll_up",
+          "bonus_share",
+          "chanlun",
+          "convert_share",
+          "d",
+          "dea",
+          "deduct_value",
+          "dif",
+          "dividend",
+          "j",
+          "k",
+          "ma10",
+          "ma120",
+          "ma20",
+          "ma250",
+          "ma30",
+          "ma5",
+          "ma60",
+          "macd",
+          "pct_10d",
+          "pct_20d",
+          "pct_30d",
+          "pct_3d",
+          "pct_5d",
+          "pct_change",
+          "rsi12",
+          "rsi24",
+          "rsi6"
+        ],
+        "expected_cell_count": 840,
+        "present_cell_count": 840,
+        "coverage": 1.0,
+        "field_present_counts": {
+          "BS": 24,
+          "adj_price": 24,
+          "allot_price": 24,
+          "allot_share": 24,
+          "bias": 24,
+          "boll": 24,
+          "boll_down": 24,
+          "boll_up": 24,
+          "bonus_share": 24,
+          "chanlun": 24,
+          "convert_share": 24,
+          "d": 24,
+          "dea": 24,
+          "deduct_value": 24,
+          "dif": 24,
+          "dividend": 24,
+          "j": 24,
+          "k": 24,
+          "ma10": 24,
+          "ma120": 24,
+          "ma20": 24,
+          "ma250": 24,
+          "ma30": 24,
+          "ma5": 24,
+          "ma60": 24,
+          "macd": 24,
+          "pct_10d": 24,
+          "pct_20d": 24,
+          "pct_30d": 24,
+          "pct_3d": 24,
+          "pct_5d": 24,
+          "pct_change": 24,
+          "rsi12": 24,
+          "rsi24": 24,
+          "rsi6": 24
+        },
+        "missing_examples": []
+      }
+    },
+    {
+      "check_name": "字段血缘完整性",
+      "passed": true,
+      "blocking": true,
+      "details": {
+        "record_count": 24,
+        "records_with_lineage": 24,
+        "coverage": 1.0,
+        "invalid_lineage_count": 0,
+        "invalid_examples": []
+      }
+    },
+    {
+      "check_name": "标准计算字段内部一致性",
+      "passed": true,
+      "blocking": true,
+      "details": {
+        "checked_counts": {
+          "float_market_cap_cny": 24,
+          "pct_change_pct": 24,
+          "total_market_cap_cny": 24,
+          "volume_lots": 24,
+          "vwap_raw_cny": 24
+        },
+        "mismatch_counts": {},
+        "total_mismatch_count": 0,
+        "mismatch_examples": {}
+      }
+    },
+    {
+      "check_name": "来源质量异常",
+      "passed": true,
+      "blocking": true,
+      "details": {
+        "flag_counts": {
+          "SOURCE_PCT_CHANGE_SIGN_INVERTED": 24
+        },
+        "blocking_flag_count": 0,
+        "informational_flag_count": 24,
+        "blocking_flags": [
+          "SOURCE_ADJ_FORMULA_MISMATCH",
+          "SOURCE_PCT_CHANGE_SEMANTIC_MISMATCH",
+          "SOURCE_PRICE_CHANGE_MISMATCH"
+        ],
+        "informational_flags": [
+          "MISSING_PRE_CLOSE",
+          "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+        ]
+      }
+    }
+  ],
+  "overall_status": "PASSED",
+  "blocks_downstream": false,
+  "sample_records": [
+    {
+      "source_record_id": "000001|2026-05-26",
+      "primary_key": {
+        "instrument_id": "000001",
+        "trade_date": "2026-05-26"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "000001",
+          "trade_date": "2026-05-26",
+          "open_raw_cny": 10.71,
+          "high_raw_cny": 10.83,
+          "low_raw_cny": 10.66,
+          "close_raw_cny": 10.79,
+          "volume_shares": 83734688,
+          "amount_cny": 900879552.0,
+          "turnover_rate_pct": 0.431,
+          "change_cny": 0.1099999999999994,
+          "adj_factor": 266.71,
+          "pre_close_raw_cny": 10.68,
+          "volume_lots": 837346.88,
+          "vwap_raw_cny": 10.758737788573358,
+          "float_market_cap_cny": 209386436948.0,
+          "total_market_cap_cny": 209389863851.99997,
+          "pct_change_pct": 1.029963
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "000001",
+          "as_of_date": "2026-05-26",
+          "float_shares": 19405601200.0,
+          "total_shares": 19405918800.0
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": -1.03,
+        "pct_3d": -0.84,
+        "pct_5d": 0.64,
+        "pct_10d": 4.09,
+        "pct_20d": 1.91,
+        "pct_30d": 2.79,
+        "ma5": 10.72,
+        "ma10": 10.85,
+        "ma20": 11.1,
+        "ma30": 11.09,
+        "ma60": 11.01,
+        "ma120": 11.17,
+        "ma250": 11.54,
+        "macd": -0.11,
+        "dif": -0.11,
+        "dea": -0.05,
+        "k": 13.5,
+        "d": 10.33,
+        "j": 19.83,
+        "rsi6": 36.83,
+        "rsi12": 36.99,
+        "rsi24": 42.66,
+        "bias": 0.4,
+        "boll": 11.1,
+        "boll_up": 11.68,
+        "boll_down": 10.51,
+        "deduct_value": 829.04,
+        "adj_price": 3706.84,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "000001|2026-05-27",
+      "primary_key": {
+        "instrument_id": "000001",
+        "trade_date": "2026-05-27"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "000001",
+          "trade_date": "2026-05-27",
+          "open_raw_cny": 10.76,
+          "high_raw_cny": 10.85,
+          "low_raw_cny": 10.72,
+          "close_raw_cny": 10.76,
+          "volume_shares": 83972720,
+          "amount_cny": 905710912.0,
+          "turnover_rate_pct": 0.433,
+          "change_cny": -0.0299999999999993,
+          "adj_factor": 266.71,
+          "pre_close_raw_cny": 10.79,
+          "volume_lots": 839727.2,
+          "vwap_raw_cny": 10.785775570923509,
+          "float_market_cap_cny": 208804268912.00003,
+          "total_market_cap_cny": 208807686287.99997,
+          "pct_change_pct": -0.278035
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "000001",
+          "as_of_date": "2026-05-27",
+          "float_shares": 19405601200.0,
+          "total_shares": 19405918800.0
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 0.28,
+        "pct_3d": -0.75,
+        "pct_5d": 0.09,
+        "pct_10d": 3.41,
+        "pct_20d": 2.18,
+        "pct_30d": 2.98,
+        "ma5": 10.72,
+        "ma10": 10.81,
+        "ma20": 11.08,
+        "ma30": 11.08,
+        "ma60": 11.01,
+        "ma120": 11.16,
+        "ma250": 11.54,
+        "macd": -0.09,
+        "dif": -0.11,
+        "dea": -0.07,
+        "k": 17.51,
+        "d": 12.72,
+        "j": 27.08,
+        "rsi6": 33.57,
+        "rsi12": 35.57,
+        "rsi24": 41.92,
+        "bias": 0.28,
+        "boll": 11.08,
+        "boll_up": 11.69,
+        "boll_down": 10.48,
+        "deduct_value": 829.04,
+        "adj_price": 3698.84,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "000001|2026-05-28",
+      "primary_key": {
+        "instrument_id": "000001",
+        "trade_date": "2026-05-28"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "000001",
+          "trade_date": "2026-05-28",
+          "open_raw_cny": 10.76,
+          "high_raw_cny": 10.79,
+          "low_raw_cny": 10.63,
+          "close_raw_cny": 10.66,
+          "volume_shares": 90071104,
+          "amount_cny": 963695808.0,
+          "turnover_rate_pct": 0.464,
+          "change_cny": -0.0999999999999996,
+          "adj_factor": 266.71,
+          "pre_close_raw_cny": 10.76,
+          "volume_lots": 900711.04,
+          "vwap_raw_cny": 10.699278294623767,
+          "float_market_cap_cny": 206863708792.0,
+          "total_market_cap_cny": 206867094408.0,
+          "pct_change_pct": -0.929368
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "000001",
+          "as_of_date": "2026-05-28",
+          "float_shares": 19405601200.0,
+          "total_shares": 19405918800.0
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 0.93,
+        "pct_3d": 0.19,
+        "pct_5d": 0.37,
+        "pct_10d": 3.53,
+        "pct_20d": 6.33,
+        "pct_30d": 3.7,
+        "ma5": 10.71,
+        "ma10": 10.78,
+        "ma20": 11.05,
+        "ma30": 11.07,
+        "ma60": 11.0,
+        "ma120": 11.15,
+        "ma250": 11.54,
+        "macd": -0.09,
+        "dif": -0.12,
+        "dea": -0.08,
+        "k": 14.61,
+        "d": 13.35,
+        "j": 17.13,
+        "rsi6": 24.78,
+        "rsi12": 31.21,
+        "rsi24": 39.53,
+        "bias": -0.48,
+        "boll": 11.05,
+        "boll_up": 11.66,
+        "boll_down": 10.43,
+        "deduct_value": 829.04,
+        "adj_price": 3672.17,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "000001|2026-05-29",
+      "primary_key": {
+        "instrument_id": "000001",
+        "trade_date": "2026-05-29"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "000001",
+          "trade_date": "2026-05-29",
+          "open_raw_cny": 10.65,
+          "high_raw_cny": 10.93,
+          "low_raw_cny": 10.62,
+          "close_raw_cny": 10.93,
+          "volume_shares": 139936784,
+          "amount_cny": 1515692032.0,
+          "turnover_rate_pct": 0.721,
+          "change_cny": 0.2699999999999996,
+          "adj_factor": 266.71,
+          "pre_close_raw_cny": 10.66,
+          "volume_lots": 1399367.84,
+          "vwap_raw_cny": 10.83126243632982,
+          "float_market_cap_cny": 212103221116.0,
+          "total_market_cap_cny": 212106692484.0,
+          "pct_change_pct": 2.532833
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "000001",
+          "as_of_date": "2026-05-29",
+          "float_shares": 19405601200.0,
+          "total_shares": 19405918800.0
+        }
+      },
+      "source_extensions": {
+        "BS": "B",
+        "chanlun": "",
+        "pct_change": -2.53,
+        "pct_3d": -1.3,
+        "pct_5d": -2.34,
+        "pct_10d": 0.55,
+        "pct_20d": 4.62,
+        "pct_30d": 2.15,
+        "ma5": 10.76,
+        "ma10": 10.77,
+        "ma20": 11.02,
+        "ma30": 11.06,
+        "ma60": 11.01,
+        "ma120": 11.14,
+        "ma250": 11.54,
+        "macd": -0.05,
+        "dif": -0.11,
+        "dea": -0.08,
+        "k": 43.08,
+        "d": 23.26,
+        "j": 82.71,
+        "rsi6": 59.3,
+        "rsi12": 49.46,
+        "rsi24": 47.89,
+        "bias": 1.67,
+        "boll": 11.02,
+        "boll_up": 11.61,
+        "boll_down": 10.44,
+        "deduct_value": 829.04,
+        "adj_price": 3744.18,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "001332|2026-05-26",
+      "primary_key": {
+        "instrument_id": "001332",
+        "trade_date": "2026-05-26"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "001332",
+          "trade_date": "2026-05-26",
+          "open_raw_cny": 69.09,
+          "high_raw_cny": 69.17,
+          "low_raw_cny": 64.0,
+          "close_raw_cny": 65.81,
+          "volume_shares": 3869205,
+          "amount_cny": 254416496.0,
+          "turnover_rate_pct": 8.06,
+          "change_cny": -3.689999999999998,
+          "adj_factor": 1.35,
+          "pre_close_raw_cny": 69.5,
+          "volume_lots": 38692.05,
+          "vwap_raw_cny": 65.75420428744407,
+          "float_market_cap_cny": 3159110335.0,
+          "total_market_cap_cny": 7271346900.000001,
+          "pct_change_pct": -5.309353
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "001332",
+          "as_of_date": "2026-05-26",
+          "float_shares": 48003500.0,
+          "total_shares": 110490000.0
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 5.31,
+        "pct_3d": -2.03,
+        "pct_5d": 0.56,
+        "pct_10d": -2.03,
+        "pct_20d": -14.79,
+        "pct_30d": -21.02,
+        "ma5": 66.62,
+        "ma10": 66.15,
+        "ma20": 64.74,
+        "ma30": 61.76,
+        "ma60": 58.95,
+        "ma120": 57.22,
+        "ma250": 50.94,
+        "macd": -0.07,
+        "dif": 2.35,
+        "dea": 2.39,
+        "k": 47.84,
+        "d": 52.65,
+        "j": 38.23,
+        "rsi6": 49.7,
+        "rsi12": 55.73,
+        "rsi24": 56.66,
+        "bias": -1.1,
+        "boll": 64.74,
+        "boll_up": 69.52,
+        "boll_down": 59.96,
+        "deduct_value": 5.93,
+        "adj_price": 94.77,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "001332|2026-05-27",
+      "primary_key": {
+        "instrument_id": "001332",
+        "trade_date": "2026-05-27"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "001332",
+          "trade_date": "2026-05-27",
+          "open_raw_cny": 65.29,
+          "high_raw_cny": 67.5,
+          "low_raw_cny": 64.05,
+          "close_raw_cny": 64.82,
+          "volume_shares": 2264085,
+          "amount_cny": 148102288.0,
+          "turnover_rate_pct": 4.716,
+          "change_cny": -0.9900000000000092,
+          "adj_factor": 1.35,
+          "pre_close_raw_cny": 65.81,
+          "volume_lots": 22640.85,
+          "vwap_raw_cny": 65.41374904210751,
+          "float_market_cap_cny": 3111586870.0,
+          "total_market_cap_cny": 7161961799.999999,
+          "pct_change_pct": -1.504331
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "001332",
+          "as_of_date": "2026-05-27",
+          "float_shares": 48003500.0,
+          "total_shares": 110490000.0
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 1.5,
+        "pct_3d": 3.53,
+        "pct_5d": 1.91,
+        "pct_10d": 1.04,
+        "pct_20d": -13.48,
+        "pct_30d": -18.7,
+        "ma5": 66.36,
+        "ma10": 66.08,
+        "ma20": 65.13,
+        "ma30": 62.1,
+        "ma60": 59.03,
+        "ma120": 57.32,
+        "ma250": 51.06,
+        "macd": -0.45,
+        "dif": 2.11,
+        "dea": 2.33,
+        "k": 35.73,
+        "d": 47.01,
+        "j": 13.17,
+        "rsi6": 44.97,
+        "rsi12": 52.77,
+        "rsi24": 55.09,
+        "bias": -2.26,
+        "boll": 65.13,
+        "boll_up": 68.29,
+        "boll_down": 61.96,
+        "deduct_value": 5.93,
+        "adj_price": 93.44,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "001332|2026-05-28",
+      "primary_key": {
+        "instrument_id": "001332",
+        "trade_date": "2026-05-28"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "001332",
+          "trade_date": "2026-05-28",
+          "open_raw_cny": 64.26,
+          "high_raw_cny": 65.52,
+          "low_raw_cny": 62.49,
+          "close_raw_cny": 63.97,
+          "volume_shares": 2079125,
+          "amount_cny": 132582136.0,
+          "turnover_rate_pct": 4.331,
+          "change_cny": -0.8499999999999943,
+          "adj_factor": 1.35,
+          "pre_close_raw_cny": 64.82,
+          "volume_lots": 20791.25,
+          "vwap_raw_cny": 63.76823711898034,
+          "float_market_cap_cny": 3070783895.0,
+          "total_market_cap_cny": 7068045300.0,
+          "pct_change_pct": -1.311324
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "001332",
+          "as_of_date": "2026-05-28",
+          "float_shares": 48003500.0,
+          "total_shares": 110490000.0
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 1.31,
+        "pct_3d": 7.96,
+        "pct_5d": 0.82,
+        "pct_10d": 1.08,
+        "pct_20d": -1.81,
+        "pct_30d": -18.22,
+        "ma5": 66.26,
+        "ma10": 66.01,
+        "ma20": 65.18,
+        "ma30": 62.43,
+        "ma60": 59.11,
+        "ma120": 57.42,
+        "ma250": 51.18,
+        "macd": -0.81,
+        "dif": 1.83,
+        "dea": 2.23,
+        "k": 29.38,
+        "d": 41.13,
+        "j": 5.88,
+        "rsi6": 40.95,
+        "rsi12": 50.26,
+        "rsi24": 53.76,
+        "bias": -3.02,
+        "boll": 65.18,
+        "boll_up": 68.21,
+        "boll_down": 62.16,
+        "deduct_value": 5.93,
+        "adj_price": 92.29,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "001332|2026-05-29",
+      "primary_key": {
+        "instrument_id": "001332",
+        "trade_date": "2026-05-29"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "001332",
+          "trade_date": "2026-05-29",
+          "open_raw_cny": 45.31,
+          "high_raw_cny": 48.98,
+          "low_raw_cny": 45.31,
+          "close_raw_cny": 46.45,
+          "volume_shares": 5988436,
+          "amount_cny": 282907392.0,
+          "turnover_rate_pct": 8.911,
+          "change_cny": -17.52,
+          "adj_factor": 1.89,
+          "pre_close_raw_cny": 63.97,
+          "volume_lots": 59884.36,
+          "vwap_raw_cny": 47.24228362797899,
+          "float_market_cap_cny": 3121667605.0000005,
+          "total_market_cap_cny": 7185164700.000001,
+          "pct_change_pct": -27.387838
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "001332",
+          "as_of_date": "2026-05-29",
+          "float_shares": 67204900.0,
+          "total_shares": 154686000.0
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 27.39,
+        "pct_3d": 29.42,
+        "pct_5d": 30.87,
+        "pct_10d": 30.16,
+        "pct_20d": 27.76,
+        "pct_30d": 14.54,
+        "ma5": 62.11,
+        "ma10": 64.01,
+        "ma20": 64.29,
+        "ma30": 62.16,
+        "ma60": 58.93,
+        "ma120": 57.37,
+        "ma250": 51.22,
+        "macd": -3.27,
+        "dif": 0.19,
+        "dea": 1.82,
+        "k": 21.05,
+        "d": 34.44,
+        "j": -5.74,
+        "rsi6": 12.76,
+        "rsi12": 24.31,
+        "rsi24": 35.4,
+        "bias": -26.22,
+        "boll": 64.29,
+        "boll_up": 73.21,
+        "boll_down": 55.37,
+        "deduct_value": 6.6,
+        "adj_price": 94.39,
+        "dividend": 5.0,
+        "bonus_share": 4.0,
+        "convert_share": 0.0,
+        "allot_share": 0.0,
+        "allot_price": 0.0
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "300622|2026-05-26",
+      "primary_key": {
+        "instrument_id": "300622",
+        "trade_date": "2026-05-26"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "300622",
+          "trade_date": "2026-05-26",
+          "open_raw_cny": 24.83,
+          "high_raw_cny": 24.93,
+          "low_raw_cny": 23.91,
+          "close_raw_cny": 24.79,
+          "volume_shares": 7118800,
+          "amount_cny": 173484544.0,
+          "turnover_rate_pct": 4.57,
+          "change_cny": -0.2899999999999991,
+          "adj_factor": 2.55,
+          "pre_close_raw_cny": 25.08,
+          "volume_lots": 71188.0,
+          "vwap_raw_cny": 24.36991403045457,
+          "float_market_cap_cny": 3861602754.0,
+          "total_market_cap_cny": 5648505617.999999,
+          "pct_change_pct": -1.1563
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "300622",
+          "as_of_date": "2026-05-26",
+          "float_shares": 155772600.0,
+          "total_shares": 227854199.99999997
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 1.16,
+        "pct_3d": 2.25,
+        "pct_5d": 12.86,
+        "pct_10d": 1.55,
+        "pct_20d": -0.85,
+        "pct_30d": -1.39,
+        "ma5": 25.31,
+        "ma10": 26.33,
+        "ma20": 25.7,
+        "ma30": 25.42,
+        "ma60": 25.98,
+        "ma120": 28.66,
+        "ma250": 31.32,
+        "macd": -0.31,
+        "dif": 0.08,
+        "dea": 0.24,
+        "k": 24.85,
+        "d": 39.74,
+        "j": -4.93,
+        "rsi6": 34.89,
+        "rsi12": 43.01,
+        "rsi24": 45.09,
+        "bias": -4.05,
+        "boll": 25.7,
+        "boll_up": 28.11,
+        "boll_down": 23.29,
+        "deduct_value": 5.28,
+        "adj_price": 68.49,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    },
+    {
+      "source_record_id": "300622|2026-05-27",
+      "primary_key": {
+        "instrument_id": "300622",
+        "trade_date": "2026-05-27"
+      },
+      "canonical_objects": {
+        "DailyBar": {
+          "instrument_id": "300622",
+          "trade_date": "2026-05-27",
+          "open_raw_cny": 24.51,
+          "high_raw_cny": 25.39,
+          "low_raw_cny": 24.3,
+          "close_raw_cny": 24.49,
+          "volume_shares": 6904440,
+          "amount_cny": 171536096.0,
+          "turnover_rate_pct": 4.432,
+          "change_cny": -0.3000000000000007,
+          "adj_factor": 2.55,
+          "pre_close_raw_cny": 24.79,
+          "volume_lots": 69044.4,
+          "vwap_raw_cny": 24.844316990226577,
+          "float_market_cap_cny": 3814870973.9999995,
+          "total_market_cap_cny": 5580149358.0,
+          "pct_change_pct": -1.210165
+        },
+        "OwnershipSnapshot": {
+          "instrument_id": "300622",
+          "as_of_date": "2026-05-27",
+          "float_shares": 155772600.0,
+          "total_shares": 227854199.99999997
+        }
+      },
+      "source_extensions": {
+        "BS": "S",
+        "chanlun": "",
+        "pct_change": 1.21,
+        "pct_3d": 1.41,
+        "pct_5d": 7.58,
+        "pct_10d": 7.2,
+        "pct_20d": -0.62,
+        "pct_30d": 0.45,
+        "ma5": 24.91,
+        "ma10": 26.14,
+        "ma20": 25.71,
+        "ma30": 25.41,
+        "ma60": 25.88,
+        "ma120": 28.63,
+        "ma250": 31.25,
+        "macd": -0.42,
+        "dif": -0.02,
+        "dea": 0.19,
+        "k": 20.55,
+        "d": 33.34,
+        "j": -5.05,
+        "rsi6": 31.9,
+        "rsi12": 41.09,
+        "rsi24": 44.04,
+        "bias": -2.73,
+        "boll": 25.71,
+        "boll_up": 28.1,
+        "boll_down": 23.31,
+        "deduct_value": 5.28,
+        "adj_price": 67.73,
+        "dividend": null,
+        "bonus_share": null,
+        "convert_share": null,
+        "allot_share": null,
+        "allot_price": null
+      },
+      "quality_flags": [
+        "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+      ],
+      "lineage": [
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "trade_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "open_raw_cny",
+          "source_fields": [
+            "open"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "high_raw_cny",
+          "source_fields": [
+            "high"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "low_raw_cny",
+          "source_fields": [
+            "low"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_shares",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "amount_cny",
+          "source_fields": [
+            "amount"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "turnover_rate_pct",
+          "source_fields": [
+            "turnover_rate"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "change_cny",
+          "source_fields": [
+            "price_change"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "adj_factor",
+          "source_fields": [
+            "adj_factor"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "instrument_id",
+          "source_fields": [
+            "stock_code"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "as_of_date",
+          "source_fields": [
+            "trade_date"
+          ],
+          "transform_id": "identity",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "float_shares",
+          "source_fields": [
+            "float_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "OwnershipSnapshot",
+          "canonical_field": "total_shares",
+          "source_fields": [
+            "total_shares"
+          ],
+          "transform_id": "multiply",
+          "transform_params": {
+            "factor": 10000
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pre_close_raw_cny",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "previous_close_from_context",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "volume_lots",
+          "source_fields": [
+            "volume"
+          ],
+          "transform_id": "divide",
+          "transform_params": {
+            "divisor": 100
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "vwap_raw_cny",
+          "source_fields": [
+            "amount",
+            "volume"
+          ],
+          "transform_id": "vwap_from_amount_volume",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "float_market_cap_cny",
+          "source_fields": [
+            "close",
+            "float_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "total_market_cap_cny",
+          "source_fields": [
+            "close",
+            "total_shares"
+          ],
+          "transform_id": "market_cap_from_close_shares_10k",
+          "transform_params": {},
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        },
+        {
+          "target_object": "DailyBar",
+          "canonical_field": "pct_change_pct",
+          "source_fields": [
+            "close"
+          ],
+          "transform_id": "pct_change_from_prev_close",
+          "transform_params": {
+            "precision": 6
+          },
+          "mapping_version": "0.2.0",
+          "dictionary_revision": "0.5"
+        }
+      ]
+    }
+  ]
+}
