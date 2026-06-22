@@ -8,7 +8,7 @@
   "dataset_mode": "SNAPSHOT",
   "coverage_version": "a_stock_daily_k@2026-05-29",
   "schema_version": "1.0.0",
-  "mapping_version": "0.1.0",
+  "mapping_version": "0.2.0",
   "dictionary_revision": "0.5",
   "date_field": "trade_date",
   "entity_field": "stock_code",
@@ -775,6 +775,97 @@
       "source_unit": null,
       "canonical_unit": null,
       "notes": "公司行为字段的每股/每10股单位尚未最终确认。"
+    },
+    {
+      "source_fields": [
+        "close"
+      ],
+      "status": "MAPPED",
+      "transform_id": "previous_close_from_context",
+      "target_object": "DailyBar",
+      "canonical_field": "pre_close_raw_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "CNY",
+      "notes": "通过每只证券请求起点前一条记录和批次内前序记录补充。"
+    },
+    {
+      "source_fields": [
+        "volume"
+      ],
+      "status": "MAPPED",
+      "transform_id": "divide",
+      "target_object": "DailyBar",
+      "canonical_field": "volume_lots",
+      "transform_params": {
+        "divisor": 100
+      },
+      "required": false,
+      "source_unit": "shares",
+      "canonical_unit": "lots",
+      "notes": "A股1手按100股换算。"
+    },
+    {
+      "source_fields": [
+        "amount",
+        "volume"
+      ],
+      "status": "MAPPED",
+      "transform_id": "vwap_from_amount_volume",
+      "target_object": "DailyBar",
+      "canonical_field": "vwap_raw_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY,shares",
+      "canonical_unit": "CNY",
+      "notes": "以成交额除以成交量得到日频成交均价。"
+    },
+    {
+      "source_fields": [
+        "close",
+        "float_shares"
+      ],
+      "status": "MAPPED",
+      "transform_id": "market_cap_from_close_shares_10k",
+      "target_object": "DailyBar",
+      "canonical_field": "float_market_cap_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY,10k_shares",
+      "canonical_unit": "CNY",
+      "notes": "使用来源收盘价与流通股本计算。"
+    },
+    {
+      "source_fields": [
+        "close",
+        "total_shares"
+      ],
+      "status": "MAPPED",
+      "transform_id": "market_cap_from_close_shares_10k",
+      "target_object": "DailyBar",
+      "canonical_field": "total_market_cap_cny",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "CNY,10k_shares",
+      "canonical_unit": "CNY",
+      "notes": "使用来源收盘价与总股本计算。"
+    },
+    {
+      "source_fields": [
+        "close"
+      ],
+      "status": "MAPPED",
+      "transform_id": "pct_change_from_prev_close",
+      "target_object": "DailyBar",
+      "canonical_field": "pct_change_pct",
+      "transform_params": {
+        "precision": 6
+      },
+      "required": false,
+      "source_unit": "CNY",
+      "canonical_unit": "percent_points",
+      "notes": "使用标准正向涨跌幅公式重新计算；来源反向pct_change继续保留。"
     }
   ],
   "enabled": true,
@@ -784,5 +875,5 @@
     "dolphindb",
     "snapshot"
   ],
-  "description": "A股日K快照数据集首个正式注册配置。"
+  "description": "A股日K快照数据集正式注册配置；已支持DailyBar与OwnershipSnapshot批量标准化读取。"
 }
