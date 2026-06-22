@@ -1,0 +1,11 @@
+registry_name: 企业行业现实世界暴露关系模板
+registry_revision: '0.2'
+schema_reference: canonical_fields.yaml#entity_exposure
+required_logic:
+- 稳定结构关系优先记录在entity_relation。
+- 对地区、商品、供应链和基础设施的敏感度记录在entity_exposure。
+- 已经发生的事件后果记录在event_impact。
+- 事件不能直接跳到股票涨跌，必须经过实体关系、暴露、经营状态、参与者行为和资本迁移。
+- 暴露权重必须附证据、有效期和置信度。
+- 同一公司可同时存在受益和受损暴露。
+records: []

@@ -1,0 +1,115 @@
+registry_name: 因果市场仿真变量注册表
+registry_revision: '0.3'
+principle: 所有市场相关标准变量必须具有至少一种可激活方式；内生变量优先由因果规则推导，行情输出不得独立随机。
+schema_reference: canonical_fields.yaml#simulation_variable
+variables:
+- canonical_field_name: conflict_intensity_score
+  simulation_enabled: true
+  variable_role_code: EXOGENOUS_STATE
+  allowed_input_mode_codes:
+  - OBSERVED
+  - MANUAL
+  - SCENARIO
+  - EXPERT
+  - SYNTHETIC
+  valid_min_numeric: 0
+  valid_max_numeric: 100
+  distribution_code: REGIME_DEPENDENT
+  manual_override_allowed: true
+  required_for_regime_flag: false
+  canonical_field_ref: geopolitical_conflict.conflict_intensity_score
+  scenario_addressable: true
+  control_permission_code: DIRECT_CONTROL
+  default_propagation_mode_code: AUTO_PROPAGATE
+- canonical_field_name: commodity_impact_score
+  simulation_enabled: true
+  variable_role_code: INTERMEDIATE
+  allowed_input_mode_codes:
+  - OBSERVED
+  - PROXY
+  - DERIVED
+  - SYNTHETIC
+  valid_min_numeric: 0
+  valid_max_numeric: 100
+  parent_variable_names:
+  - conflict_intensity_score
+  - energy_supply_risk_score
+  required_for_regime_flag: false
+  canonical_field_ref: geopolitical_conflict.commodity_impact_score
+  scenario_addressable: true
+  control_permission_code: CONDITIONAL_OVERRIDE
+  default_propagation_mode_code: PROPAGATE_SELECTED
+- canonical_field_name: risk_appetite_score
+  simulation_enabled: true
+  variable_role_code: ENDOGENOUS_STATE
+  allowed_input_mode_codes:
+  - OBSERVED
+  - PROXY
+  - ESTIMATED
+  - DERIVED
+  - LATENT
+  valid_min_numeric: 0
+  valid_max_numeric: 100
+  required_for_regime_flag: true
+  canonical_field_ref: participant_behavior.risk_appetite_score
+  scenario_addressable: true
+  control_permission_code: CONDITIONAL_OVERRIDE
+  default_propagation_mode_code: PROPAGATE_SELECTED
+- canonical_field_name: bull_probability
+  simulation_enabled: true
+  variable_role_code: MARKET_REGIME_OUTPUT
+  allowed_input_mode_codes:
+  - DERIVED
+  valid_min_numeric: 0
+  valid_max_numeric: 1
+  required_for_regime_flag: true
+  canonical_field_ref: market_state.bull_probability
+  scenario_addressable: true
+  control_permission_code: TEST_ONLY_OVERRIDE
+  default_propagation_mode_code: PROPAGATE_SELECTED
+- canonical_field_name: close_raw_cny
+  simulation_enabled: true
+  variable_role_code: MICRO_MARKET_OUTPUT
+  allowed_input_mode_codes:
+  - DERIVED
+  - SYNTHETIC
+  valid_min_numeric: 0.001
+  distribution_code: REGIME_DEPENDENT
+  required_for_micro_path_flag: true
+  canonical_field_ref: market_daily.close_raw_cny
+  scenario_addressable: true
+  control_permission_code: TEST_ONLY_OVERRIDE
+  default_propagation_mode_code: PROPAGATE_SELECTED
+- canonical_field_name: event_active_flag
+  canonical_field_ref: world_event.event_active_flag
+  simulation_enabled: true
+  variable_role_code: EXOGENOUS_STATE
+  allowed_input_mode_codes:
+  - OBSERVED
+  - MANUAL
+  - SCENARIO
+  - SYNTHETIC
+  scenario_addressable: true
+  control_permission_code: DIRECT_CONTROL
+  default_propagation_mode_code: AUTO_PROPAGATE
+  manual_override_allowed: true
+  required_for_regime_flag: false
+- canonical_field_name: impact_value_numeric
+  canonical_field_ref: event_impact.impact_value_numeric
+  simulation_enabled: true
+  variable_role_code: INTERMEDIATE
+  allowed_input_mode_codes:
+  - OBSERVED
+  - MANUAL
+  - EXPERT
+  - ESTIMATED
+  - DERIVED
+  - SCENARIO
+  scenario_addressable: true
+  control_permission_code: CONDITIONAL_OVERRIDE
+  default_propagation_mode_code: AUTO_PROPAGATE
+  manual_override_allowed: true
+  required_for_regime_flag: false
+coverage_status: REPRESENTATIVE_EXAMPLES_ONLY
+coverage_policy: 所有可能影响市场的标准字段最终都必须判断场景可寻址性、控制权限、输入模式、父变量、下游规则和缺失值策略；当前文件只提供代表性样例。
+domain_model_note: 自然语言事件优先通过 world_entity、entity_relation、world_event、event_impact、entity_exposure 和 causal_rule 表达，不为每个场景新增专用字段。

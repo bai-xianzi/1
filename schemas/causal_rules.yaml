@@ -1,0 +1,84 @@
+registry_name: 因果规则与硬逻辑注册表
+registry_revision: '0.2'
+schema_reference: canonical_fields.yaml#causal_rule
+rules:
+- causal_rule_id: CR_ACCOUNTING_PROFIT_001
+  causal_rule_name_cn: 毛利润会计恒等约束
+  cause_variable_names:
+  - revenue_cny
+  - operating_cost_cny
+  effect_variable_names:
+  - gross_profit_cny
+  causal_relation_type_code: HARD_IDENTITY
+  effect_direction_code: CONDITION_DEPENDENT
+  evidence_level_code: ACCOUNTING_IDENTITY
+  rule_version: '1.0'
+  review_status_code: DRAFT
+  cause_field_refs:
+  - fundamental.revenue_cny
+  - fundamental.operating_cost_cny
+  effect_field_refs:
+  - fundamental.gross_profit_cny
+- causal_rule_id: CR_OIL_INPUT_COST_001
+  causal_rule_name_cn: 原油价格对石油投入成本的硬方向传导
+  cause_variable_names:
+  - crude_oil_price_usd_bbl
+  effect_variable_names:
+  - petroleum_input_cost_index
+  causal_relation_type_code: HARD_DIRECTIONAL
+  effect_direction_code: POSITIVE
+  applicable_condition_expression: petroleum_input_quantity > 0
+  invalidation_condition_expression: full_price_hedge == true
+  lag_min_days: 0
+  lag_max_days: 30
+  evidence_level_code: PHYSICAL_CONSTRAINT
+  rule_version: '1.0'
+  review_status_code: DRAFT
+  cause_field_refs:
+  - cross_asset_market.price_level
+  effect_field_refs:
+  - real_economy.petroleum_input_cost_index
+- causal_rule_id: CR_PROPERTY_CAPITAL_ABSORPTION_001
+  causal_rule_name_cn: 房地产预期收益对股票增量资金的条件化吸纳
+  cause_variable_names:
+  - real_estate_price_index
+  - mortgage_rate_pct
+  - household_disposable_income
+  effect_variable_names:
+  - capital_absorption_score
+  - switch_to_property_probability
+  - switch_to_equity_probability
+  causal_relation_type_code: CONDITIONAL_CAUSAL
+  effect_direction_code: CONDITION_DEPENDENT
+  applicable_condition_expression: credit_availability_score > threshold and property_policy_restriction_score < threshold
+  evidence_level_code: PROJECT_ASSUMPTION
+  rule_version: '1.0'
+  review_status_code: DRAFT
+  cause_field_refs:
+  - real_economy.real_estate_price_index
+  - real_economy.mortgage_rate_pct
+  - real_economy.household_disposable_income
+  effect_field_refs:
+  - participant_behavior.capital_absorption_score
+  - participant_behavior.switch_to_property_probability
+  - participant_behavior.switch_to_equity_probability
+governance:
+  proposal_sources:
+  - 官方规则
+  - 会计或物理恒等
+  - 学术研究
+  - 历史统计
+  - 领域专家
+  - 大语言模型候选
+  - 项目假设
+  approval_rule: 大语言模型、Codex、统计模型和专家均只能提出候选规则；未经人工核验与项目经理结构化评审，不得进入 ACTIVE 规则集。
+  required_review_items:
+  - 适用条件
+  - 失效条件
+  - 方向
+  - 强度区间
+  - 时滞
+  - 证据
+  - 反例
+  - 样本数
+  - 版本

@@ -1,0 +1,55 @@
+registry_name: 用户场景干预合同注册表
+registry_revision: '0.2'
+schema_reference: canonical_fields.yaml#scenario_intervention
+principles:
+- 用户自然语言要求先转换为通用实体、实体关系、事件、影响或字段干预。
+- 布尔值只控制事件或影响是否生效；程度、持续时间和恢复周期必须独立表达。
+- 外生变量可直接控制，内生变量优先推导，行情输出默认只允许测试注入。
+- 直接市场冲击必须标记，不能冒充完整的上游因果解释。
+- 强制覆盖必须记录原因和被破坏的因果关系。
+examples:
+- intervention_id: INT_CREATE_WAR_001
+  scenario_id: SCN_USER_001
+  intervention_target_kind_code: EVENT_CREATE
+  event_template_id: WORLD_EVENT_WAR
+  intervention_mode_code: TOGGLE
+  value_bool: true
+  structured_payload_json:
+    event_type_code: WAR
+    country_codes:
+    - IL
+    event_severity_score: 80
+    expected_duration_days: 180
+  propagation_mode_code: AUTO_PROPAGATE
+  direct_market_shock_flag: false
+  forced_override_flag: false
+  review_status_code: DRAFT
+- intervention_id: INT_WAREHOUSE_IMPACT_001
+  scenario_id: SCN_USER_001
+  intervention_target_kind_code: IMPACT_CREATE
+  target_object_id: ENTITY_WAREHOUSE_001
+  intervention_mode_code: SET_ABSOLUTE
+  structured_payload_json:
+    event_id: EVENT_WAR_001
+    target_entity_type_code: WAREHOUSE
+    impact_type_code: INVENTORY_LOSS
+    impact_metric_code: INVENTORY_LOSS_PCT
+    impact_value_numeric: 40
+    impact_unit_code: PERCENT_POINTS
+    downtime_days: 30
+    expected_recovery_days: 90
+  propagation_mode_code: AUTO_PROPAGATE
+  direct_market_shock_flag: false
+  forced_override_flag: false
+  review_status_code: DRAFT
+- intervention_id: INT_CRYPTO_001
+  scenario_id: SCN_USER_001
+  intervention_target_kind_code: DIRECT_MARKET_SHOCK
+  canonical_field_ref: cross_asset_market.return_1d_pct
+  target_scope_code: ASSET_CLASS
+  intervention_mode_code: PCT_CHANGE
+  value_numeric: -30
+  propagation_mode_code: AUTO_PROPAGATE
+  direct_market_shock_flag: true
+  forced_override_flag: false
+  review_status_code: DRAFT

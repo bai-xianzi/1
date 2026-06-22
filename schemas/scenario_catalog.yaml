@@ -1,0 +1,49 @@
+catalog_name: 因果行情仿真场景目录
+catalog_revision: '0.2'
+schema_reference: canonical_fields.yaml#simulation_scenario
+principles:
+- 场景模板由事件、实体、影响、字段干预和因果规则集组成。
+- 自然语言场景不直接等同于新增标准字段。
+- 所有场景默认处于DRAFT，经过人工审核后才能进入可运行状态。
+scenarios:
+- scenario_id: SCN_BASELINE_A_SHARE_001
+  scenario_name_cn: A股基准无重大冲击场景
+  scenario_type_code: BASELINE
+  scenario_status_code: DRAFT
+  event_templates: []
+  shock_field_refs: []
+- scenario_id: SCN_WAR_ENERGY_SUPPLY_001
+  scenario_name_cn: 战争升级与能源供应冲击
+  scenario_type_code: WAR
+  scenario_status_code: DRAFT
+  event_templates:
+  - event_type_code: WAR
+    event_active_flag: true
+    target_scope_code: COUNTRY
+  shock_field_refs:
+  - geopolitical_conflict.conflict_intensity_score
+  - geopolitical_conflict.energy_supply_risk_score
+  - geopolitical_conflict.shipping_risk_score
+- scenario_id: SCN_PROPERTY_CAPITAL_ABSORPTION_001
+  scenario_name_cn: 房地产上涨吸纳金融市场资金
+  scenario_type_code: PROPERTY_BOOM
+  scenario_status_code: DRAFT
+  event_templates:
+  - event_type_code: PRICE_SHOCK
+    target_scope_code: ASSET_CLASS
+    target_asset_class_code: REAL_ESTATE
+  shock_field_refs:
+  - real_economy.real_estate_price_index
+  - participant_behavior.capital_absorption_score
+  - participant_behavior.switch_to_property_probability
+- scenario_id: SCN_INCOME_CONTRACTION_001
+  scenario_name_cn: 居民收入下降与风险偏好收缩
+  scenario_type_code: INCOME_SHOCK
+  scenario_status_code: DRAFT
+  event_templates:
+  - event_type_code: DEMAND_SHOCK
+    target_scope_code: COUNTRY
+  shock_field_refs:
+  - real_economy.household_disposable_income
+  - participant_behavior.risk_appetite_score
+  - participant_behavior.estimated_cash_balance_cny
