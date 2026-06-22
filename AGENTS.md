@@ -3,7 +3,7 @@
 ## 1. 当前项目阶段
 
 ```text
-CURRENT：通用数据接入骨架 + DolphinDB数据入库与质量验收
+CURRENT：通用数据接入骨架 + 数据入库与质量验收
 NEXT：市场状态MVP + 风险仓位MVP + 基础因子与真实A股回测
 FUTURE：CWMS因果行情仿真、实验生命周期、模拟盘
 RESERVED：自动券商交易、订单状态机、账实核对、复杂工作台
