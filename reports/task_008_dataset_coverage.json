@@ -1,0 +1,58 @@
+{
+  "dataset_id": "a_stock_daily_k",
+  "dataset_mode": "SNAPSHOT",
+  "database_uri": "dfs://A_STOCK_DAILY_K_DB",
+  "table_name": "stock_daily_k",
+  "date_field": "trade_date",
+  "entity_field": "stock_code",
+  "declared_cutoff_date": "2026-05-29",
+  "generated_at": "2026-06-22T16:10:44.243481+00:00",
+  "database_summary": {
+    "row_count": 16548275,
+    "min_data_date": "1990-12-19T00:00:00",
+    "max_data_date": "2026-05-29T00:00:00",
+    "entity_count": 5523
+  },
+  "coverage_evaluation": {
+    "dataset_mode": "SNAPSHOT",
+    "declared_cutoff_date": "2026-05-29",
+    "database_min_date": "1990-12-19",
+    "database_max_date": "2026-05-29",
+    "database_matches_declared_cutoff": true,
+    "calendar_lag_days_informational": 24,
+    "calendar_lag_is_blocking": false,
+    "allowed_request_start_date": "1990-12-19",
+    "allowed_request_end_date": "2026-05-29",
+    "pending_import_detected": false,
+    "latest_source_filename_date": null,
+    "coverage_version": "a_stock_daily_k@2026-05-29"
+  },
+  "source_inventory": [],
+  "import_log_inventory": [],
+  "checks": [
+    {
+      "check_name": "快照截止日期一致性",
+      "status": "PASSED",
+      "blocking": false,
+      "details": {
+        "declared_cutoff_date": "2026-05-29",
+        "database_max_date": "2026-05-29"
+      },
+      "description": "数据库最大日期与人工声明的快照截止日期一致。"
+    },
+    {
+      "check_name": "源文件待导入日期检查",
+      "status": "PASSED",
+      "blocking": false,
+      "details": {
+        "latest_source_filename_date": null,
+        "database_max_date": "2026-05-29",
+        "pending_import": false,
+        "source_inventory_provided": false
+      },
+      "description": "本次未提供源文件目录，仅核验数据库边界。"
+    }
+  ],
+  "overall_status": "PASSED",
+  "blocks_downstream": false
+}
