@@ -4,7 +4,8 @@
 1. 建立只读连接；
 2. 执行健康检查；
 3. 按限制行数读取原始表；
-4. 转换为 RawDataBatch。
+4. 执行项目内部生成的安全只读查询；
+5. 转换为 RawDataBatch。
 
 本模块不会创建、删除或修改 DolphinDB 数据库和表。
 """
@@ -72,6 +73,16 @@ class DolphinDBDataSourceAdapter(DataSourceAdapter):
 
     _TABLE_NAME_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
     _DATABASE_URI_PATTERN = re.compile(r"^dfs://[A-Za-z0-9_.-]+$")
+    _READ_ONLY_PREFIX_PATTERN = re.compile(
+        r"^(select|exec)\b",
+        re.IGNORECASE,
+    )
+    _FORBIDDEN_SCRIPT_PATTERN = re.compile(
+        r"\b(insert|update|delete|drop|create|alter|rename|truncate|"
+        r"grant|revoke)\b|append!|upsert!|tableInsert|saveTable|"
+        r"loadTextEx|dropDatabase|database\s*\(",
+        re.IGNORECASE,
+    )
 
     def __init__(
         self,
@@ -91,11 +102,7 @@ class DolphinDBDataSourceAdapter(DataSourceAdapter):
 
     @staticmethod
     def _default_session_factory() -> DolphinDBSessionProtocol:
-        """创建真实 DolphinDB 会话。
-
-        只有实际使用默认工厂时才导入 dolphindb，
-        因此单元测试不需要安装 DolphinDB 客户端。
-        """
+        """创建真实 DolphinDB 会话。"""
 
         try:
             import dolphindb as ddb
@@ -130,7 +137,7 @@ class DolphinDBDataSourceAdapter(DataSourceAdapter):
 
     @classmethod
     def _validate_database_uri(cls, database_uri: str) -> None:
-        """限制数据库URI格式，避免把任意脚本拼入查询。"""
+        """限制数据库URI格式。"""
 
         if not cls._DATABASE_URI_PATTERN.fullmatch(database_uri):
             raise DataContractError(
@@ -213,19 +220,43 @@ class DolphinDBDataSourceAdapter(DataSourceAdapter):
             ),
         )
 
+    def run_readonly_query(self, script: str) -> Any:
+        """执行经过安全检查的只读 select/exec 查询。"""
+
+        if not isinstance(script, str) or not script.strip():
+            raise DataContractError("只读查询脚本不能为空。")
+
+        normalized = " ".join(script.split())
+
+        if ";" in normalized:
+            raise DataContractError("只读查询不允许包含分号。")
+
+        if re.search(r"(^|\s)//", normalized) or "/*" in normalized:
+            raise DataContractError("只读查询不允许包含注释。")
+
+        if not self._READ_ONLY_PREFIX_PATTERN.match(normalized):
+            raise DataContractError(
+                "只读查询只能以 select 或 exec 开头。"
+            )
+
+        if self._FORBIDDEN_SCRIPT_PATTERN.search(normalized):
+            raise DataContractError(
+                "只读查询中包含被禁止的写入或结构变更关键字。"
+            )
+
+        try:
+            return self._get_session().run(script)
+        except Exception as exc:
+            raise DataContractError(
+                f"DolphinDB只读查询失败：{exc}"
+            ) from exc
+
     def read_raw(
         self,
         source_object_name: str,
         **kwargs: Any,
     ) -> RawDataBatch:
-        """从指定 DFS 表读取有限行原始数据。
-
-        必填参数：
-        - database_uri：例如 dfs://A_STOCK_DAILY_K_DB
-
-        可选参数：
-        - limit：读取行数，默认100，最大100000
-        """
+        """从指定 DFS 表读取有限行原始数据。"""
 
         database_uri = kwargs.get("database_uri")
         limit = kwargs.get("limit", 100)

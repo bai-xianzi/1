@@ -1,0 +1,483 @@
+{
+  "database_uri": "dfs://A_STOCK_DAILY_K_DB",
+  "table_name": "stock_daily_k",
+  "generated_at": "2026-06-22T14:46:14.526397+00:00",
+  "raw_fields": [
+    "stock_code",
+    "trade_date",
+    "open",
+    "high",
+    "low",
+    "close",
+    "amount",
+    "volume",
+    "BS",
+    "chanlun",
+    "turnover_rate",
+    "pct_change",
+    "price_change",
+    "pct_3d",
+    "pct_5d",
+    "pct_10d",
+    "pct_20d",
+    "pct_30d",
+    "ma5",
+    "ma10",
+    "ma20",
+    "ma30",
+    "ma60",
+    "ma120",
+    "ma250",
+    "macd",
+    "dif",
+    "dea",
+    "k",
+    "d",
+    "j",
+    "rsi6",
+    "rsi12",
+    "rsi24",
+    "bias",
+    "boll",
+    "boll_up",
+    "boll_down",
+    "float_shares",
+    "total_shares",
+    "adj_factor",
+    "deduct_value",
+    "adj_price",
+    "dividend",
+    "bonus_share",
+    "convert_share",
+    "allot_share",
+    "allot_price"
+  ],
+  "summary": {
+    "row_count": 16548275,
+    "stock_count": 5523,
+    "min_trade_date": "1990-12-19T00:00:00",
+    "max_trade_date": "2026-05-29T00:00:00"
+  },
+  "null_counts": {
+    "stock_code_null_count": 0,
+    "trade_date_null_count": 0,
+    "open_null_count": 0,
+    "high_null_count": 0,
+    "low_null_count": 0,
+    "close_null_count": 0,
+    "amount_null_count": 0,
+    "volume_null_count": 0,
+    "BS_null_count": 0,
+    "chanlun_null_count": 177344,
+    "turnover_rate_null_count": 51,
+    "pct_change_null_count": 5523,
+    "price_change_null_count": 5523,
+    "pct_3d_null_count": 16567,
+    "pct_5d_null_count": 27607,
+    "pct_10d_null_count": 55195,
+    "pct_20d_null_count": 110323,
+    "pct_30d_null_count": 165380,
+    "ma5_null_count": 0,
+    "ma10_null_count": 0,
+    "ma20_null_count": 0,
+    "ma30_null_count": 0,
+    "ma60_null_count": 0,
+    "ma120_null_count": 0,
+    "ma250_null_count": 0,
+    "macd_null_count": 0,
+    "dif_null_count": 0,
+    "dea_null_count": 0,
+    "k_null_count": 0,
+    "d_null_count": 0,
+    "j_null_count": 0,
+    "rsi6_null_count": 0,
+    "rsi12_null_count": 0,
+    "rsi24_null_count": 0,
+    "bias_null_count": 0,
+    "boll_null_count": 104812,
+    "boll_up_null_count": 104812,
+    "boll_down_null_count": 104812,
+    "float_shares_null_count": 0,
+    "total_shares_null_count": 0,
+    "adj_factor_null_count": 0,
+    "deduct_value_null_count": 0,
+    "adj_price_null_count": 0,
+    "dividend_null_count": 16495142,
+    "bonus_share_null_count": 16495142,
+    "convert_share_null_count": 16495142,
+    "allot_share_null_count": 16495142,
+    "allot_price_null_count": 16495142
+  },
+  "duplicate_summary": {
+    "duplicate_group_count": 0,
+    "duplicate_extra_row_count": 0
+  },
+  "duplicate_samples": [],
+  "ohlc_summary": {
+    "checked_row_count": 16548275,
+    "open_null_count": 0,
+    "high_null_count": 0,
+    "low_null_count": 0,
+    "close_null_count": 0,
+    "open_nonpositive_count": 0,
+    "high_nonpositive_count": 0,
+    "low_nonpositive_count": 0,
+    "close_nonpositive_count": 0,
+    "high_below_low_count": 0,
+    "high_below_open_count": 0,
+    "high_below_close_count": 0,
+    "low_above_open_count": 0,
+    "low_above_close_count": 0,
+    "missing_ohlc_count": 0,
+    "ohlc_logic_anomaly_count": 0
+  },
+  "change_formula_summary": {
+    "comparable_row_count": 16542752,
+    "price_change_mismatch_count": 820,
+    "pct_change_standard_mismatch_count": 16094398,
+    "pct_change_inverse_mismatch_count": 10468080,
+    "pct_change_negated_standard_mismatch_count": 820
+  },
+  "change_formula_samples": [
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-04T00:00:00",
+      "prev_close": 49.0,
+      "close": 48.76,
+      "price_change": -0.240000000000002,
+      "expected_price_change": -0.240000000000002,
+      "pct_change": 0.49,
+      "expected_standard_pct_change": -0.4897959183673528,
+      "expected_inverse_pct_change": 0.4922067268252617,
+      "expected_negated_standard_pct_change": 0.489795918367351
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-05T00:00:00",
+      "prev_close": 48.76,
+      "close": 48.52,
+      "price_change": -0.2399999999999949,
+      "expected_price_change": -0.23999999999999488,
+      "pct_change": 0.49,
+      "expected_standard_pct_change": -0.4922067268252617,
+      "expected_inverse_pct_change": 0.4946413849958642,
+      "expected_negated_standard_pct_change": 0.4922067268252561
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-06T00:00:00",
+      "prev_close": 48.52,
+      "close": 48.28,
+      "price_change": -0.240000000000002,
+      "expected_price_change": -0.240000000000002,
+      "pct_change": 0.49,
+      "expected_standard_pct_change": -0.4946413849958864,
+      "expected_inverse_pct_change": 0.4971002485501197,
+      "expected_negated_standard_pct_change": 0.49464138499588206
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-08T00:00:00",
+      "prev_close": 48.28,
+      "close": 48.04,
+      "price_change": -0.240000000000002,
+      "expected_price_change": -0.240000000000002,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.4971002485501308,
+      "expected_inverse_pct_change": 0.4995836802664577,
+      "expected_negated_standard_pct_change": 0.49710024855012835
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-09T00:00:00",
+      "prev_close": 48.04,
+      "close": 47.8,
+      "price_change": -0.240000000000002,
+      "expected_price_change": -0.240000000000002,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.4995836802664466,
+      "expected_inverse_pct_change": 0.502092050209213,
+      "expected_negated_standard_pct_change": 0.4995836802664488
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-10T00:00:00",
+      "prev_close": 47.8,
+      "close": 47.56,
+      "price_change": -0.2399999999999949,
+      "expected_price_change": -0.23999999999999488,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.5020920502091908,
+      "expected_inverse_pct_change": 0.5046257359125228,
+      "expected_negated_standard_pct_change": 0.5020920502091943
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-12T00:00:00",
+      "prev_close": 47.56,
+      "close": 47.08,
+      "price_change": -0.480000000000004,
+      "expected_price_change": -0.480000000000004,
+      "pct_change": 1.01,
+      "expected_standard_pct_change": -1.0092514718250678,
+      "expected_inverse_pct_change": 1.0195412064571086,
+      "expected_negated_standard_pct_change": 1.0092514718250714
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-13T00:00:00",
+      "prev_close": 47.08,
+      "close": 46.84,
+      "price_change": -0.2399999999999949,
+      "expected_price_change": -0.23999999999999488,
+      "pct_change": 0.51,
+      "expected_standard_pct_change": -0.5097706032285321,
+      "expected_inverse_pct_change": 0.5123825789923098,
+      "expected_negated_standard_pct_change": 0.5097706032285363
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-16T00:00:00",
+      "prev_close": 46.84,
+      "close": 46.38,
+      "price_change": -0.4600000000000009,
+      "expected_price_change": -0.46000000000000085,
+      "pct_change": 0.98,
+      "expected_standard_pct_change": -0.9820666097352659,
+      "expected_inverse_pct_change": 0.9918068132815927,
+      "expected_negated_standard_pct_change": 0.9820666097352708
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-17T00:00:00",
+      "prev_close": 46.38,
+      "close": 46.15,
+      "price_change": -0.230000000000004,
+      "expected_price_change": -0.23000000000000398,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.49590340664080745,
+      "expected_inverse_pct_change": 0.4983748645720487,
+      "expected_negated_standard_pct_change": 0.495903406640802
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-18T00:00:00",
+      "prev_close": 46.15,
+      "close": 45.92,
+      "price_change": -0.2299999999999969,
+      "expected_price_change": -0.22999999999999687,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.4983748645720376,
+      "expected_inverse_pct_change": 0.5008710801393645,
+      "expected_negated_standard_pct_change": 0.4983748645720409
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-19T00:00:00",
+      "prev_close": 45.92,
+      "close": 45.69,
+      "price_change": -0.230000000000004,
+      "expected_price_change": -0.23000000000000398,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.5008710801393867,
+      "expected_inverse_pct_change": 0.5033924272269674,
+      "expected_negated_standard_pct_change": 0.5008710801393814
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-20T00:00:00",
+      "prev_close": 45.69,
+      "close": 45.46,
+      "price_change": -0.2299999999999969,
+      "expected_price_change": -0.22999999999999687,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.5033924272269563,
+      "expected_inverse_pct_change": 0.5059392872855284,
+      "expected_negated_standard_pct_change": 0.5033924272269575
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-23T00:00:00",
+      "prev_close": 45.46,
+      "close": 45.0,
+      "price_change": -0.4600000000000009,
+      "expected_price_change": -0.46000000000000085,
+      "pct_change": 1.01,
+      "expected_standard_pct_change": -1.0118785745710568,
+      "expected_inverse_pct_change": 1.0222222222222133,
+      "expected_negated_standard_pct_change": 1.0118785745710532
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-24T00:00:00",
+      "prev_close": 45.0,
+      "close": 44.78,
+      "price_change": -0.2199999999999989,
+      "expected_price_change": -0.21999999999999886,
+      "pct_change": 0.49,
+      "expected_standard_pct_change": -0.48888888888888316,
+      "expected_inverse_pct_change": 0.4912907548012546,
+      "expected_negated_standard_pct_change": 0.4888888888888864
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-25T00:00:00",
+      "prev_close": 44.78,
+      "close": 44.56,
+      "price_change": -0.2199999999999989,
+      "expected_price_change": -0.21999999999999886,
+      "pct_change": 0.49,
+      "expected_standard_pct_change": -0.4912907548012435,
+      "expected_inverse_pct_change": 0.4937163375224429,
+      "expected_negated_standard_pct_change": 0.491290754801248
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-26T00:00:00",
+      "prev_close": 44.56,
+      "close": 44.34,
+      "price_change": -0.2199999999999989,
+      "expected_price_change": -0.21999999999999886,
+      "pct_change": 0.49,
+      "expected_standard_pct_change": -0.4937163375224429,
+      "expected_inverse_pct_change": 0.49616599007666906,
+      "expected_negated_standard_pct_change": 0.4937163375224391
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-29T00:00:00",
+      "prev_close": 44.34,
+      "close": 43.9,
+      "price_change": -0.4400000000000048,
+      "expected_price_change": -0.44000000000000483,
+      "pct_change": 0.99,
+      "expected_standard_pct_change": -0.9923319801533714,
+      "expected_inverse_pct_change": 1.0022779043280305,
+      "expected_negated_standard_pct_change": 0.9923319801533712
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-04-30T00:00:00",
+      "prev_close": 43.9,
+      "close": 43.68,
+      "price_change": -0.2199999999999989,
+      "expected_price_change": -0.21999999999999886,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.5011389521640042,
+      "expected_inverse_pct_change": 0.5036630036630019,
+      "expected_negated_standard_pct_change": 0.5011389521640065
+    },
+    {
+      "stock_code": "000001",
+      "trade_date": "1991-05-02T00:00:00",
+      "prev_close": 43.68,
+      "close": 43.46,
+      "price_change": -0.2199999999999989,
+      "expected_price_change": -0.21999999999999886,
+      "pct_change": 0.5,
+      "expected_standard_pct_change": -0.5036630036630019,
+      "expected_inverse_pct_change": 0.5062126092959085,
+      "expected_negated_standard_pct_change": 0.5036630036630011
+    }
+  ],
+  "amount_volume_summary": {
+    "comparable_row_count": 16548275,
+    "min_amount_per_volume": 0.0,
+    "avg_amount_per_volume": 18.29711315136254,
+    "max_amount_per_volume": 9327.40532717475
+  },
+  "adjustment_summary": {
+    "row_count": 16548275,
+    "adj_factor_null_count": 0,
+    "adj_factor_equal_one_count": 3558832,
+    "adj_factor_non_one_count": 12989443,
+    "adj_price_null_count": 0,
+    "adj_price_equal_close_count": 1000078,
+    "adj_price_close_difference_count": 15548197
+  },
+  "checks": [
+    {
+      "check_name": "必需字段完整性",
+      "status": "PASSED",
+      "blocking": false,
+      "details": {
+        "missing_fields": []
+      }
+    },
+    {
+      "check_name": "主键字段空值",
+      "status": "PASSED",
+      "blocking": false,
+      "details": {
+        "null_count": 0
+      }
+    },
+    {
+      "check_name": "股票代码与交易日期重复",
+      "status": "PASSED",
+      "blocking": false,
+      "details": {
+        "duplicate_extra_row_count": 0
+      }
+    },
+    {
+      "check_name": "OHLC逻辑关系",
+      "status": "PASSED",
+      "blocking": false,
+      "details": {
+        "ohlc_logic_anomaly_count": 0
+      }
+    },
+    {
+      "check_name": "涨跌幅公式一致性",
+      "status": "PENDING_CONFIRMATION",
+      "blocking": true,
+      "details": {
+        "comparable_row_count": 16542752,
+        "standard_mismatch_count": 16094398,
+        "inverse_mismatch_count": 10468080,
+        "negated_standard_mismatch_count": 820
+      }
+    }
+  ],
+  "pending_confirmations": [
+    {
+      "category": "PCT_CHANGE_FORMULA",
+      "field": "pct_change",
+      "blocking": true,
+      "description": "需要确认pct_change采用常规涨跌幅、反向分母公式、常规涨跌幅取反或其他公式。"
+    },
+    {
+      "category": "ADJUSTMENT_METHOD",
+      "field": "open/high/low/close/adj_price",
+      "blocking": true,
+      "description": "价格复权口径尚未确认。"
+    },
+    {
+      "category": "VOLUME_UNIT",
+      "field": "volume",
+      "blocking": true,
+      "description": "成交量单位尚未确认。"
+    },
+    {
+      "category": "AMOUNT_UNIT",
+      "field": "amount",
+      "blocking": true,
+      "description": "成交额单位尚未确认。"
+    },
+    {
+      "category": "SHARE_UNIT",
+      "field": "float_shares/total_shares",
+      "blocking": true,
+      "description": "股本字段单位尚未确认。"
+    },
+    {
+      "category": "TRADE_DATE_SEMANTICS",
+      "field": "trade_date",
+      "blocking": false,
+      "description": "日期时区和时间语义尚未固化。"
+    }
+  ],
+  "overall_status": "PENDING_CONFIRMATION",
+  "blocks_downstream": true
+}
