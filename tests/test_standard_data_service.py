@@ -25,8 +25,10 @@ from a_stock_quant.dataset_registry import (
     DatasetRegistration,
     FieldMappingRule,
 )
-from a_stock_quant.standard_data_service import (
+from a_stock_quant.daily_k_standard_provider import (
     DailyKStandardDataProvider,
+)
+from a_stock_quant.standard_data_service import (
     ProviderDescriptor,
     StandardDataQuery,
     StandardDataRecord,

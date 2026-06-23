@@ -1,56 +1,39 @@
 # Python
-
-**pycache**/
+__pycache__/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
+.coverage
+htmlcov/
 .venv/
 venv/
 
-# 环境变量和密钥
-
+# Local secrets and machine-specific configuration
 .env
 .env.*
-*.key
-*.pem
+!.env.example
+credentials/
 secrets/
+configs/local/*.local.*
+configs/local/storage.local.json
 
-# 数据与数据库
-
-data/
-raw_data/
-datasets/
-*.csv
-*.xls
-*.xlsx
-*.parquet
-*.feather
-*.db
-*.ddb
-
-# 日志、缓存和临时文件
-
-logs/
-cache/
-tmp/
-temp/
-*.log
-
-# 模型和大型结果
-
-models/
-checkpoints/
-outputs/
-results/
-
-# 编辑器和系统文件
-
+# IDE and OS
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
 
-# 允许保留小型测试样例
+# Purchased/raw local data must never enter Git
+data/raw/
+data/incoming/
+data/archive/
+*.xlsx
+*.xls
+*.xlsm
+*.7z
+*.rar
 
-!tests/fixtures/*.csv
-!tests/fixtures/*.json
+# Temporary files
+*.tmp
+*.bak
+*.swp
