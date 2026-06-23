@@ -1,0 +1,157 @@
+{
+  "task_id": "TASK_013",
+  "assessment_type": "preliminary_schema_and_sample_assessment",
+  "database_uri": "dfs://A_STOCK_FUNDAMENTAL_DB",
+  "table_name": "stock_fundamental_snapshot",
+  "schema_field_count": 54,
+  "sample_row_count": 10,
+  "schema": {
+    "stock_code": "SYMBOL",
+    "snapshot_date": "DATE",
+    "update_date": "DATE",
+    "total_shares": "DOUBLE",
+    "b_shares": "DOUBLE",
+    "h_shares": "DOUBLE",
+    "circulating_a_shares": "DOUBLE",
+    "eps": "DOUBLE",
+    "zpg": "DOUBLE",
+    "total_assets": "DOUBLE",
+    "current_assets": "DOUBLE",
+    "fixed_assets": "DOUBLE",
+    "intangible_assets": "DOUBLE",
+    "shareholder_count": "LONG",
+    "current_liabilities": "DOUBLE",
+    "long_term_liabilities": "DOUBLE",
+    "capital_reserve": "DOUBLE",
+    "net_assets": "DOUBLE",
+    "operating_revenue": "DOUBLE",
+    "operating_cost": "DOUBLE",
+    "accounts_receivable": "DOUBLE",
+    "operating_profit": "DOUBLE",
+    "investment_income": "DOUBLE",
+    "operating_cash_flow": "DOUBLE",
+    "total_cash_flow": "DOUBLE",
+    "inventory": "DOUBLE",
+    "total_profit": "DOUBLE",
+    "after_tax_profit": "DOUBLE",
+    "net_profit": "DOUBLE",
+    "undistributed_profit": "DOUBLE",
+    "adjusted_nav_per_share": "DOUBLE",
+    "region_code": "INT",
+    "source_industry_code": "INT",
+    "report_period": "INT",
+    "listing_date": "DATE",
+    "sw_code": "SYMBOL",
+    "source_detail_code": "SYMBOL",
+    "source_industry_level2_code": "SYMBOL",
+    "source_industry_level1_code": "SYMBOL",
+    "source_sector": "STRING",
+    "source_industry": "STRING",
+    "source_subindustry": "STRING",
+    "tdx_industry_code": "SYMBOL",
+    "sw_subindustry_code": "SYMBOL",
+    "sw_industry_code": "SYMBOL",
+    "sw_sector_code": "SYMBOL",
+    "sw_sector": "STRING",
+    "sw_industry": "STRING",
+    "sw_subindustry": "STRING",
+    "market": "SYMBOL",
+    "stock_name": "STRING",
+    "pinyin": "STRING",
+    "source_file": "STRING",
+    "imported_at": "TIMESTAMP"
+  },
+  "sample_observations": {
+    "snapshot_dates": [
+      "2026.06.19"
+    ],
+    "report_period_values": [
+      "3"
+    ],
+    "markets": [
+      "sz"
+    ],
+    "zpg_null_count": 10,
+    "h_shares_zero_count": 10
+  },
+  "candidate_units": {
+    "share_fields": {
+      "candidate_unit": "10k_shares",
+      "canonical_transform": "multiply by 10000",
+      "confidence": "high_candidate_not_confirmed"
+    },
+    "money_fields": {
+      "candidate_unit": "CNY_thousand",
+      "canonical_transform": "multiply by 1000",
+      "confidence": "high_candidate_not_confirmed"
+    },
+    "eps": {
+      "candidate_unit": "CNY/share",
+      "confidence": "candidate_not_confirmed"
+    },
+    "adjusted_nav_per_share": {
+      "candidate_unit": "CNY/share",
+      "confidence": "candidate_not_confirmed"
+    }
+  },
+  "blocking_issues": [
+    "report_period来源为INT而Canonical要求DATE",
+    "update_date尚未确认是否为公告日期",
+    "FundamentalSnapshot要求company_id但来源缺失",
+    "金额和股本单位尚未通过全表公式验证",
+    "after_tax_profit与net_profit口径未确认",
+    "net_assets合并或归母口径未确认",
+    "行业分类缺少版本和有效区间"
+  ],
+  "recommended_object_split": {
+    "FundamentalSnapshot": [
+      "operating_revenue",
+      "operating_cost",
+      "operating_profit",
+      "total_profit",
+      "after_tax_profit",
+      "net_profit",
+      "total_assets",
+      "net_assets",
+      "inventory",
+      "accounts_receivable",
+      "operating_cash_flow",
+      "eps",
+      "adjusted_nav_per_share"
+    ],
+    "OwnershipSnapshot": [
+      "total_shares",
+      "circulating_a_shares",
+      "shareholder_count"
+    ],
+    "Instrument_candidates": [
+      "stock_code",
+      "market",
+      "stock_name",
+      "listing_date"
+    ],
+    "ClassificationMembership_candidates": [
+      "source_detail_code",
+      "source_industry",
+      "source_industry_level1_code",
+      "source_industry_level2_code",
+      "source_sector",
+      "source_subindustry",
+      "sw_code",
+      "sw_industry",
+      "sw_industry_code",
+      "sw_sector",
+      "sw_sector_code",
+      "sw_subindustry",
+      "sw_subindustry_code",
+      "tdx_industry_code"
+    ],
+    "lineage_metadata": [
+      "source_file",
+      "imported_at",
+      "snapshot_date"
+    ]
+  },
+  "strict_historical_backtest_blocked": true,
+  "current_snapshot_research_candidate": true
+}

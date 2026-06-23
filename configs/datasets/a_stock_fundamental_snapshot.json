@@ -1,0 +1,835 @@
+{
+  "dataset_id": "a_stock_fundamental_snapshot",
+  "source_type": "DOLPHINDB",
+  "source_locator": {
+    "database_uri": "dfs://A_STOCK_FUNDAMENTAL_DB",
+    "table_name": "stock_fundamental_snapshot"
+  },
+  "dataset_mode": "SNAPSHOT",
+  "coverage_version": "a_stock_fundamental_snapshot@2026-06-19",
+  "schema_version": "1.0.0",
+  "mapping_version": "0.1.0-draft",
+  "dictionary_revision": "0.5",
+  "date_field": "snapshot_date",
+  "entity_field": "stock_code",
+  "primary_key_fields": [
+    "stock_code",
+    "snapshot_date"
+  ],
+  "source_fields": [
+    "stock_code",
+    "snapshot_date",
+    "update_date",
+    "total_shares",
+    "b_shares",
+    "h_shares",
+    "circulating_a_shares",
+    "eps",
+    "zpg",
+    "total_assets",
+    "current_assets",
+    "fixed_assets",
+    "intangible_assets",
+    "shareholder_count",
+    "current_liabilities",
+    "long_term_liabilities",
+    "capital_reserve",
+    "net_assets",
+    "operating_revenue",
+    "operating_cost",
+    "accounts_receivable",
+    "operating_profit",
+    "investment_income",
+    "operating_cash_flow",
+    "total_cash_flow",
+    "inventory",
+    "total_profit",
+    "after_tax_profit",
+    "net_profit",
+    "undistributed_profit",
+    "adjusted_nav_per_share",
+    "region_code",
+    "source_industry_code",
+    "report_period",
+    "listing_date",
+    "sw_code",
+    "source_detail_code",
+    "source_industry_level2_code",
+    "source_industry_level1_code",
+    "source_sector",
+    "source_industry",
+    "source_subindustry",
+    "tdx_industry_code",
+    "sw_subindustry_code",
+    "sw_industry_code",
+    "sw_sector_code",
+    "sw_sector",
+    "sw_industry",
+    "sw_subindustry",
+    "market",
+    "stock_name",
+    "pinyin",
+    "source_file",
+    "imported_at"
+  ],
+  "canonical_objects": [
+    "FundamentalSnapshot",
+    "OwnershipSnapshot",
+    "Instrument"
+  ],
+  "field_mappings": [
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "暂与日K保持6位代码一致；未来证券主数据升级时统一迁移。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "instrument_id"
+    },
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null,
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "instrument_id"
+    },
+    {
+      "source_fields": [
+        "snapshot_date"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "文件名提取的全市场快照观察日期。",
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "as_of_date"
+    },
+    {
+      "source_fields": [
+        "operating_revenue"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "revenue_cny"
+    },
+    {
+      "source_fields": [
+        "operating_cost"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "operating_cost_cny"
+    },
+    {
+      "source_fields": [
+        "operating_profit"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "operating_profit_cny"
+    },
+    {
+      "source_fields": [
+        "total_profit"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "total_profit_cny"
+    },
+    {
+      "source_fields": [
+        "after_tax_profit"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "net_profit_cny"
+    },
+    {
+      "source_fields": [
+        "net_profit"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "net_profit_parent_cny"
+    },
+    {
+      "source_fields": [
+        "total_assets"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "total_assets_cny"
+    },
+    {
+      "source_fields": [
+        "net_assets"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "total_equity_cny"
+    },
+    {
+      "source_fields": [
+        "inventory"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "inventory_cny"
+    },
+    {
+      "source_fields": [
+        "accounts_receivable"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "accounts_receivable_cny"
+    },
+    {
+      "source_fields": [
+        "operating_cash_flow"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 1000
+      },
+      "required": false,
+      "source_unit": "candidate_CNY_thousand",
+      "canonical_unit": "CNY",
+      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "operating_cash_flow_cny"
+    },
+    {
+      "source_fields": [
+        "eps"
+      ],
+      "status": "WARNING",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "candidate_CNY_per_share",
+      "canonical_unit": "CNY/share",
+      "notes": "需确认是基本每股收益而非其他EPS口径。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "basic_eps_cny"
+    },
+    {
+      "source_fields": [
+        "adjusted_nav_per_share"
+      ],
+      "status": "WARNING",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": "candidate_CNY_per_share",
+      "canonical_unit": "CNY/share",
+      "notes": "需确认调整后每股净资产的准确口径。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "book_value_per_share_cny"
+    },
+    {
+      "source_fields": [
+        "total_shares"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 10000
+      },
+      "required": false,
+      "source_unit": "candidate_10k_shares",
+      "canonical_unit": "shares",
+      "notes": "样例支持万股候选，待全表公式画像确认。",
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "total_shares"
+    },
+    {
+      "source_fields": [
+        "circulating_a_shares"
+      ],
+      "status": "WARNING",
+      "transform_id": "multiply",
+      "transform_params": {
+        "factor": 10000
+      },
+      "required": false,
+      "source_unit": "candidate_10k_shares",
+      "canonical_unit": "shares",
+      "notes": "样例支持万股候选，待全表公式画像确认。",
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "float_shares"
+    },
+    {
+      "source_fields": [
+        "shareholder_count"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": "count",
+      "notes": null,
+      "target_object": "OwnershipSnapshot",
+      "canonical_field": "shareholder_count"
+    },
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null,
+      "target_object": "Instrument",
+      "canonical_field": "symbol"
+    },
+    {
+      "source_fields": [
+        "market"
+      ],
+      "status": "WARNING",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "需把sh/sz/bj固化为市场与交易所枚举。",
+      "target_object": "Instrument",
+      "canonical_field": "market_code"
+    },
+    {
+      "source_fields": [
+        "stock_name"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null,
+      "target_object": "Instrument",
+      "canonical_field": "instrument_name_cn"
+    },
+    {
+      "source_fields": [
+        "listing_date"
+      ],
+      "status": "MAPPED",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": null,
+      "target_object": "Instrument",
+      "canonical_field": "listing_date"
+    },
+    {
+      "source_fields": [
+        "update_date"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "可能是公告日期或供应商更新日期；严格时点回测前必须确认。"
+    },
+    {
+      "source_fields": [
+        "b_shares"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "B股股本，当前标准对象没有直接字段。"
+    },
+    {
+      "source_fields": [
+        "h_shares"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "H股股本，当前标准对象没有直接字段。"
+    },
+    {
+      "source_fields": [
+        "zpg"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "字段全称、单位和业务口径未知；样例全部为空。"
+    },
+    {
+      "source_fields": [
+        "current_assets"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "长尾财务指标，候选进入metric_code扩展。"
+    },
+    {
+      "source_fields": [
+        "fixed_assets"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "长尾财务指标，候选进入metric_code扩展。"
+    },
+    {
+      "source_fields": [
+        "intangible_assets"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "长尾财务指标，候选进入metric_code扩展。"
+    },
+    {
+      "source_fields": [
+        "current_liabilities"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "不可直接等同总负债，候选扩展指标。"
+    },
+    {
+      "source_fields": [
+        "long_term_liabilities"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "不可直接等同总负债，候选扩展指标。"
+    },
+    {
+      "source_fields": [
+        "capital_reserve"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "候选扩展财务指标。"
+    },
+    {
+      "source_fields": [
+        "investment_income"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "候选扩展财务指标。"
+    },
+    {
+      "source_fields": [
+        "total_cash_flow"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "准确现金流口径未知。"
+    },
+    {
+      "source_fields": [
+        "undistributed_profit"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "候选扩展财务指标。"
+    },
+    {
+      "source_fields": [
+        "region_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "地区代码体系未知。"
+    },
+    {
+      "source_fields": [
+        "source_industry_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源行业代码体系和版本未知。"
+    },
+    {
+      "source_fields": [
+        "report_period"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "来源为INT，样例值3；需转换为DATE和period_type。"
+    },
+    {
+      "source_fields": [
+        "sw_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "source_detail_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "source_industry_level2_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "source_industry_level1_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "source_sector"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "source_industry"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "source_subindustry"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "tdx_industry_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "sw_subindustry_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "sw_industry_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "sw_sector_code"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "sw_sector"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "sw_industry"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "sw_subindustry"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "行业分类需要专属一对多适配器、分类体系版本和有效区间，不能由普通单对象映射直接固化。"
+    },
+    {
+      "source_fields": [
+        "pinyin"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "证券简称拼音，仅保留来源扩展。"
+    },
+    {
+      "source_fields": [
+        "source_file"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "数据治理与血缘字段，不是业务标准字段。"
+    },
+    {
+      "source_fields": [
+        "imported_at"
+      ],
+      "status": "PENDING_CONFIRMATION",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "数据治理与血缘字段，不是业务标准字段。"
+    }
+  ],
+  "enabled": false,
+  "tags": [
+    "a_share",
+    "fundamental",
+    "snapshot",
+    "dolphindb",
+    "draft"
+  ],
+  "description": "TASK_013基本面快照注册草案。在单位、公告日期、报告期、利润口径和公司身份确认前禁用。"
+}
