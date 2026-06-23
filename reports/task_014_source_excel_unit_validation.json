@@ -1,0 +1,35 @@
+{
+  "source_file": "2026-06-19更新简化个股基本面数据.xlsx",
+  "evidence_status": "CONFIRMED_EMPIRICALLY",
+  "raw_layer_policy": "preserve_source_values",
+  "canonical_layer_policy": "normalize_units_only",
+  "sample_000001": {
+    "stock_name": "平安银行",
+    "raw_total_shares_10k": 1940591.87,
+    "canonical_total_shares": 19405918700,
+    "raw_operating_revenue_cny_thousand": 35277000.0,
+    "canonical_operating_revenue_cny": 35277000000.0,
+    "raw_eps_cny_per_share": 0.67,
+    "canonical_eps_cny_per_share": 0.67,
+    "raw_adjusted_nav_per_share_cny": 23.91,
+    "canonical_adjusted_nav_per_share_cny": 23.91
+  },
+  "rules": {
+    "shares": {
+      "source_unit": "10k_shares",
+      "factor": 10000,
+      "canonical_unit": "shares"
+    },
+    "money": {
+      "source_unit": "CNY_thousand",
+      "factor": 1000,
+      "canonical_unit": "CNY"
+    },
+    "per_share": {
+      "source_unit": "CNY_per_share",
+      "factor": 1,
+      "canonical_unit": "CNY_per_share"
+    }
+  },
+  "important_note": "乘以10000或1000不是修复源数据错误，而是Raw到Canonical的单位标准化。"
+}

@@ -25,6 +25,8 @@ from .data_contracts import (
     DataContractError,
     QualityStatus,
 )
+
+
 def _require_text(value: str, field_name: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise DataContractError(f"{field_name} 不能为空。")
@@ -75,6 +77,23 @@ def _json_safe(value: Any) -> Any:
     return value
 
 
+class StandardDataUsage(str, Enum):
+    """标准数据的用途级时点门禁枚举。"""
+
+    CURRENT_SNAPSHOT_RESEARCH = (
+        "CURRENT_SNAPSHOT_RESEARCH"
+    )
+    MANUAL_DECISION_SUPPORT = (
+        "MANUAL_DECISION_SUPPORT"
+    )
+    STRICT_HISTORICAL_BACKTEST = (
+        "STRICT_HISTORICAL_BACKTEST"
+    )
+    HISTORICAL_MODEL_TRAINING = (
+        "HISTORICAL_MODEL_TRAINING"
+    )
+
+
 @dataclass(frozen=True, slots=True)
 class StandardDataQuery:
     """来源无关的标准数据查询请求。
@@ -91,6 +110,10 @@ class StandardDataQuery:
     end_date: date
     fields: tuple[str, ...] = ()
     as_of_date: date | None = None
+    usage: StandardDataUsage = (
+        StandardDataUsage.CURRENT_SNAPSHOT_RESEARCH
+    )
+    decision_time: datetime | None = None
     limit_per_instrument: int = 5_000
     include_source_extensions: bool = False
     include_quality_flags: bool = True
@@ -161,6 +184,59 @@ class StandardDataQuery:
             "as_of_date",
             resolved_as_of,
         )
+
+        resolved_usage = self.usage
+        if isinstance(resolved_usage, str):
+            try:
+                resolved_usage = StandardDataUsage(
+                    resolved_usage
+                )
+            except ValueError as exc:
+                raise DataContractError(
+                    "usage 不是受支持的数据用途。"
+                ) from exc
+
+        if not isinstance(
+            resolved_usage,
+            StandardDataUsage,
+        ):
+            raise DataContractError(
+                "usage 必须是 StandardDataUsage。"
+            )
+
+        object.__setattr__(
+            self,
+            "usage",
+            resolved_usage,
+        )
+
+        if (
+            resolved_usage
+            is StandardDataUsage.MANUAL_DECISION_SUPPORT
+            and self.decision_time is None
+        ):
+            raise DataContractError(
+                "MANUAL_DECISION_SUPPORT必须提供decision_time。"
+            )
+
+        if self.decision_time is not None:
+            if not isinstance(self.decision_time, datetime):
+                raise DataContractError(
+                    "decision_time 必须是 datetime。"
+                )
+
+            if (
+                self.decision_time.tzinfo is None
+                or self.decision_time.utcoffset() is None
+            ):
+                raise DataContractError(
+                    "decision_time 必须携带时区。"
+                )
+
+            if self.decision_time.date() < resolved_as_of:
+                raise DataContractError(
+                    "decision_time 的日期不能早于 as_of_date。"
+                )
 
         if (
             not isinstance(self.limit_per_instrument, int)

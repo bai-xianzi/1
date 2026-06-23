@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 import unittest
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +32,7 @@ from a_stock_quant.standard_data_service import (
     ProviderDescriptor,
     StandardDataQuery,
     StandardDataRecord,
+    StandardDataUsage,
     StandardDatasetProvider,
     StandardDataService,
     StandardQueryMetadata,
@@ -320,6 +321,55 @@ class TestStandardDataQuery(unittest.TestCase):
                     "close_raw_cny",
                 )
             )
+
+    def test_usage_string_is_normalized(self) -> None:
+        query = make_query(
+            usage="MANUAL_DECISION_SUPPORT",
+            decision_time=datetime(
+                2026, 5, 29, 9, 0, tzinfo=timezone.utc
+            ),
+        )
+        self.assertEqual(
+            query.usage,
+            StandardDataUsage.MANUAL_DECISION_SUPPORT,
+        )
+
+    def test_unknown_usage_is_rejected(self) -> None:
+        with self.assertRaises(DataContractError):
+            make_query(usage="UNKNOWN")
+
+    def test_manual_usage_requires_decision_time(self) -> None:
+        with self.assertRaises(DataContractError):
+            make_query(usage="MANUAL_DECISION_SUPPORT")
+
+    def test_decision_time_requires_timezone(self) -> None:
+        with self.assertRaises(DataContractError):
+            make_query(
+                decision_time=datetime(
+                    2026, 5, 29, 9, 0
+                )
+            )
+
+    def test_decision_time_is_serialized(self) -> None:
+        query = make_query(
+            decision_time=datetime(
+                2026,
+                5,
+                29,
+                9,
+                0,
+                tzinfo=timezone.utc,
+            )
+        )
+        value = query.to_dict()
+        self.assertEqual(
+            value["usage"],
+            "CURRENT_SNAPSHOT_RESEARCH",
+        )
+        self.assertEqual(
+            value["decision_time"],
+            "2026-05-29T09:00:00+00:00",
+        )
 
 
 class TestStandardDataService(unittest.TestCase):

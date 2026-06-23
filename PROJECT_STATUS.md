@@ -6,8 +6,8 @@
 
 ```text
 阶段：通用数据接入骨架搭建 + 真实数据画像与标准化验收
-当前工作：完成 TASK_013 交付闭环，并启动 TASK_014
-下一任务：TASK_014 基本面标准化服务、用途级时点门禁与真实抽样验收
+当前工作：完成 TASK_014 交付闭环，并启动 TASK_015
+下一任务：TASK_015 七类快照数据源盘点、物理结构发现与接入优先级确认
 ```
 
 当前阶段仍然不开发复杂因子库、选股模型、自动交易或前端系统。
@@ -40,7 +40,8 @@
 - TASK_010：日K标准映射插件与批量标准化读取服务；
 - TASK_011：真实 DolphinDB 日K标准化抽样验收；
 - TASK_012：统一标准数据服务接口与标准查询结果合同；
-- TASK_013：基本面快照发现、时点语义画像与注册草案。
+- TASK_013：基本面快照发现、时点语义画像与注册草案；
+- TASK_014：基本面标准化服务、用途级时点门禁、StandardDataService Provider 与真实抽样验收。
 
 ---
 
@@ -347,13 +348,14 @@ BLOCKED
 BLOCKED
 ```
 
-当前数据集配置必须保持：
+当前数据集配置继续保持：
 
 ```json
 "enabled": false
 ```
 
-直到 TASK_014 的标准 Provider 和真实抽样验收完成。
+TASK_014 已完成真实验收，但验收通过不等于自动启用。
+后续由统一配置激活策略决定何时启用，不能在单个任务中静默改为 `true`。
 
 ---
 
@@ -385,68 +387,104 @@ reports/task_013_fundamental_profile_final_check.md
 
 ---
 
-## 七、当前任务：TASK_014
+## 七、TASK_014 最终状态
+
+```text
+基本面只读标准化服务：PASSED
+StandardDataService Provider：PASSED
+金额单位转换：PASSED
+股本单位转换：PASSED
+报告期结束日推导：PASSED_WITH_DERIVATION_WARNING
+空财务载荷处理：PASSED
+Canonical 字段约束：PASSED
+当前快照研究：ALLOWED_WITH_WARNING
+快照后人工辅助决策：ALLOWED_WITH_WARNING
+严格历史回测：BLOCKED
+历史模型训练：BLOCKED
+真实 DolphinDB 抽样验收：PASSED
+```
+
+真实验收覆盖：
+
+```text
+000001：正常一季报
+002731：旧三季报
+600015：年报
+001235：身份和财务不完整
+001248：有身份但无财务载荷
+```
+
+验收结论：
+
+- 金额字段由千元人民币转换为人民币元；
+- 股本字段由万股转换为股；
+- 3、9、12 月报告期推导结果符合预期；
+- `update_date` 不映射为公告日期；
+- 空财务载荷不补零；
+- Instrument 身份候选继续保留；
+- 行业分类使用权威 Canonical 字段；
+- 当前研究与快照后的人工辅助决策允许但带警告；
+- 严格历史回测和历史模型训练继续阻断；
+- 数据集配置继续保持 `enabled=false`。
+
+TASK_014 交付文件包括：
+
+```text
+configs/datasets/a_stock_fundamental_snapshot.json
+src/a_stock_quant/dolphindb_fundamental_service.py
+src/a_stock_quant/fundamental_standard_provider.py
+src/a_stock_quant/standard_data_service.py
+tests/test_dolphindb_fundamental_service.py
+tests/test_fundamental_standard_provider.py
+tests/test_standard_data_service.py
+scripts/run_task_014_fundamental_acceptance.py
+scripts/verify_task_014_patch.ps1
+tasks/TASK_014_FUNDAMENTAL_STANDARD_SERVICE.md
+reports/task_014_source_excel_unit_validation.json
+reports/task_014_source_excel_unit_validation.md
+reports/task_014_fundamental_acceptance.json
+reports/task_014_fundamental_acceptance.md
+```
+
+---
+
+## 八、当前任务：TASK_015
 
 任务名称：
 
 ```text
-TASK_014
-基本面标准化服务、用途级时点门禁与真实抽样验收
+TASK_015
+七类快照数据源盘点、物理结构发现与接入优先级确认
 ```
 
-### 主要开发内容
+目标：
 
 ```text
-DolphinDB 基本面只读查询
-→ 财务空记录识别
-→ 股本单位转换
-→ 金额单位转换
-→ 报告期结束日推导
-→ FundamentalSnapshot
-→ OwnershipSnapshot
-→ Instrument 候选
-→ ClassificationMembershipSnapshot
-→ source_extensions
-→ 字段血缘
-→ 用途级时点门禁
-→ StandardDataService Provider
-→ 真实样本验收
+hq
+hy
+gn
+kphq
+kphy
+kpgn
+zj
 ```
 
-### 真实验收样本
+在正式批量接入前，先完成：
 
-至少覆盖：
+- 每类数据的来源文件清单；
+- 字段数量、样例和数据类型；
+- 快照日期、覆盖范围和主键候选；
+- 与现有 Canonical 对象的映射候选；
+- 单位、时间和业务口径待确认事项；
+- 是否需要专属清洗插件；
+- 接入优先级和任务拆分；
+- 数据端通用摄取框架的最小公共能力清单。
 
-```text
-000001
-正常 3 月报告期数据
-
-002731
-9 月报告期旧数据
-
-600015
-12 月报告期数据
-
-001235
-全部财务字段为空
-
-001248
-有名称和市场，但财务字段为空
-```
-
-### TASK_014 不做的内容
-
-- 不修改 DolphinDB 原始表；
-- 不修改 Excel 导入脚本；
-- 不开发通用 Excel 摄取框架；
-- 不开发基本面因子；
-- 不开发选股模型；
-- 不进入自动交易；
-- 不解除严格历史回测门禁。
+TASK_015 不直接开发因子、模型、回测或自动交易，也不一次性写七套独立导入程序。
 
 ---
 
-## 八、七类数据后续接入
+## 九、七类数据后续接入
 
 基本面 Provider 验收完成后，按顺序接入：
 
@@ -484,7 +522,7 @@ zj
 
 ---
 
-## 九、数据门禁后的开发顺序
+## 十、数据门禁后的开发顺序
 
 ```text
 基本面标准 Provider
@@ -502,7 +540,7 @@ zj
 
 ---
 
-## 十、CWMS 长期定位
+## 十一、CWMS 长期定位
 
 CWMS 因果世界—市场仿真引擎属于长期研究底座。
 
@@ -517,7 +555,7 @@ CWMS 因果世界—市场仿真引擎属于长期研究底座。
 
 ---
 
-## 十一、Git 与 GitHub 交付闭环
+## 十二、Git 与 GitHub 交付闭环
 
 每个任务只有同时满足以下条件才算完成：
 
@@ -533,4 +571,4 @@ HEAD 与两个远程 main 一致
 任务标签已建立并推送
 ```
 
-当前 TASK_013 在完成本文件替换、测试、提交、双远程推送和 `task-013` 标签后正式闭环。
+当前 TASK_014 在完成本文件替换、最终测试、提交、双远程推送和 `task-014` 标签后正式闭环。

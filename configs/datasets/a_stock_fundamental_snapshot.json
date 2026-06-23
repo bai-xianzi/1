@@ -8,7 +8,7 @@
   "dataset_mode": "SNAPSHOT",
   "coverage_version": "a_stock_fundamental_snapshot@2026-06-19",
   "schema_version": "1.0.0",
-  "mapping_version": "0.1.0-draft",
+  "mapping_version": "0.2.0-rc2",
   "dictionary_revision": "0.5",
   "date_field": "snapshot_date",
   "entity_field": "stock_code",
@@ -75,7 +75,8 @@
   "canonical_objects": [
     "FundamentalSnapshot",
     "OwnershipSnapshot",
-    "Instrument"
+    "Instrument",
+    "ClassificationMembership"
   ],
   "field_mappings": [
     {
@@ -130,9 +131,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "revenue_cny"
     },
@@ -146,9 +147,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "operating_cost_cny"
     },
@@ -162,9 +163,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "operating_profit_cny"
     },
@@ -178,9 +179,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "total_profit_cny"
     },
@@ -194,9 +195,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "net_profit_cny"
     },
@@ -210,9 +211,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "net_profit_parent_cny"
     },
@@ -226,9 +227,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "total_assets_cny"
     },
@@ -242,9 +243,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "total_equity_cny"
     },
@@ -258,9 +259,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "inventory_cny"
     },
@@ -274,9 +275,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "accounts_receivable_cny"
     },
@@ -290,9 +291,9 @@
         "factor": 1000
       },
       "required": false,
-      "source_unit": "candidate_CNY_thousand",
+      "source_unit": "CNY_thousand_empirically_confirmed",
       "canonical_unit": "CNY",
-      "notes": "样例支持千元候选，但必须以TASK_013全表画像和人工确认固化。",
+      "notes": "来源Excel数值按千元人民币记录且本身无错误；仅在Raw→Canonical时×1000转换为人民币元，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "operating_cash_flow_cny"
     },
@@ -306,7 +307,7 @@
       "required": false,
       "source_unit": "candidate_CNY_per_share",
       "canonical_unit": "CNY/share",
-      "notes": "需确认是基本每股收益而非其他EPS口径。",
+      "notes": "来源值按元/股保留，Canonical不做倍数转换；具体会计口径仍保留WARNING。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "basic_eps_cny"
     },
@@ -320,7 +321,7 @@
       "required": false,
       "source_unit": "candidate_CNY_per_share",
       "canonical_unit": "CNY/share",
-      "notes": "需确认调整后每股净资产的准确口径。",
+      "notes": "来源值按元/股保留，Canonical不做倍数转换；具体会计口径仍保留WARNING。",
       "target_object": "FundamentalSnapshot",
       "canonical_field": "book_value_per_share_cny"
     },
@@ -334,9 +335,9 @@
         "factor": 10000
       },
       "required": false,
-      "source_unit": "candidate_10k_shares",
+      "source_unit": "10k_shares_empirically_confirmed",
       "canonical_unit": "shares",
-      "notes": "样例支持万股候选，待全表公式画像确认。",
+      "notes": "来源Excel数值按万股记录且本身无错误；仅在Raw→Canonical时×10000转换为股，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "OwnershipSnapshot",
       "canonical_field": "total_shares"
     },
@@ -350,9 +351,9 @@
         "factor": 10000
       },
       "required": false,
-      "source_unit": "candidate_10k_shares",
+      "source_unit": "10k_shares_empirically_confirmed",
       "canonical_unit": "shares",
-      "notes": "样例支持万股候选，待全表公式画像确认。",
+      "notes": "来源Excel数值按万股记录且本身无错误；仅在Raw→Canonical时×10000转换为股，Raw原值继续保留于DolphinDB和source_extensions。",
       "target_object": "OwnershipSnapshot",
       "canonical_field": "float_shares"
     },
@@ -389,12 +390,16 @@
         "market"
       ],
       "status": "WARNING",
-      "transform_id": "identity",
-      "transform_params": {},
+      "transform_id": "map_market_code",
+      "transform_params": {
+        "sh": "SH",
+        "sz": "SZ",
+        "bj": "BJ"
+      },
       "required": false,
       "source_unit": null,
       "canonical_unit": null,
-      "notes": "需把sh/sz/bj固化为市场与交易所枚举。",
+      "notes": "sh/sz/bj映射为SH/SZ/BJ；空市场保留空值和质量警告。",
       "target_object": "Instrument",
       "canonical_field": "market_code"
     },
@@ -436,7 +441,7 @@
       "required": false,
       "source_unit": null,
       "canonical_unit": null,
-      "notes": "可能是公告日期或供应商更新日期；严格时点回测前必须确认。"
+      "notes": "供应商更新日期，不得直接等同正式公告日期；严格历史回测继续阻断。"
     },
     {
       "source_fields": [
@@ -608,15 +613,25 @@
     },
     {
       "source_fields": [
+        "update_date",
         "report_period"
       ],
-      "status": "PENDING_CONFIRMATION",
-      "transform_id": "identity",
-      "transform_params": {},
+      "status": "WARNING",
+      "transform_id": "derive_report_period_end",
+      "transform_params": {
+        "supported_months": [
+          3,
+          6,
+          9,
+          12
+        ]
+      },
       "required": false,
-      "source_unit": null,
-      "canonical_unit": null,
-      "notes": "来源为INT，样例值3；需转换为DATE和period_type。"
+      "source_unit": "month_code",
+      "canonical_unit": "DATE",
+      "notes": "由供应商更新日期与报告月份码推导期末日；不是公告日期，保留DERIVED_WARNING。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "report_period"
     },
     {
       "source_fields": [
@@ -821,6 +836,130 @@
       "source_unit": null,
       "canonical_unit": null,
       "notes": "数据治理与血缘字段，不是业务标准字段。"
+    },
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "WARNING",
+      "transform_id": "identity",
+      "transform_params": {},
+      "required": true,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "暂与日K保持6位证券代码一致；未来由证券主数据统一迁移。",
+      "target_object": "Instrument",
+      "canonical_field": "instrument_id"
+    },
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "WARNING",
+      "transform_id": "provisional_company_id",
+      "transform_params": {
+        "prefix": "CN-A-COMPANY:"
+      },
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "临时公司ID由证券代码派生，仅用于满足当前Canonical对象合同。",
+      "target_object": "Instrument",
+      "canonical_field": "company_id"
+    },
+    {
+      "source_fields": [
+        "stock_code"
+      ],
+      "status": "WARNING",
+      "transform_id": "provisional_company_id",
+      "transform_params": {
+        "prefix": "CN-A-COMPANY:"
+      },
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "临时公司ID由证券代码派生；待证券/公司主数据统一替换。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "company_id"
+    },
+    {
+      "source_fields": [
+        "market"
+      ],
+      "status": "WARNING",
+      "transform_id": "map_market_to_exchange",
+      "transform_params": {
+        "sh": "SSE",
+        "sz": "SZSE",
+        "bj": "BSE"
+      },
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "sh/sz/bj映射为SSE/SZSE/BSE；空市场保留空值和质量警告。",
+      "target_object": "Instrument",
+      "canonical_field": "exchange_code"
+    },
+    {
+      "source_fields": [
+        "update_date",
+        "report_period"
+      ],
+      "status": "WARNING",
+      "transform_id": "derive_period_type",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "月份码12推导ANNUAL，其余3/6/9推导QUARTERLY。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "period_type"
+    },
+    {
+      "source_fields": [
+        "update_date",
+        "report_period"
+      ],
+      "status": "WARNING",
+      "transform_id": "derive_fiscal_year",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "报告月份晚于更新月份时年份减1。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "fiscal_year"
+    },
+    {
+      "source_fields": [
+        "report_period"
+      ],
+      "status": "WARNING",
+      "transform_id": "divide_integer",
+      "transform_params": {
+        "divisor": 3
+      },
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "3/6/9/12除以3得到季度序号。",
+      "target_object": "FundamentalSnapshot",
+      "canonical_field": "fiscal_quarter"
+    },
+    {
+      "source_fields": [
+        "snapshot_date"
+      ],
+      "status": "WARNING",
+      "transform_id": "snapshot_date_to_midnight_timestamp",
+      "transform_params": {},
+      "required": false,
+      "source_unit": null,
+      "canonical_unit": null,
+      "notes": "仅表示快照日观察到的分类；不是历史有效区间。",
+      "target_object": "ClassificationMembership",
+      "canonical_field": "effective_from"
     }
   ],
   "enabled": false,
@@ -829,7 +968,8 @@
     "fundamental",
     "snapshot",
     "dolphindb",
-    "draft"
+    "task_014_rc2",
+    "authority_aligned"
   ],
-  "description": "TASK_013基本面快照注册草案。在单位、公告日期、报告期、利润口径和公司身份确认前禁用。"
+  "description": "TASK_014基本面标准化Provider权威字段字典对齐候选。来源Raw值保持原样；股本按万股×10000转换为股，金额按千元人民币×1000转换为元；报告期由update_date与3/6/9/12月份码推导并保留WARNING；公告日期、利润/权益口径、公司身份和分类版本仍未完全确认。真实DolphinDB抽样验收通过前保持enabled=false。"
 }
