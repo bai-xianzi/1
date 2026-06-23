@@ -25,72 +25,91 @@ if ($inside -ne "true") {
     throw "The current directory is not a Git repository."
 }
 
-if ($Fetch) {
-    Write-Host "Fetching remote references from $Remote ..."
-    Invoke-Git fetch $Remote | Out-Null
-}
-
-$localBranch = (Invoke-Git branch --show-current).Trim()
-$head = (Invoke-Git rev-parse HEAD).Trim()
-$status = @(Invoke-Git status --porcelain)
-
-Write-Host "=== Delivery status check ==="
-Write-Host "Local branch : $localBranch"
-Write-Host "Local HEAD   : $head"
-
-if ($localBranch -ne $Branch) {
-    Write-Warning "Current branch is not the expected branch: $Branch"
-}
-
-$dirtyLines = @(
-    $status | Where-Object {
-        -not [string]::IsNullOrWhiteSpace($_)
-    }
-)
-
-if ($dirtyLines.Count -gt 0) {
-    Write-Host "Working tree contains uncommitted changes:"
-    $dirtyLines | ForEach-Object {
-        Write-Host $_
-    }
-    exit 2
-}
-
-Write-Host "Working tree : clean"
-
-$remoteRef = "$Remote/$Branch"
+$repoRoot = (Invoke-Git rev-parse --show-toplevel).Trim()
+Push-Location $repoRoot
 
 try {
-    $remoteHead = (Invoke-Git rev-parse $remoteRef).Trim()
+    if (Test-Path ".\scripts\audit_git_encoding.py") {
+        Write-Host "Running UTF-8 repository audit ..."
+        & python ".\scripts\audit_git_encoding.py"
+        if ($LASTEXITCODE -ne 0) {
+            throw "UTF-8 repository audit failed."
+        }
+    }
+    else {
+        Write-Warning "Encoding audit script is missing."
+    }
+
+    if ($Fetch) {
+        Write-Host "Fetching remote references from $Remote ..."
+        Invoke-Git fetch $Remote | Out-Null
+    }
+
+    $localBranch = (Invoke-Git branch --show-current).Trim()
+    $head = (Invoke-Git rev-parse HEAD).Trim()
+    $status = @(Invoke-Git status --porcelain)
+
+    Write-Host "=== Delivery status check ==="
+    Write-Host "Local branch : $localBranch"
+    Write-Host "Local HEAD   : $head"
+
+    if ($localBranch -ne $Branch) {
+        Write-Warning "Current branch is not the expected branch: $Branch"
+    }
+
+    $dirtyLines = @(
+        $status | Where-Object {
+            -not [string]::IsNullOrWhiteSpace($_)
+        }
+    )
+
+    if ($dirtyLines.Count -gt 0) {
+        Write-Host "Working tree contains uncommitted changes:"
+        $dirtyLines | ForEach-Object {
+            Write-Host $_
+        }
+        exit 2
+    }
+
+    Write-Host "Working tree : clean"
+
+    $remoteRef = "$Remote/$Branch"
+
+    try {
+        $remoteHead = (Invoke-Git rev-parse $remoteRef).Trim()
+    }
+    catch {
+        Write-Warning "Cannot resolve remote branch $remoteRef. Retry with -Fetch."
+        exit 3
+    }
+
+    Write-Host "Remote ref   : $remoteRef"
+    Write-Host "Remote HEAD  : $remoteHead"
+
+    $countsText = (
+        Invoke-Git rev-list --left-right --count "$remoteRef...HEAD"
+    ).Trim()
+
+    $counts = $countsText -split "\s+"
+    if ($counts.Count -lt 2) {
+        throw "Unexpected rev-list output: $countsText"
+    }
+
+    $behind = [int]$counts[0]
+    $ahead = [int]$counts[1]
+
+    Write-Host "Local ahead  : $ahead"
+    Write-Host "Local behind : $behind"
+
+    if ($head -ne $remoteHead) {
+        Write-Warning "Local HEAD and remote HEAD are not identical."
+        exit 4
+    }
+
+    Write-Host "Delivery status: PASSED"
+    Write-Host "Local repository and GitHub remote branch are identical."
+    exit 0
 }
-catch {
-    Write-Warning "Cannot resolve remote branch $remoteRef. Retry with -Fetch."
-    exit 3
+finally {
+    Pop-Location
 }
-
-Write-Host "Remote ref   : $remoteRef"
-Write-Host "Remote HEAD  : $remoteHead"
-
-$countsText = (
-    Invoke-Git rev-list --left-right --count "$remoteRef...HEAD"
-).Trim()
-
-$counts = $countsText -split "\s+"
-if ($counts.Count -lt 2) {
-    throw "Unexpected rev-list output: $countsText"
-}
-
-$behind = [int]$counts[0]
-$ahead = [int]$counts[1]
-
-Write-Host "Local ahead  : $ahead"
-Write-Host "Local behind : $behind"
-
-if ($head -ne $remoteHead) {
-    Write-Warning "Local HEAD and remote HEAD are not identical."
-    exit 4
-}
-
-Write-Host "Delivery status: PASSED"
-Write-Host "Local repository and GitHub remote branch are identical."
-exit 0
