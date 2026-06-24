@@ -1,0 +1,56 @@
+{
+  "source_id": "ifind_http_api_template",
+  "vendor_name": "同花顺iFinD",
+  "protocol": "HTTP",
+  "enabled": false,
+  "operational_status": "DISABLED",
+  "capabilities": [
+    "TIME_SERIES",
+    "CROSS_SECTION",
+    "HISTORICAL_QUOTES",
+    "REALTIME_QUOTES",
+    "HIGH_FREQUENCY",
+    "SNAPSHOT",
+    "FUNDAMENTAL",
+    "MACRO",
+    "REPORTS",
+    "TRADING_CALENDAR"
+  ],
+  "credential_references": [
+    {
+      "reference_id": "ifind_refresh_token",
+      "environment_variable": "IFIND_REFRESH_TOKEN",
+      "required": true,
+      "description": "只保存环境变量名，不保存refresh token值。"
+    }
+  ],
+  "rate_limit_policy": {
+    "request_max_rows_hint": 2000000,
+    "quota_unit": "CELL",
+    "quota_limit_hint": null,
+    "quota_window_seconds": null,
+    "account_specific": true,
+    "hard_enforcement_enabled": false
+  },
+  "timezone": "Asia/Shanghai",
+  "documentation_status": "PUBLIC_OFFICIAL_HTTP_EXAMPLES_AVAILABLE; INDICATOR_DICTIONARY_REQUIRES_SUPERCOMMAND",
+  "metadata": {
+    "access_token_endpoint": "/api/v1/get_access_token",
+    "documented_operations": {
+      "HIGH_FREQUENCY": "/api/v1/high_frequency",
+      "REALTIME_QUOTES": "/api/v1/real_time_quotation",
+      "HISTORICAL_QUOTES": "/api/v1/cmd_history_quotation",
+      "BASIC_DATA": "/api/v1/basic_data_service",
+      "DATE_SEQUENCE": "/api/v1/date_sequence",
+      "DATA_POOL": "/api/v1/data_pool",
+      "ECONOMIC_DATABASE": "/api/v1/edb_service",
+      "SNAPSHOT": "/api/v1/snap_shot",
+      "REPORT_QUERY": "/api/v1/report_query",
+      "SMART_QUERY": "/api/v1/smart_stock_picking",
+      "TRADING_CALENDAR": "/api/v1/get_trade_dates"
+    },
+    "design_only": true,
+    "live_validation_required_after_entitlement": true,
+    "no_vendor_fields_in_business_code": true
+  }
+}

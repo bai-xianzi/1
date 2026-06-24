@@ -1,0 +1,54 @@
+{
+  "dataset_id": "a_stock_daily_bar",
+  "bindings": [
+    {
+      "source_id": "dolphindb_primary",
+      "role": "PRIMARY",
+      "priority": 1,
+      "enabled": true,
+      "source_locator": {
+        "database_uri": "dfs://A_STOCK_DAILY_K_DB",
+        "table_name": "stock_daily_k"
+      },
+      "mapping_version": "existing",
+      "source_schema_version": "existing",
+      "required_capabilities": [
+        "HISTORICAL_QUOTES",
+        "TIME_SERIES"
+      ],
+      "notes": "当前正式事实源。保持现有日K服务和Provider不变。"
+    },
+    {
+      "source_id": "wind_client_api_template",
+      "role": "RECONCILIATION",
+      "priority": 1,
+      "enabled": false,
+      "source_locator": {
+        "query_manifest_id": "wind_daily_bar_template"
+      },
+      "mapping_version": "0.1.0-template",
+      "source_schema_version": "licensed-code-generator-required",
+      "required_capabilities": [
+        "HISTORICAL_QUOTES",
+        "TIME_SERIES"
+      ],
+      "notes": "未来开通后先作为对账来源，不得直接替换主来源。"
+    },
+    {
+      "source_id": "ifind_http_api_template",
+      "role": "FALLBACK",
+      "priority": 2,
+      "enabled": false,
+      "source_locator": {
+        "query_manifest_id": "ifind_daily_bar_template"
+      },
+      "mapping_version": "0.1.0-template",
+      "source_schema_version": "official-example-plus-entitlement",
+      "required_capabilities": [
+        "HISTORICAL_QUOTES",
+        "TIME_SERIES"
+      ],
+      "notes": "未来开通后必须完成权限、指标、单位、复权和时点验收再启用。"
+    }
+  ]
+}

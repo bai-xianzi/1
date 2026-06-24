@@ -1,0 +1,88 @@
+{
+  "task_id": "TASK_015",
+  "status": "PENDING_LOCAL_PHYSICAL_DISCOVERY",
+  "datasets": [
+    {
+      "dataset_id": "hq",
+      "description": "个股收盘行情",
+      "candidate_canonical_objects": [
+        "DailyBar",
+        "SecuritySnapshot"
+      ],
+      "priority": 1
+    },
+    {
+      "dataset_id": "hy",
+      "description": "行业收盘行情",
+      "candidate_canonical_objects": [
+        "SectorSnapshot"
+      ],
+      "priority": 2
+    },
+    {
+      "dataset_id": "gn",
+      "description": "概念收盘行情",
+      "candidate_canonical_objects": [
+        "SectorSnapshot",
+        "ClassificationMembership"
+      ],
+      "priority": 3
+    },
+    {
+      "dataset_id": "kphq",
+      "description": "个股集合竞价",
+      "candidate_canonical_objects": [
+        "AuctionSnapshot"
+      ],
+      "priority": 4
+    },
+    {
+      "dataset_id": "kphy",
+      "description": "行业集合竞价",
+      "candidate_canonical_objects": [
+        "SectorAuctionSnapshot"
+      ],
+      "priority": 5
+    },
+    {
+      "dataset_id": "kpgn",
+      "description": "概念集合竞价",
+      "candidate_canonical_objects": [
+        "SectorAuctionSnapshot"
+      ],
+      "priority": 6
+    },
+    {
+      "dataset_id": "zj",
+      "description": "个股资金流",
+      "candidate_canonical_objects": [
+        "MoneyFlowSnapshot"
+      ],
+      "priority": 7
+    }
+  ],
+  "required_discovery_fields": [
+    "source_file_inventory",
+    "field_names",
+    "field_types",
+    "sample_rows",
+    "row_count",
+    "entity_count",
+    "min_observation_time",
+    "max_observation_time",
+    "primary_key_candidate",
+    "unit_candidates",
+    "time_semantics",
+    "availability_semantics",
+    "canonical_mapping_candidates",
+    "pending_confirmations",
+    "special_cleaning_plugin_required"
+  ],
+  "constraints": [
+    "不写入DolphinDB",
+    "不开发因子和模型",
+    "不一次性写七套独立导入器",
+    "不启用Wind或iFinD模板",
+    "不把本机路径和凭据提交Git"
+  ]
+}

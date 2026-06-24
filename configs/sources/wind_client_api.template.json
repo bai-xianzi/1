@@ -1,0 +1,38 @@
+{
+  "source_id": "wind_client_api_template",
+  "vendor_name": "Wind",
+  "protocol": "SDK",
+  "enabled": false,
+  "operational_status": "DISABLED",
+  "capabilities": [
+    "TIME_SERIES",
+    "CROSS_SECTION",
+    "HISTORICAL_QUOTES",
+    "REALTIME_QUOTES",
+    "HIGH_FREQUENCY",
+    "FUNDAMENTAL",
+    "MACRO",
+    "REPORTS",
+    "NEWS_EVENTS",
+    "TRADING_CALENDAR",
+    "PORTFOLIO_ANALYTICS"
+  ],
+  "credential_references": [],
+  "rate_limit_policy": {
+    "request_max_rows_hint": null,
+    "quota_unit": null,
+    "quota_limit_hint": null,
+    "quota_window_seconds": null,
+    "account_specific": true,
+    "hard_enforcement_enabled": false
+  },
+  "timezone": "Asia/Shanghai",
+  "documentation_status": "PUBLIC_OFFICIAL_OVERVIEW_ONLY; EXACT_FIELDS_REQUIRE_LICENSED_CODE_GENERATOR",
+  "metadata": {
+    "integration_mode": "CLIENT_API",
+    "query_manifest_generation": "Wind Client API code generator",
+    "design_only": true,
+    "live_validation_required_after_entitlement": true,
+    "no_vendor_fields_in_business_code": true
+  }
+}
