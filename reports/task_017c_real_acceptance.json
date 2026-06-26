@@ -1,0 +1,202 @@
+{
+  "task_id": "TASK_017C",
+  "mode": "REAL_READONLY_ACCEPTANCE",
+  "generated_at": "2026-06-26T16:26:59.704958+00:00",
+  "database_uri": "dfs://A_STOCK_DAILY_FUNDS_DB",
+  "service_id": "dolphindb_daily_funds_canonical_service",
+  "service_version": "0.1.0",
+  "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+  "mapping_version": "0.2.0",
+  "dictionary_revision": "0.6.0",
+  "dataset_count": 7,
+  "write_operation_count": 0,
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "datasets": [
+    {
+      "dataset_id": "hq",
+      "selector": "300774",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "DailyBar",
+      "source_row_count": 1,
+      "result_count": 1,
+      "quality_flags": [
+        "SUPPLEMENTAL_DAILY_BAR_NOT_AUTHORITATIVE",
+        "SOURCE_SNAPSHOT_TIME_UNAVAILABLE",
+        "VOLUME_LOT_TO_SHARE_DERIVED",
+        "MAPPING_WARNING_CLOSE_RAW_CNY"
+      ],
+      "warnings": [],
+      "semantic_checks": [
+        "VOLUME_LOT_TO_SHARE"
+      ],
+      "primary_key": {
+        "instrument_id": "300774",
+        "trade_date": "2025-11-20"
+      },
+      "source_record_id": "hq:88ab6d1facddf9da9f5741e39b968bd013a6cdbcc6831a98fe7053ad65674620:1"
+    },
+    {
+      "dataset_id": "kphq",
+      "selector": "300093",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "AuctionSnapshot",
+      "source_row_count": 1,
+      "result_count": 1,
+      "quality_flags": [
+        "EXACT_SNAPSHOT_TIME_UNAVAILABLE",
+        "DATE_ONLY_SNAPSHOT_TIME_PRECISION",
+        "AUCTION_FIELD_SEMANTICS_REQUIRE_REAL_SAMPLE_ACCEPTANCE",
+        "VOLUME_LOT_TO_SHARE_DERIVED",
+        "MAPPING_WARNING_INDICATIVE_PRICE_CNY",
+        "MAPPING_WARNING_FINAL_OPEN_PRICE_CNY",
+        "MAPPING_WARNING_OPEN_GAP_PCT"
+      ],
+      "warnings": [],
+      "semantic_checks": [
+        "DATE_ONLY_NO_FABRICATED_TIME"
+      ],
+      "primary_key": {
+        "instrument_id": "300093",
+        "trade_date": "2025-11-20",
+        "auction_phase": "OPENING_CALL",
+        "snapshot_time_precision": "DATE_ONLY"
+      },
+      "source_record_id": "kphq:54a36ac526f9379bb19556e422b3bc3a653f464373ed5057d7568af60f00ae8c:1"
+    },
+    {
+      "dataset_id": "hy",
+      "selector": "能源金属",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "source_row_count": 1,
+      "result_count": 1,
+      "quality_flags": [
+        "PROVISIONAL_NODE_ID_FROM_SOURCE_NAME",
+        "LEADING_INSTRUMENT_ID_UNRESOLVED",
+        "AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED",
+        "VOLUME_LOT_TO_SHARE_DERIVED",
+        "MAPPING_WARNING_NODE_ID",
+        "MAPPING_WARNING_LEADING_INSTRUMENT_NAME_CN"
+      ],
+      "warnings": [],
+      "semantic_checks": [
+        "CLASSIFICATION_NODE_NOT_MEMBERSHIP"
+      ],
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "INDUSTRY",
+        "node_id": "SOURCE_VENDOR:INDUSTRY:87FA7AF278FCE809933A",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "CLOSE"
+      },
+      "source_record_id": "hy:992e5e88a66db011a08d2b1643b68001b549f29b5536cf40e35f0c045bd090d4:1"
+    },
+    {
+      "dataset_id": "gn",
+      "selector": "租售同权",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "source_row_count": 1,
+      "result_count": 1,
+      "quality_flags": [
+        "PROVISIONAL_NODE_ID_FROM_SOURCE_NAME",
+        "LEADING_INSTRUMENT_ID_UNRESOLVED",
+        "AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED",
+        "VOLUME_LOT_TO_SHARE_DERIVED",
+        "MAPPING_WARNING_NODE_ID",
+        "MAPPING_WARNING_LEADING_INSTRUMENT_NAME_CN"
+      ],
+      "warnings": [],
+      "semantic_checks": [
+        "CLASSIFICATION_NODE_NOT_MEMBERSHIP"
+      ],
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "CONCEPT",
+        "node_id": "SOURCE_VENDOR:CONCEPT:F5A0BCC48398C2B65ECE",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "CLOSE"
+      },
+      "source_record_id": "gn:79fa2e83c02d9681df8a0bc56b6f54d5a4785054fad90c2a65bd263dfc55d5ce:1"
+    },
+    {
+      "dataset_id": "kphy",
+      "selector": "证券",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "source_row_count": 1,
+      "result_count": 1,
+      "quality_flags": [
+        "PROVISIONAL_NODE_ID_FROM_SOURCE_NAME",
+        "LEADING_INSTRUMENT_ID_UNRESOLVED",
+        "AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED",
+        "VOLUME_LOT_TO_SHARE_DERIVED",
+        "MAPPING_WARNING_NODE_ID",
+        "MAPPING_WARNING_LEADING_INSTRUMENT_NAME_CN"
+      ],
+      "warnings": [],
+      "semantic_checks": [
+        "CLASSIFICATION_NODE_NOT_MEMBERSHIP"
+      ],
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "INDUSTRY",
+        "node_id": "SOURCE_VENDOR:INDUSTRY:05ECD86CA885BBCC5905",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "OPENING_AUCTION"
+      },
+      "source_record_id": "kphy:7192ceec58cd5b2940a48177101b8d42a8b9214190e0f9c065e67748c0e0141b:1"
+    },
+    {
+      "dataset_id": "kpgn",
+      "selector": "CPO概念",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "source_row_count": 1,
+      "result_count": 1,
+      "quality_flags": [
+        "PROVISIONAL_NODE_ID_FROM_SOURCE_NAME",
+        "LEADING_INSTRUMENT_ID_UNRESOLVED",
+        "AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED",
+        "VOLUME_LOT_TO_SHARE_DERIVED",
+        "MAPPING_WARNING_NODE_ID",
+        "MAPPING_WARNING_LEADING_INSTRUMENT_NAME_CN"
+      ],
+      "warnings": [],
+      "semantic_checks": [
+        "CLASSIFICATION_NODE_NOT_MEMBERSHIP"
+      ],
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "CONCEPT",
+        "node_id": "SOURCE_VENDOR:CONCEPT:E5361B4F8BF5902444EB",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "OPENING_AUCTION"
+      },
+      "source_record_id": "kpgn:7d47aa24d341d23da58b0362e0ed95fad79e0783d1f2ec30ffdbc356376e48c2:1"
+    },
+    {
+      "dataset_id": "zj",
+      "selector": "300502",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "MoneyFlowSnapshot",
+      "source_row_count": 1,
+      "result_count": 1,
+      "quality_flags": [
+        "VENDOR_FLOW_METHOD_REQUIRES_DOCUMENTATION",
+        "SOURCE_OUTFLOW_VALUES_ARE_NEGATIVE",
+        "TOTAL_NET_INFLOW_DERIVED_FROM_BUCKETS"
+      ],
+      "warnings": [],
+      "semantic_checks": [
+        "MONEY_FLOW_BUCKET_SUM"
+      ],
+      "primary_key": {
+        "instrument_id": "300502",
+        "trade_date": "2025-11-20",
+        "flow_method_code": "VENDOR_ORDER_SIZE_BUCKET_V1"
+      },
+      "source_record_id": "zj:7b53501d60daa3cb966a0358a9ddcbb2db90d741d755084bde56955d5df15efe:1"
+    }
+  ]
+}

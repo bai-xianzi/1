@@ -1,0 +1,69 @@
+task_id: TASK_017C
+service_id: dolphindb_daily_funds_canonical_service
+service_version: "0.1.0"
+status: IMPLEMENTED_WITH_WARNINGS
+database_uri: dfs://A_STOCK_DAILY_FUNDS_DB
+mapping_contract_path: configs/mappings/a_stock_daily_funds_canonical_v0.yaml
+dictionary_path: schemas/canonical_fields.yaml
+enum_definitions_path: schemas/enum_definitions.yaml
+mapping_version: "0.2.0"
+dictionary_revision: "0.6.0"
+coverage:
+  coverage_version: daily-funds-raw@2025-11-20..2025-12-31
+  start_date: 2025-11-20
+  end_date: 2025-12-31
+query_policy:
+  max_entity_ids: 100
+  max_limit_per_entity: 5000
+  max_raw_rows_per_request: 100000
+  classification_filter_location: PYTHON_AFTER_BOUNDED_READ
+  revision_policy: LATEST_INGESTED_AT_PER_CANONICAL_KEY
+dataset_profiles:
+  hq:
+    family: security_snapshot
+    source_table: security_market_snapshot_raw
+    canonical_object: DailyBar
+    selector_mode: INSTRUMENT_ID
+    raw_entity_field: instrument_id
+  kphq:
+    family: security_snapshot
+    source_table: security_market_snapshot_raw
+    canonical_object: AuctionSnapshot
+    selector_mode: INSTRUMENT_ID
+    raw_entity_field: instrument_id
+  hy:
+    family: classification_snapshot
+    source_table: classification_market_snapshot_raw
+    canonical_object: ClassificationMarketSnapshot
+    selector_mode: NODE_NAME_OR_PROVISIONAL_ID
+    raw_entity_field: node_name_raw
+  gn:
+    family: classification_snapshot
+    source_table: classification_market_snapshot_raw
+    canonical_object: ClassificationMarketSnapshot
+    selector_mode: NODE_NAME_OR_PROVISIONAL_ID
+    raw_entity_field: node_name_raw
+  kphy:
+    family: classification_snapshot
+    source_table: classification_market_snapshot_raw
+    canonical_object: ClassificationMarketSnapshot
+    selector_mode: NODE_NAME_OR_PROVISIONAL_ID
+    raw_entity_field: node_name_raw
+  kpgn:
+    family: classification_snapshot
+    source_table: classification_market_snapshot_raw
+    canonical_object: ClassificationMarketSnapshot
+    selector_mode: NODE_NAME_OR_PROVISIONAL_ID
+    raw_entity_field: node_name_raw
+  zj:
+    family: money_flow_snapshot
+    source_table: money_flow_snapshot_raw
+    canonical_object: MoneyFlowSnapshot
+    selector_mode: INSTRUMENT_ID
+    raw_entity_field: instrument_id
+known_quarantines:
+  - dataset_id: kphq
+    snapshot_date: 2025-12-23
+    reason_code: UNIVERSE_COVERAGE_INCOMPLETE
+    source_row_count: 288
+    main_raw_leak_count: 0
