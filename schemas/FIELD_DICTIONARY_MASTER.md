@@ -2,11 +2,11 @@
 
 > 本字典是多源数据统一语言、CWMS变量宇宙、研究实验治理和未来执行安全的共同标准。
 
-- 字典修订：`0.5.1`
+- 字典修订：`0.6.0`
 - 状态：`official_institutional_research_and_execution_governance`
-- 领域数量：**45**
-- 字段总数：**1201**
-- 当前核心字段：**710**
+- 领域数量：**46**
+- 字段总数：**1235**
+- 当前核心字段：**744**
 - 近期字段：**50**
 - 远期预留字段：**441**
 
@@ -220,14 +220,15 @@ A股日频原始价格、复权价格、成交和交易状态
 个股、行业和概念集合竞价标准字段
 
 - 标准对象：`AuctionSnapshot`
-- 字段数量：20
+- 字段数量：21
 
 | 标准字段 | 中文名 | 类型 | 单位 | 阶段 | 定义 |
 |---|---|---|---|---|---|
 | `instrument_id` | 证券统一标识 | `STRING` |  | `core` | 证券统一标识 |
 | `trade_date` | 交易日期 | `DATE` |  | `core` | 交易日期 |
 | `auction_phase` | 竞价阶段 | `STRING` |  | `core` | 竞价阶段 |
-| `snapshot_time` | 竞价快照时间 | `TIMESTAMP` |  | `core` | 竞价快照时间 |
+| `snapshot_time` | 竞价快照时间 | `TIMESTAMP` |  | `core` | 来源明确提供的竞价快照时间；日期级来源必须为空，禁止伪造精确时间 |
+| `snapshot_time_precision` | 竞价快照时间精度 | `STRING` |  | `core` | EXACT_TIMESTAMP/SECOND/MINUTE/DATE_ONLY/UNKNOWN |
 | `indicative_price_cny` | 竞价指示价格 | `DECIMAL` | CNY | `core` | 竞价指示价格 |
 | `final_open_price_cny` | 最终开盘价 | `DECIMAL` | CNY | `core` | 最终开盘价 |
 | `matched_volume_shares` | 匹配量 | `LONG` | shares | `core` | 匹配量 |
@@ -1670,3 +1671,45 @@ TradingView式工作台中的人工标注、事件和交易证据
 | `source_snapshot_id` | 券商快照ID | `STRING` |  | `future_reserved` | 用于核对的券商侧快照 |
 | `created_at` | 核对创建时间 | `TIMESTAMP` |  | `future_reserved` | 核对记录生成时间 |
 
+### 46. 分类节点市场快照（`classification_market`）
+
+行业、概念、指数、主题或地区等分类节点在交易日和市场阶段上的聚合行情、广度、成交与估值快照；不得与ClassificationMembership成员关系混用
+
+- 标准对象：`ClassificationMarketSnapshot`
+- 字段数量：33
+
+| 标准字段 | 中文名 | 类型 | 单位 | 阶段 | 定义 |
+|---|---|---|---|---|---|
+| `classification_system` | 分类体系 | `STRING` |  | `core` | 分类节点所属体系；来源暂未提供权威体系时可使用明确版本化的来源体系代码 |
+| `classification_version` | 分类体系版本 | `STRING` |  | `core` | 分类体系版本；来源未提供时为空 |
+| `classification_type` | 分类类型 | `STRING` |  | `core` | INDUSTRY/CONCEPT/INDEX/THEME/REGION/OTHER |
+| `node_id` | 分类节点ID | `STRING` |  | `core` | 分类体系内稳定节点标识；临时哈希ID必须通过质量标记说明且不得冒充跨供应商统一ID |
+| `node_code` | 分类节点代码 | `STRING` |  | `core` | 来源或主数据提供的分类节点代码 |
+| `node_name_cn` | 分类节点中文名 | `STRING` |  | `core` | 分类节点中文名称 |
+| `node_level` | 分类层级 | `INT` |  | `core` | 分类节点层级；来源未提供时为空 |
+| `parent_node_id` | 父节点ID | `STRING` |  | `core` | 父分类节点标识；来源未提供时为空 |
+| `trade_date` | 交易日期 | `DATE` |  | `core` | 聚合市场快照所属交易日 |
+| `snapshot_phase` | 市场快照阶段 | `STRING` |  | `core` | CLOSE、OPENING_AUCTION等市场阶段；阶段不等于精确时间戳 |
+| `pct_change_pct` | 节点涨跌幅 | `DOUBLE` | percent_points | `core` | 分类节点聚合涨跌幅 |
+| `return_3d_pct` | 三日收益率 | `DOUBLE` | percent_points | `core` | 分类节点三日聚合收益率 |
+| `return_5d_pct` | 五日收益率 | `DOUBLE` | percent_points | `core` | 分类节点五日聚合收益率 |
+| `return_10d_pct` | 十日收益率 | `DOUBLE` | percent_points | `core` | 分类节点十日聚合收益率 |
+| `return_20d_pct` | 二十日收益率 | `DOUBLE` | percent_points | `core` | 分类节点二十日聚合收益率 |
+| `speed_pct` | 涨速 | `DOUBLE` | percent_points | `core` | 来源报告的分类节点涨速 |
+| `leading_instrument_id` | 领涨证券统一标识 | `STRING` |  | `core` | 领涨证券统一标识；来源只提供名称且无法可靠解析时为空 |
+| `leading_instrument_name_cn` | 领涨证券中文名 | `STRING` |  | `core` | 来源报告的领涨证券中文名称 |
+| `up_count` | 上涨成分数量 | `INT` | count | `core` | 分类节点内上涨成分数量 |
+| `down_count` | 下跌成分数量 | `INT` | count | `core` | 分类节点内下跌成分数量 |
+| `limit_up_count` | 涨停成分数量 | `INT` | count | `core` | 分类节点内涨停成分数量 |
+| `breadth_ratio` | 涨跌家数比 | `DOUBLE` | ratio | `core` | 上涨成分数量与下跌成分数量之比；全涨、全跌等不可用单一数值表达的状态由breadth_status记录 |
+| `breadth_status` | 市场广度状态 | `STRING` |  | `core` | NORMAL/ALL_UP/ALL_DOWN/RATIO_MISMATCH_WARNING/UNKNOWN |
+| `turnover_rate_pct` | 节点换手率 | `DOUBLE` | percent_points | `core` | 分类节点聚合换手率 |
+| `volume_ratio` | 节点量比 | `DOUBLE` | ratio | `core` | 分类节点聚合量比 |
+| `turnover_3d_pct` | 三日换手率 | `DOUBLE` | percent_points | `core` | 分类节点三日聚合换手率 |
+| `volume_lots` | 节点成交量（手） | `DOUBLE` | lots | `core` | 分类节点聚合成交量（手） |
+| `volume_shares` | 节点成交量（股） | `LONG` | shares | `core` | 由确认的手数口径乘以100得到的分类节点聚合成交量（股）；单位未确认时不得生成 |
+| `amount_cny` | 节点成交额 | `DECIMAL` | CNY | `core` | 分类节点聚合成交额 |
+| `total_market_cap_cny` | 节点总市值 | `DECIMAL` | CNY | `core` | 分类节点成分证券总市值聚合 |
+| `float_market_cap_cny` | 节点流通市值 | `DECIMAL` | CNY | `core` | 分类节点成分证券流通市值聚合 |
+| `average_return_pct` | 成分平均收益率 | `DOUBLE` | percent_points | `core` | 分类节点成分证券平均收益率 |
+| `pe_ratio` | 节点市盈率 | `DOUBLE` | ratio | `core` | 来源报告的分类节点市盈率口径 |

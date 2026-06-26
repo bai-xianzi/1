@@ -8,7 +8,7 @@ from typing import Any
 import yaml
 
 
-EXPECTED_DICTIONARY_REVISION = "0.5.1"
+EXPECTED_DICTIONARY_REVISION = "0.6.0"
 EXPECTED_VALUE_DOMAIN_KINDS = {
     "CLOSED_ENUM",
     "CONTROLLED_CODESET",
@@ -74,6 +74,7 @@ def validate_dictionary_governance(
     schema_dir = project_root / "schemas"
     canonical = load_yaml(schema_dir / "canonical_fields.yaml")
     contract = load_yaml(schema_dir / "field_governance_contract.yaml")
+    enums = load_yaml(schema_dir / "enum_definitions.yaml")
 
     issues: list[GovernanceIssue] = []
     index = field_index(canonical)
@@ -85,7 +86,7 @@ def validate_dictionary_governance(
             GovernanceIssue(
                 "ERROR",
                 "DICTIONARY_REVISION_MISMATCH",
-                "canonical_fields.yaml修订号不符合TASK_015C-1。",
+                "canonical_fields.yaml修订号不符合当前治理合同。",
                 {"actual": canonical_revision},
             )
         )
@@ -223,6 +224,117 @@ def validate_dictionary_governance(
             )
         )
 
+
+    expected_precision_values = {
+        "EXACT_TIMESTAMP",
+        "SECOND",
+        "MINUTE",
+        "DATE_ONLY",
+        "UNKNOWN",
+    }
+    actual_precision_values = set(
+        enums.get("snapshot_time_precision", [])
+    )
+    if actual_precision_values != expected_precision_values:
+        issues.append(
+            GovernanceIssue(
+                "ERROR",
+                "SNAPSHOT_TIME_PRECISION_ENUM_INVALID",
+                "snapshot_time_precision枚举不完整。",
+                {
+                    "expected": sorted(expected_precision_values),
+                    "actual": sorted(actual_precision_values),
+                },
+            )
+        )
+
+    auction_time = index.get(("auction", "snapshot_time"))
+    auction_precision = index.get(
+        ("auction", "snapshot_time_precision")
+    )
+    if auction_time is None or auction_time.get("nullable") is not True:
+        issues.append(
+            GovernanceIssue(
+                "ERROR",
+                "AUCTION_TIME_NULLABILITY_INVALID",
+                "日期级竞价来源要求snapshot_time可空。",
+            )
+        )
+    if (
+        auction_time is not None
+        and auction_time.get("time_semantics")
+        != "observation_time"
+    ):
+        issues.append(
+            GovernanceIssue(
+                "ERROR",
+                "AUCTION_TIME_SEMANTICS_INVALID",
+                "snapshot_time必须声明observation_time。",
+            )
+        )
+    if (
+        auction_precision is None
+        or auction_precision.get("nullable") is not False
+        or auction_precision.get("enum_ref")
+        != "snapshot_time_precision"
+    ):
+        issues.append(
+            GovernanceIssue(
+                "ERROR",
+                "AUCTION_TIME_PRECISION_FIELD_INVALID",
+                "snapshot_time_precision必须非空并绑定枚举。",
+            )
+        )
+
+    object_domains = {
+        str(domain.get("canonical_object", "")): domain
+        for domain in canonical.get("domains", [])
+    }
+    classification_market = object_domains.get(
+        "ClassificationMarketSnapshot"
+    )
+    required_classification_fields = {
+        "classification_system",
+        "classification_type",
+        "node_id",
+        "node_name_cn",
+        "trade_date",
+        "snapshot_phase",
+        "pct_change_pct",
+        "up_count",
+        "down_count",
+        "breadth_ratio",
+        "breadth_status",
+        "volume_lots",
+        "volume_shares",
+        "amount_cny",
+    }
+    if classification_market is None:
+        issues.append(
+            GovernanceIssue(
+                "ERROR",
+                "CLASSIFICATION_MARKET_OBJECT_MISSING",
+                "缺少ClassificationMarketSnapshot对象。",
+            )
+        )
+    else:
+        actual_fields = {
+            str(field.get("canonical_name", ""))
+            for field in classification_market.get("fields", [])
+        }
+        missing_fields = sorted(
+            required_classification_fields - actual_fields
+        )
+        if missing_fields:
+            issues.append(
+                GovernanceIssue(
+                    "ERROR",
+                    "CLASSIFICATION_MARKET_FIELDS_MISSING",
+                    "ClassificationMarketSnapshot缺少核心字段。",
+                    {"missing": missing_fields},
+                )
+            )
+
     issue_rows = [
         {
             "severity": item.severity,
@@ -235,7 +347,7 @@ def validate_dictionary_governance(
     errors = [item for item in issue_rows if item["severity"] == "ERROR"]
 
     return {
-        "task_id": "TASK_015C-1",
+        "task_id": "FIELD_DICTIONARY_GOVERNANCE",
         "overall_status": "PASSED" if not errors else "FAILED",
         "dictionary_revision": canonical_revision,
         "contract_revision": contract.get("contract_revision"),

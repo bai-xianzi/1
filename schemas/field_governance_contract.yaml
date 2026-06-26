@@ -1,6 +1,6 @@
 contract_name: field_governance_contract
-contract_revision: '0.1'
-dictionary_revision: 0.5.1
+contract_revision: '0.2'
+dictionary_revision: 0.6.0
 status: official
 principles:
 - 同名字段只有语义完全相同时才允许跨Domain复用。
@@ -9,6 +9,7 @@ principles:
 - 时间字段必须声明可比较的时间语义；未知时进入人工复核。
 - 允许的上下文类型差异必须登记，禁止静默漂移。
 - 破坏性字段变更必须新增字段并提供迁移计划。
+- 精确时间缺失时必须使用可空时间字段与显式时间精度，禁止以系统时间或固定时刻填充。
 value_domain_kinds:
   CLOSED_ENUM:
     description: 有限、封闭、版本化的枚举值集合。
@@ -148,6 +149,14 @@ required_metadata:
   canonical_name: longitude
   key: unit
   value: degrees
+- domain_code: auction
+  canonical_name: snapshot_time
+  key: time_semantics
+  value: observation_time
+- domain_code: classification_market
+  canonical_name: trade_date
+  key: time_semantics
+  value: trade_date
 shared_field_contracts:
 - canonical_name: trade_count
   resolution: SEMANTIC_COLLISION_MIGRATION_REQUIRED
@@ -189,3 +198,9 @@ shared_field_contracts:
   - DECIMAL与DOUBLE不得在同一Domain内静默互换。
   - 来源映射必须保留原始精度和转换证据。
   - 跨Domain连接时必须显式选择精度转换策略。
+time_precision_catalog:
+  EXACT_TIMESTAMP: 来源提供并可证明的完整时间戳。
+  SECOND: 来源可证明到秒。
+  MINUTE: 来源可证明到分钟。
+  DATE_ONLY: 来源只能证明交易日期，精确时间字段必须为空。
+  UNKNOWN: 来源时间精度尚未确认。

@@ -1,35 +1,32 @@
 task_id: TASK_017A
 contract_name: A股七类日线资金Canonical接入合同
-contract_version: "0.1.0"
-status: REVIEW_REQUIRED
-dictionary_revision: "0.5.1"
-
+contract_version: 0.2.0
+status: APPROVED_WITH_WARNINGS
+dictionary_revision: 0.6.0
 source:
   database_uri: dfs://A_STOCK_DAILY_FUNDS_DB
   main_raw_tables:
     security_snapshot: security_market_snapshot_raw
     classification_snapshot: classification_market_snapshot_raw
     money_flow_snapshot: money_flow_snapshot_raw
-
 principles:
-  - Raw表只读，Canonical服务不得写回或修改Raw层。
-  - 不得把source_file_mtime_utc伪装成available_at或snapshot_time。
-  - 不得为集合竞价来源虚构09:25或其他精确时刻。
-  - hq只作为DailyBar补充与对账来源，不替代权威日K数据集。
-  - 分类节点市场快照不是ClassificationMembership。
-  - 来源额外字段必须保存在source_extensions和lineage。
-  - 所有百分比字段必须显式声明percent_points或ratio变换。
-  - zj流出字段保留来源负号，Canonical净额不得静默改符号。
-
+- Raw表只读，Canonical服务不得写回或修改Raw层。
+- 不得把source_file_mtime_utc伪装成available_at或snapshot_time。
+- 不得为集合竞价来源虚构09:25或其他精确时刻。
+- hq只作为DailyBar补充与对账来源，不替代权威日K数据集。
+- 分类节点市场快照不是ClassificationMembership。
+- 来源额外字段必须保存在source_extensions和lineage。
+- 所有百分比字段必须显式声明percent_points或ratio变换。
+- zj流出字段保留来源负号，Canonical净额不得静默改符号。
+- 日期级来源必须把精确时间留空，并通过snapshot_time_precision表达DATE_ONLY。
 allowed_mapping_statuses:
-  - MAPPED
-  - MAPPED_WITH_WARNING
-  - DERIVED
-  - CONSTANT
-  - SOURCE_EXTENSION
-  - BLOCKED_SCHEMA_GAP
-  - NOT_APPLICABLE
-
+- MAPPED
+- MAPPED_WITH_WARNING
+- DERIVED
+- CONSTANT
+- SOURCE_EXTENSION
+- BLOCKED_SCHEMA_GAP
+- NOT_APPLICABLE
 datasets:
   hq:
     family: security_snapshot
@@ -38,188 +35,789 @@ datasets:
     canonical_object: DailyBar
     readiness: READY_WITH_WARNING
     quality_flags:
-      - SUPPLEMENTAL_DAILY_BAR_NOT_AUTHORITATIVE
-      - SOURCE_SNAPSHOT_TIME_UNAVAILABLE
-      - VOLUME_LOT_TO_SHARE_DERIVED
+    - SUPPLEMENTAL_DAILY_BAR_NOT_AUTHORITATIVE
+    - SOURCE_SNAPSHOT_TIME_UNAVAILABLE
+    - VOLUME_LOT_TO_SHARE_DERIVED
     mappings:
-      - {target: instrument_id, source: instrument_id, transform: identity, status: MAPPED}
-      - {target: trade_date, source: snapshot_date, transform: identity, status: MAPPED}
-      - {target: pre_close_raw_cny, source: prev_close, transform: identity, status: MAPPED}
-      - {target: open_raw_cny, source: open_price, transform: identity, status: MAPPED}
-      - {target: high_raw_cny, source: high_price, transform: identity, status: MAPPED}
-      - {target: low_raw_cny, source: low_price, transform: identity, status: MAPPED}
-      - {target: close_raw_cny, source: last_price, transform: identity, status: MAPPED_WITH_WARNING}
-      - {target: vwap_raw_cny, source: avg_price, transform: identity, status: MAPPED}
-      - {target: volume_lots, source: total_volume_lot, transform: identity, status: MAPPED}
-      - {target: volume_shares, source: total_volume_lot, transform: multiply_100, status: DERIVED}
-      - {target: amount_cny, source: amount_cny, transform: identity, status: MAPPED}
-      - {target: change_cny, source: price_change, transform: identity, status: MAPPED}
-      - {target: pct_change_pct, source: pct_change, transform: percent_points_identity, status: MAPPED}
-      - {target: amplitude_pct, source: amplitude_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: turnover_rate_pct, source: turnover_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: float_market_cap_cny, source: float_market_cap_cny, transform: identity, status: MAPPED}
-      - {target: total_market_cap_cny, source: total_market_cap_cny, transform: identity, status: MAPPED}
+    - target: instrument_id
+      source: instrument_id
+      transform: identity
+      status: MAPPED
+    - target: trade_date
+      source: snapshot_date
+      transform: identity
+      status: MAPPED
+    - target: pre_close_raw_cny
+      source: prev_close
+      transform: identity
+      status: MAPPED
+    - target: open_raw_cny
+      source: open_price
+      transform: identity
+      status: MAPPED
+    - target: high_raw_cny
+      source: high_price
+      transform: identity
+      status: MAPPED
+    - target: low_raw_cny
+      source: low_price
+      transform: identity
+      status: MAPPED
+    - target: close_raw_cny
+      source: last_price
+      transform: identity
+      status: MAPPED_WITH_WARNING
+    - target: vwap_raw_cny
+      source: avg_price
+      transform: identity
+      status: MAPPED
+    - target: volume_lots
+      source: total_volume_lot
+      transform: identity
+      status: MAPPED
+    - target: volume_shares
+      source: total_volume_lot
+      transform: multiply_100
+      status: DERIVED
+    - target: amount_cny
+      source: amount_cny
+      transform: identity
+      status: MAPPED
+    - target: change_cny
+      source: price_change
+      transform: identity
+      status: MAPPED
+    - target: pct_change_pct
+      source: pct_change
+      transform: percent_points_identity
+      status: MAPPED
+    - target: amplitude_pct
+      source: amplitude_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: turnover_rate_pct
+      source: turnover_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: float_market_cap_cny
+      source: float_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: total_market_cap_cny
+      source: total_market_cap_cny
+      transform: identity
+      status: MAPPED
     source_extensions:
-      - instrument_name
-      - market_candidate
-      - current_volume_lot
-      - bid_price
-      - ask_price
-      - speed_pct
-      - pe_dynamic
-      - industry_name
-      - volume_ratio
-      - order_imbalance_pct
-      - order_imbalance_lot
-      - inner_volume_lot
-      - outer_volume_lot
-      - inner_outer_ratio
-      - bid1_volume_lot
-      - ask1_volume_lot
-      - pb
-      - total_shares
-      - float_shares
-      - return_3d_pct
-      - return_6d_pct
-      - turnover_3d_pct
-      - turnover_6d_pct
-      - consecutive_up_days
-      - return_month_pct
-      - return_ytd_pct
-      - return_1m_pct
-      - return_1y_pct
-      - listing_date_raw
-      - speed_5m_pct
-      - return_20d_pct
-
+    - instrument_name
+    - market_candidate
+    - current_volume_lot
+    - bid_price
+    - ask_price
+    - speed_pct
+    - pe_dynamic
+    - industry_name
+    - volume_ratio
+    - order_imbalance_pct
+    - order_imbalance_lot
+    - inner_volume_lot
+    - outer_volume_lot
+    - inner_outer_ratio
+    - bid1_volume_lot
+    - ask1_volume_lot
+    - pb
+    - total_shares
+    - float_shares
+    - return_3d_pct
+    - return_6d_pct
+    - turnover_3d_pct
+    - turnover_6d_pct
+    - consecutive_up_days
+    - return_month_pct
+    - return_ytd_pct
+    - return_1m_pct
+    - return_1y_pct
+    - listing_date_raw
+    - speed_5m_pct
+    - return_20d_pct
   kphq:
     family: security_snapshot
     source_table: security_market_snapshot_raw
     source_role: OPENING_AUCTION_OBSERVATION
     canonical_object: AuctionSnapshot
-    readiness: BLOCKED_SCHEMA_GAP
+    readiness: READY_WITH_WARNING
     quality_flags:
-      - EXACT_SNAPSHOT_TIME_UNAVAILABLE
-      - AUCTION_FIELD_SEMANTICS_REQUIRE_REAL_SAMPLE_ACCEPTANCE
-      - VOLUME_LOT_TO_SHARE_DERIVED
+    - EXACT_SNAPSHOT_TIME_UNAVAILABLE
+    - DATE_ONLY_SNAPSHOT_TIME_PRECISION
+    - AUCTION_FIELD_SEMANTICS_REQUIRE_REAL_SAMPLE_ACCEPTANCE
+    - VOLUME_LOT_TO_SHARE_DERIVED
     exclusions:
-      - snapshot_date: "2025-12-23"
-        reason: QUARANTINED_UNIVERSE_COVERAGE_INCOMPLETE
-    gaps:
-      - gap_id: AUCTION_SNAPSHOT_TIME_UNAVAILABLE
-        field: snapshot_time
-        current_dictionary_nullable: false
-        prohibited_fallbacks:
-          - source_file_mtime_utc
-          - ingested_at_utc
-          - constant_09_25
-          - midnight
-        proposed_resolution:
-          - 允许snapshot_time为空并增加snapshot_time_precision。
-          - 或新增日期级AuctionObservation对象，禁止伪造精确时间。
+    - snapshot_date: '2025-12-23'
+      reason: QUARANTINED_UNIVERSE_COVERAGE_INCOMPLETE
     mappings:
-      - {target: instrument_id, source: instrument_id, transform: identity, status: MAPPED}
-      - {target: trade_date, source: snapshot_date, transform: identity, status: MAPPED}
-      - {target: auction_phase, source: null, transform: constant_OPENING_CALL, status: CONSTANT}
-      - {target: snapshot_time, source: null, transform: no_safe_value, status: BLOCKED_SCHEMA_GAP}
-      - {target: indicative_price_cny, source: last_price, transform: identity, status: MAPPED_WITH_WARNING}
-      - {target: final_open_price_cny, source: open_price, transform: identity, status: MAPPED_WITH_WARNING}
-      - {target: matched_volume_shares, source: total_volume_lot, transform: multiply_100, status: DERIVED}
-      - {target: matched_amount_cny, source: amount_cny, transform: identity, status: MAPPED}
-      - {target: order_imbalance_ratio, source: order_imbalance_pct, transform: divide_100, status: DERIVED}
-      - {target: auction_volume_ratio, source: volume_ratio, transform: identity, status: MAPPED}
-      - {target: auction_turnover_rate_pct, source: turnover_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: open_gap_pct, source: pct_change, transform: percent_points_identity, status: MAPPED_WITH_WARNING}
+    - target: instrument_id
+      source: instrument_id
+      transform: identity
+      status: MAPPED
+    - target: trade_date
+      source: snapshot_date
+      transform: identity
+      status: MAPPED
+    - target: auction_phase
+      source: null
+      transform: constant_OPENING_CALL
+      status: CONSTANT
+    - target: snapshot_time
+      source: null
+      transform: no_safe_exact_value
+      status: NOT_APPLICABLE
+    - target: snapshot_time_precision
+      source: null
+      transform: constant_DATE_ONLY
+      status: CONSTANT
+    - target: indicative_price_cny
+      source: last_price
+      transform: identity
+      status: MAPPED_WITH_WARNING
+    - target: final_open_price_cny
+      source: open_price
+      transform: identity
+      status: MAPPED_WITH_WARNING
+    - target: matched_volume_shares
+      source: total_volume_lot
+      transform: multiply_100
+      status: DERIVED
+    - target: matched_amount_cny
+      source: amount_cny
+      transform: identity
+      status: MAPPED
+    - target: order_imbalance_ratio
+      source: order_imbalance_pct
+      transform: divide_100
+      status: DERIVED
+    - target: auction_volume_ratio
+      source: volume_ratio
+      transform: identity
+      status: MAPPED
+    - target: auction_turnover_rate_pct
+      source: turnover_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: open_gap_pct
+      source: pct_change
+      transform: percent_points_identity
+      status: MAPPED_WITH_WARNING
     source_extensions:
-      - instrument_name
-      - market_candidate
-      - prev_close
-      - bid_price
-      - ask_price
-      - current_volume_lot
-      - order_imbalance_lot
-      - bid1_volume_lot
-      - ask1_volume_lot
-      - speed_pct
-      - speed_5m_pct
-
+    - instrument_name
+    - market_candidate
+    - prev_close
+    - bid_price
+    - ask_price
+    - current_volume_lot
+    - order_imbalance_lot
+    - bid1_volume_lot
+    - ask1_volume_lot
+    - speed_pct
+    - speed_5m_pct
+    resolved_gaps:
+    - gap_id: AUCTION_SNAPSHOT_TIME_UNAVAILABLE
+      resolution: NULL_EXACT_TIME_WITH_DATE_ONLY_PRECISION
+      dictionary_revision: 0.6.0
+      rules:
+      - snapshot_time保持为空
+      - snapshot_time_precision固定为DATE_ONLY
+      - 禁止source_file_mtime_utc、ingested_at_utc、midnight和constant_09_25回填
   hy:
     family: classification_snapshot
     source_table: classification_market_snapshot_raw
     source_role: INDUSTRY_CLOSE_AGGREGATE
     canonical_object: ClassificationMarketSnapshot
-    readiness: BLOCKED_DICTIONARY_GAP
+    readiness: READY_WITH_WARNING
     classification_type: INDUSTRY
     snapshot_phase: CLOSE
-    gaps: &classification_gaps
-      - gap_id: CLASSIFICATION_MARKET_SNAPSHOT_OBJECT_MISSING
-        current_incorrect_object: ClassificationMembership
-        reason: 聚合行情快照不是证券成员关系。
-        proposed_object: ClassificationMarketSnapshot
-    mappings: &classification_mappings
-      - {target: classification_system, source: null, transform: constant_SOURCE_VENDOR, status: CONSTANT}
-      - {target: classification_type, source: classification_type, transform: normalized_enum, status: MAPPED}
-      - {target: node_id, source: node_name_raw, transform: provisional_hash_id, status: MAPPED_WITH_WARNING}
-      - {target: node_name_cn, source: node_name_raw, transform: identity, status: MAPPED}
-      - {target: trade_date, source: snapshot_date, transform: identity, status: MAPPED}
-      - {target: snapshot_phase, source: snapshot_phase, transform: identity, status: MAPPED}
-      - {target: pct_change_pct, source: pct_change, transform: percent_points_identity, status: MAPPED}
-      - {target: return_3d_pct, source: return_3d_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: return_5d_pct, source: return_5d_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: return_10d_pct, source: return_10d_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: return_20d_pct, source: return_20d_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: speed_pct, source: speed_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: leading_instrument_name_cn, source: leading_stock_name, transform: identity, status: MAPPED_WITH_WARNING}
-      - {target: up_count, source: up_count, transform: identity, status: MAPPED}
-      - {target: down_count, source: down_count, transform: identity, status: MAPPED}
-      - {target: limit_up_count, source: limit_up_count, transform: identity, status: MAPPED}
-      - {target: breadth_ratio, source: breadth_ratio, transform: identity, status: MAPPED}
-      - {target: breadth_status, source: breadth_status, transform: identity, status: MAPPED}
-      - {target: turnover_rate_pct, source: turnover_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: volume_ratio, source: volume_ratio, transform: identity, status: MAPPED}
-      - {target: turnover_3d_pct, source: turnover_3d_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: volume_lots, source: volume_lot, transform: identity, status: MAPPED}
-      - {target: volume_shares, source: volume_lot, transform: multiply_100, status: DERIVED}
-      - {target: amount_cny, source: amount_cny, transform: identity, status: MAPPED}
-      - {target: total_market_cap_cny, source: total_market_cap_cny, transform: identity, status: MAPPED}
-      - {target: float_market_cap_cny, source: float_market_cap_cny, transform: identity, status: MAPPED}
-      - {target: average_return_pct, source: average_return_pct, transform: percent_points_identity, status: MAPPED}
-      - {target: average_shares, source: average_shares, transform: identity, status: MAPPED_WITH_WARNING}
-      - {target: pe_ratio, source: pe_ratio, transform: identity, status: MAPPED}
-
+    mappings:
+    - target: classification_system
+      source: null
+      transform: constant_SOURCE_VENDOR
+      status: CONSTANT
+    - target: classification_version
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: classification_type
+      source: classification_type
+      transform: normalized_enum
+      status: MAPPED
+    - target: node_id
+      source: node_name_raw
+      transform: provisional_hash_id
+      status: MAPPED_WITH_WARNING
+    - target: node_code
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: node_name_cn
+      source: node_name_raw
+      transform: identity
+      status: MAPPED
+    - target: node_level
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: parent_node_id
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: trade_date
+      source: snapshot_date
+      transform: identity
+      status: MAPPED
+    - target: snapshot_phase
+      source: snapshot_phase
+      transform: identity
+      status: MAPPED
+    - target: pct_change_pct
+      source: pct_change
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_3d_pct
+      source: return_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_5d_pct
+      source: return_5d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_10d_pct
+      source: return_10d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_20d_pct
+      source: return_20d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: speed_pct
+      source: speed_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: leading_instrument_id
+      source: null
+      transform: unresolved_from_name_only
+      status: NOT_APPLICABLE
+    - target: leading_instrument_name_cn
+      source: leading_stock_name
+      transform: identity
+      status: MAPPED_WITH_WARNING
+    - target: up_count
+      source: up_count
+      transform: identity
+      status: MAPPED
+    - target: down_count
+      source: down_count
+      transform: identity
+      status: MAPPED
+    - target: limit_up_count
+      source: limit_up_count
+      transform: identity
+      status: MAPPED
+    - target: breadth_ratio
+      source: breadth_ratio
+      transform: identity
+      status: MAPPED
+    - target: breadth_status
+      source: breadth_status
+      transform: identity
+      status: MAPPED
+    - target: turnover_rate_pct
+      source: turnover_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_ratio
+      source: volume_ratio
+      transform: identity
+      status: MAPPED
+    - target: turnover_3d_pct
+      source: turnover_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_lots
+      source: volume_lot
+      transform: identity
+      status: MAPPED
+    - target: volume_shares
+      source: volume_lot
+      transform: multiply_100
+      status: DERIVED
+    - target: amount_cny
+      source: amount_cny
+      transform: identity
+      status: MAPPED
+    - target: total_market_cap_cny
+      source: total_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: float_market_cap_cny
+      source: float_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: average_return_pct
+      source: average_return_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: pe_ratio
+      source: pe_ratio
+      transform: identity
+      status: MAPPED
+    quality_flags:
+    - PROVISIONAL_NODE_ID_FROM_SOURCE_NAME
+    - LEADING_INSTRUMENT_ID_UNRESOLVED
+    - AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED
+    - VOLUME_LOT_TO_SHARE_DERIVED
+    source_extensions:
+    - average_shares
   gn:
     family: classification_snapshot
     source_table: classification_market_snapshot_raw
     source_role: CONCEPT_CLOSE_AGGREGATE
     canonical_object: ClassificationMarketSnapshot
-    readiness: BLOCKED_DICTIONARY_GAP
+    readiness: READY_WITH_WARNING
     classification_type: CONCEPT
     snapshot_phase: CLOSE
-    gaps: *classification_gaps
-    mappings: *classification_mappings
-
+    mappings:
+    - target: classification_system
+      source: null
+      transform: constant_SOURCE_VENDOR
+      status: CONSTANT
+    - target: classification_version
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: classification_type
+      source: classification_type
+      transform: normalized_enum
+      status: MAPPED
+    - target: node_id
+      source: node_name_raw
+      transform: provisional_hash_id
+      status: MAPPED_WITH_WARNING
+    - target: node_code
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: node_name_cn
+      source: node_name_raw
+      transform: identity
+      status: MAPPED
+    - target: node_level
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: parent_node_id
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: trade_date
+      source: snapshot_date
+      transform: identity
+      status: MAPPED
+    - target: snapshot_phase
+      source: snapshot_phase
+      transform: identity
+      status: MAPPED
+    - target: pct_change_pct
+      source: pct_change
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_3d_pct
+      source: return_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_5d_pct
+      source: return_5d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_10d_pct
+      source: return_10d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_20d_pct
+      source: return_20d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: speed_pct
+      source: speed_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: leading_instrument_id
+      source: null
+      transform: unresolved_from_name_only
+      status: NOT_APPLICABLE
+    - target: leading_instrument_name_cn
+      source: leading_stock_name
+      transform: identity
+      status: MAPPED_WITH_WARNING
+    - target: up_count
+      source: up_count
+      transform: identity
+      status: MAPPED
+    - target: down_count
+      source: down_count
+      transform: identity
+      status: MAPPED
+    - target: limit_up_count
+      source: limit_up_count
+      transform: identity
+      status: MAPPED
+    - target: breadth_ratio
+      source: breadth_ratio
+      transform: identity
+      status: MAPPED
+    - target: breadth_status
+      source: breadth_status
+      transform: identity
+      status: MAPPED
+    - target: turnover_rate_pct
+      source: turnover_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_ratio
+      source: volume_ratio
+      transform: identity
+      status: MAPPED
+    - target: turnover_3d_pct
+      source: turnover_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_lots
+      source: volume_lot
+      transform: identity
+      status: MAPPED
+    - target: volume_shares
+      source: volume_lot
+      transform: multiply_100
+      status: DERIVED
+    - target: amount_cny
+      source: amount_cny
+      transform: identity
+      status: MAPPED
+    - target: total_market_cap_cny
+      source: total_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: float_market_cap_cny
+      source: float_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: average_return_pct
+      source: average_return_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: pe_ratio
+      source: pe_ratio
+      transform: identity
+      status: MAPPED
+    quality_flags:
+    - PROVISIONAL_NODE_ID_FROM_SOURCE_NAME
+    - LEADING_INSTRUMENT_ID_UNRESOLVED
+    - AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED
+    - VOLUME_LOT_TO_SHARE_DERIVED
+    source_extensions:
+    - average_shares
   kphy:
     family: classification_snapshot
     source_table: classification_market_snapshot_raw
     source_role: INDUSTRY_OPENING_AUCTION_AGGREGATE
     canonical_object: ClassificationMarketSnapshot
-    readiness: BLOCKED_DICTIONARY_GAP
+    readiness: READY_WITH_WARNING
     classification_type: INDUSTRY
     snapshot_phase: OPENING_AUCTION
-    gaps: *classification_gaps
-    mappings: *classification_mappings
-
+    mappings:
+    - target: classification_system
+      source: null
+      transform: constant_SOURCE_VENDOR
+      status: CONSTANT
+    - target: classification_version
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: classification_type
+      source: classification_type
+      transform: normalized_enum
+      status: MAPPED
+    - target: node_id
+      source: node_name_raw
+      transform: provisional_hash_id
+      status: MAPPED_WITH_WARNING
+    - target: node_code
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: node_name_cn
+      source: node_name_raw
+      transform: identity
+      status: MAPPED
+    - target: node_level
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: parent_node_id
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: trade_date
+      source: snapshot_date
+      transform: identity
+      status: MAPPED
+    - target: snapshot_phase
+      source: snapshot_phase
+      transform: identity
+      status: MAPPED
+    - target: pct_change_pct
+      source: pct_change
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_3d_pct
+      source: return_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_5d_pct
+      source: return_5d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_10d_pct
+      source: return_10d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_20d_pct
+      source: return_20d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: speed_pct
+      source: speed_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: leading_instrument_id
+      source: null
+      transform: unresolved_from_name_only
+      status: NOT_APPLICABLE
+    - target: leading_instrument_name_cn
+      source: leading_stock_name
+      transform: identity
+      status: MAPPED_WITH_WARNING
+    - target: up_count
+      source: up_count
+      transform: identity
+      status: MAPPED
+    - target: down_count
+      source: down_count
+      transform: identity
+      status: MAPPED
+    - target: limit_up_count
+      source: limit_up_count
+      transform: identity
+      status: MAPPED
+    - target: breadth_ratio
+      source: breadth_ratio
+      transform: identity
+      status: MAPPED
+    - target: breadth_status
+      source: breadth_status
+      transform: identity
+      status: MAPPED
+    - target: turnover_rate_pct
+      source: turnover_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_ratio
+      source: volume_ratio
+      transform: identity
+      status: MAPPED
+    - target: turnover_3d_pct
+      source: turnover_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_lots
+      source: volume_lot
+      transform: identity
+      status: MAPPED
+    - target: volume_shares
+      source: volume_lot
+      transform: multiply_100
+      status: DERIVED
+    - target: amount_cny
+      source: amount_cny
+      transform: identity
+      status: MAPPED
+    - target: total_market_cap_cny
+      source: total_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: float_market_cap_cny
+      source: float_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: average_return_pct
+      source: average_return_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: pe_ratio
+      source: pe_ratio
+      transform: identity
+      status: MAPPED
+    quality_flags:
+    - PROVISIONAL_NODE_ID_FROM_SOURCE_NAME
+    - LEADING_INSTRUMENT_ID_UNRESOLVED
+    - AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED
+    - VOLUME_LOT_TO_SHARE_DERIVED
+    source_extensions:
+    - average_shares
   kpgn:
     family: classification_snapshot
     source_table: classification_market_snapshot_raw
     source_role: CONCEPT_OPENING_AUCTION_AGGREGATE
     canonical_object: ClassificationMarketSnapshot
-    readiness: BLOCKED_DICTIONARY_GAP
+    readiness: READY_WITH_WARNING
     classification_type: CONCEPT
     snapshot_phase: OPENING_AUCTION
-    gaps: *classification_gaps
-    mappings: *classification_mappings
-
+    mappings:
+    - target: classification_system
+      source: null
+      transform: constant_SOURCE_VENDOR
+      status: CONSTANT
+    - target: classification_version
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: classification_type
+      source: classification_type
+      transform: normalized_enum
+      status: MAPPED
+    - target: node_id
+      source: node_name_raw
+      transform: provisional_hash_id
+      status: MAPPED_WITH_WARNING
+    - target: node_code
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: node_name_cn
+      source: node_name_raw
+      transform: identity
+      status: MAPPED
+    - target: node_level
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: parent_node_id
+      source: null
+      transform: unavailable
+      status: NOT_APPLICABLE
+    - target: trade_date
+      source: snapshot_date
+      transform: identity
+      status: MAPPED
+    - target: snapshot_phase
+      source: snapshot_phase
+      transform: identity
+      status: MAPPED
+    - target: pct_change_pct
+      source: pct_change
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_3d_pct
+      source: return_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_5d_pct
+      source: return_5d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_10d_pct
+      source: return_10d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: return_20d_pct
+      source: return_20d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: speed_pct
+      source: speed_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: leading_instrument_id
+      source: null
+      transform: unresolved_from_name_only
+      status: NOT_APPLICABLE
+    - target: leading_instrument_name_cn
+      source: leading_stock_name
+      transform: identity
+      status: MAPPED_WITH_WARNING
+    - target: up_count
+      source: up_count
+      transform: identity
+      status: MAPPED
+    - target: down_count
+      source: down_count
+      transform: identity
+      status: MAPPED
+    - target: limit_up_count
+      source: limit_up_count
+      transform: identity
+      status: MAPPED
+    - target: breadth_ratio
+      source: breadth_ratio
+      transform: identity
+      status: MAPPED
+    - target: breadth_status
+      source: breadth_status
+      transform: identity
+      status: MAPPED
+    - target: turnover_rate_pct
+      source: turnover_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_ratio
+      source: volume_ratio
+      transform: identity
+      status: MAPPED
+    - target: turnover_3d_pct
+      source: turnover_3d_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: volume_lots
+      source: volume_lot
+      transform: identity
+      status: MAPPED
+    - target: volume_shares
+      source: volume_lot
+      transform: multiply_100
+      status: DERIVED
+    - target: amount_cny
+      source: amount_cny
+      transform: identity
+      status: MAPPED
+    - target: total_market_cap_cny
+      source: total_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: float_market_cap_cny
+      source: float_market_cap_cny
+      transform: identity
+      status: MAPPED
+    - target: average_return_pct
+      source: average_return_pct
+      transform: percent_points_identity
+      status: MAPPED
+    - target: pe_ratio
+      source: pe_ratio
+      transform: identity
+      status: MAPPED
+    quality_flags:
+    - PROVISIONAL_NODE_ID_FROM_SOURCE_NAME
+    - LEADING_INSTRUMENT_ID_UNRESOLVED
+    - AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED
+    - VOLUME_LOT_TO_SHARE_DERIVED
+    source_extensions:
+    - average_shares
   zj:
     family: money_flow_snapshot
     source_table: money_flow_snapshot_raw
@@ -229,82 +827,78 @@ datasets:
     flow_method_code: VENDOR_ORDER_SIZE_BUCKET_V1
     sign_policy: PRESERVE_SOURCE_SIGN
     quality_flags:
-      - VENDOR_FLOW_METHOD_REQUIRES_DOCUMENTATION
-      - SOURCE_OUTFLOW_VALUES_ARE_NEGATIVE
-      - TOTAL_NET_INFLOW_DERIVED_FROM_BUCKETS
+    - VENDOR_FLOW_METHOD_REQUIRES_DOCUMENTATION
+    - SOURCE_OUTFLOW_VALUES_ARE_NEGATIVE
+    - TOTAL_NET_INFLOW_DERIVED_FROM_BUCKETS
     mappings:
-      - {target: instrument_id, source: instrument_id, transform: identity, status: MAPPED}
-      - {target: trade_date, source: snapshot_date, transform: identity, status: MAPPED}
-      - {target: net_inflow_total_cny, source: [super_large_net_cny, large_net_cny, medium_net_cny, small_net_cny], transform: sum_nullable, status: DERIVED}
-      - {target: net_inflow_main_cny, source: main_net_inflow_cny, transform: identity, status: MAPPED}
-      - {target: net_inflow_super_large_cny, source: super_large_net_cny, transform: identity, status: MAPPED}
-      - {target: net_inflow_large_cny, source: large_net_cny, transform: identity, status: MAPPED}
-      - {target: net_inflow_medium_cny, source: medium_net_cny, transform: identity, status: MAPPED}
-      - {target: net_inflow_small_cny, source: small_net_cny, transform: identity, status: MAPPED}
-      - {target: flow_method_code, source: null, transform: constant_VENDOR_ORDER_SIZE_BUCKET_V1, status: CONSTANT}
+    - target: instrument_id
+      source: instrument_id
+      transform: identity
+      status: MAPPED
+    - target: trade_date
+      source: snapshot_date
+      transform: identity
+      status: MAPPED
+    - target: net_inflow_total_cny
+      source:
+      - super_large_net_cny
+      - large_net_cny
+      - medium_net_cny
+      - small_net_cny
+      transform: sum_nullable
+      status: DERIVED
+    - target: net_inflow_main_cny
+      source: main_net_inflow_cny
+      transform: identity
+      status: MAPPED
+    - target: net_inflow_super_large_cny
+      source: super_large_net_cny
+      transform: identity
+      status: MAPPED
+    - target: net_inflow_large_cny
+      source: large_net_cny
+      transform: identity
+      status: MAPPED
+    - target: net_inflow_medium_cny
+      source: medium_net_cny
+      transform: identity
+      status: MAPPED
+    - target: net_inflow_small_cny
+      source: small_net_cny
+      transform: identity
+      status: MAPPED
+    - target: flow_method_code
+      source: null
+      transform: constant_VENDOR_ORDER_SIZE_BUCKET_V1
+      status: CONSTANT
     source_extensions:
-      - instrument_name
-      - market_candidate
-      - last_price
-      - pct_change
-      - auction_net_inflow_cny
-      - super_large_inflow_cny
-      - super_large_outflow_cny
-      - super_large_net_ratio_pct
-      - large_inflow_cny
-      - large_outflow_cny
-      - large_net_ratio_pct
-      - medium_inflow_cny
-      - medium_outflow_cny
-      - medium_net_ratio_pct
-      - small_inflow_cny
-      - small_outflow_cny
-      - small_net_ratio_pct
-
-proposed_dictionary_changes:
-  - change_id: ADD_CLASSIFICATION_MARKET_SNAPSHOT
-    change_type: ADD_OBJECT
-    backward_compatible: true
-    canonical_object: ClassificationMarketSnapshot
-    domain_code: classification_market
-    rationale: 行业和概念聚合行情不能使用ClassificationMembership表达。
-    proposed_fields:
-      - classification_system
-      - classification_type
-      - node_id
-      - node_name_cn
-      - trade_date
-      - snapshot_phase
-      - pct_change_pct
-      - return_3d_pct
-      - return_5d_pct
-      - return_10d_pct
-      - return_20d_pct
-      - speed_pct
-      - leading_instrument_id
-      - leading_instrument_name_cn
-      - up_count
-      - down_count
-      - limit_up_count
-      - breadth_ratio
-      - breadth_status
-      - turnover_rate_pct
-      - volume_ratio
-      - turnover_3d_pct
-      - volume_lots
-      - volume_shares
-      - amount_cny
-      - total_market_cap_cny
-      - float_market_cap_cny
-      - average_return_pct
-      - average_shares
-      - pe_ratio
-
-  - change_id: AUCTION_TIME_PRECISION_GOVERNANCE
-    change_type: REVIEW_NULLABILITY_AND_PRECISION
-    backward_compatible: review_required
-    canonical_object: AuctionSnapshot
-    fields:
-      - snapshot_time
-      - snapshot_time_precision
-    rationale: 当前来源只有交易日期，不能伪造精确竞价时间。
+    - instrument_name
+    - market_candidate
+    - last_price
+    - pct_change
+    - auction_net_inflow_cny
+    - super_large_inflow_cny
+    - super_large_outflow_cny
+    - super_large_net_ratio_pct
+    - large_inflow_cny
+    - large_outflow_cny
+    - large_net_ratio_pct
+    - medium_inflow_cny
+    - medium_outflow_cny
+    - medium_net_ratio_pct
+    - small_inflow_cny
+    - small_outflow_cny
+    - small_net_ratio_pct
+implemented_dictionary_changes:
+- change_id: ADD_CLASSIFICATION_MARKET_SNAPSHOT
+  status: IMPLEMENTED
+  dictionary_revision: 0.6.0
+  canonical_object: ClassificationMarketSnapshot
+  domain_code: classification_market
+- change_id: AUCTION_TIME_PRECISION_GOVERNANCE
+  status: IMPLEMENTED
+  dictionary_revision: 0.6.0
+  canonical_object: AuctionSnapshot
+  fields:
+  - snapshot_time
+  - snapshot_time_precision

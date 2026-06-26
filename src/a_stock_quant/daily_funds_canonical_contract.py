@@ -1,4 +1,4 @@
-"""TASK_017A七类日线资金Canonical接入合同验证。"""
+"""七类日线资金Canonical接入合同验证。"""
 
 from __future__ import annotations
 
@@ -56,9 +56,7 @@ class DailyFundsCanonicalContract:
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
-    payload = yaml.safe_load(
-        path.read_text(encoding="utf-8")
-    )
+    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise DailyFundsCanonicalContractError(
             f"YAML根节点必须是映射：{path}"
@@ -66,12 +64,8 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     return payload
 
 
-def load_contract(
-    path: str | Path,
-) -> DailyFundsCanonicalContract:
-    return DailyFundsCanonicalContract(
-        raw=_load_yaml(Path(path))
-    )
+def load_contract(path: str | Path) -> DailyFundsCanonicalContract:
+    return DailyFundsCanonicalContract(raw=_load_yaml(Path(path)))
 
 
 def _dictionary_objects(
@@ -82,9 +76,7 @@ def _dictionary_objects(
     for domain in payload.get("domains", []):
         if not isinstance(domain, dict):
             continue
-        object_name = str(
-            domain.get("canonical_object", "")
-        ).strip()
+        object_name = str(domain.get("canonical_object", "")).strip()
         fields = {
             str(item.get("canonical_name", "")).strip()
             for item in domain.get("fields", [])
@@ -134,10 +126,7 @@ def validate_contract(
         )
 
     allowed = set(
-        contract.raw.get(
-            "allowed_mapping_statuses",
-            [],
-        )
+        contract.raw.get("allowed_mapping_statuses", [])
     )
     if allowed != ALLOWED_STATUSES:
         issues.append(
@@ -148,13 +137,28 @@ def validate_contract(
         )
 
     for dataset_id, dataset in contract.datasets.items():
-        canonical_object = str(
-            dataset.get("canonical_object", "")
-        )
-        readiness = str(
-            dataset.get("readiness", "")
-        )
+        canonical_object = str(dataset.get("canonical_object", ""))
+        readiness = str(dataset.get("readiness", ""))
         mappings = dataset.get("mappings", [])
+        if readiness != "READY_WITH_WARNING":
+            issues.append(
+                {
+                    "severity": "ERROR",
+                    "code": "DATASET_NOT_READY_WITH_WARNING",
+                    "dataset_id": dataset_id,
+                    "readiness": readiness,
+                }
+            )
+        if canonical_object not in objects:
+            issues.append(
+                {
+                    "severity": "ERROR",
+                    "code": "CANONICAL_OBJECT_MISSING",
+                    "dataset_id": dataset_id,
+                    "canonical_object": canonical_object,
+                }
+            )
+            continue
         if not isinstance(mappings, list) or not mappings:
             issues.append(
                 {
@@ -178,11 +182,7 @@ def validate_contract(
                         "status": status,
                     }
                 )
-            if (
-                canonical_object in objects
-                and status != "BLOCKED_SCHEMA_GAP"
-                and target not in objects[canonical_object]
-            ):
+            if target not in objects[canonical_object]:
                 issues.append(
                     {
                         "severity": "ERROR",
@@ -193,53 +193,56 @@ def validate_contract(
                     }
                 )
 
-        if dataset_id == "hq":
+        if dataset_id == "hq" and dataset.get("source_role") != "SUPPLEMENTAL_RECONCILIATION":
+            issues.append(
+                {
+                    "severity": "ERROR",
+                    "code": "HQ_ROLE_NOT_SUPPLEMENTAL",
+                }
+            )
+
+        if dataset_id == "kphq":
+            mapping_index = {
+                str(item.get("target", "")): item
+                for item in mappings
+            }
+            snapshot_time = mapping_index.get("snapshot_time", {})
+            precision = mapping_index.get(
+                "snapshot_time_precision", {}
+            )
+            if snapshot_time.get("status") != "NOT_APPLICABLE":
+                issues.append(
+                    {
+                        "severity": "ERROR",
+                        "code": "AUCTION_TIME_MUST_REMAIN_NULL",
+                    }
+                )
             if (
-                dataset.get("source_role")
-                != "SUPPLEMENTAL_RECONCILIATION"
+                precision.get("status") != "CONSTANT"
+                or precision.get("transform")
+                != "constant_DATE_ONLY"
             ):
                 issues.append(
                     {
                         "severity": "ERROR",
-                        "code": "HQ_ROLE_NOT_SUPPLEMENTAL",
-                    }
-                )
-
-        if dataset_id == "kphq":
-            gap_targets = {
-                str(item.get("target", ""))
-                for item in mappings
-                if item.get("status")
-                == "BLOCKED_SCHEMA_GAP"
-            }
-            if "snapshot_time" not in gap_targets:
-                issues.append(
-                    {
-                        "severity": "ERROR",
-                        "code": "AUCTION_TIME_GAP_NOT_BLOCKING",
+                        "code": "AUCTION_TIME_PRECISION_NOT_DATE_ONLY",
                     }
                 )
             serialized = str(dataset)
-            forbidden = (
-                "constant_09_25",
+            for forbidden in (
                 "source_file_mtime_utc",
                 "ingested_at_utc",
                 "midnight",
-            )
-            if not all(item in serialized for item in forbidden):
-                issues.append(
-                    {
-                        "severity": "ERROR",
-                        "code": "AUCTION_FORBIDDEN_FALLBACKS_MISSING",
-                    }
-                )
-            if readiness != "BLOCKED_SCHEMA_GAP":
-                issues.append(
-                    {
-                        "severity": "ERROR",
-                        "code": "KPHQ_READINESS_TOO_PERMISSIVE",
-                    }
-                )
+                "constant_09_25",
+            ):
+                if forbidden not in serialized:
+                    issues.append(
+                        {
+                            "severity": "ERROR",
+                            "code": "AUCTION_FORBIDDEN_FALLBACK_NOT_RECORDED",
+                            "fallback": forbidden,
+                        }
+                    )
 
         if dataset_id in CLASSIFICATION_DATASETS:
             if canonical_object != "ClassificationMarketSnapshot":
@@ -250,81 +253,66 @@ def validate_contract(
                         "dataset_id": dataset_id,
                     }
                 )
-            if readiness != "BLOCKED_DICTIONARY_GAP":
+            if "average_shares" not in dataset.get(
+                "source_extensions", []
+            ):
                 issues.append(
                     {
                         "severity": "ERROR",
-                        "code": "CLASSIFICATION_GAP_NOT_BLOCKING",
-                        "dataset_id": dataset_id,
-                    }
-                )
-            if canonical_object in objects:
-                issues.append(
-                    {
-                        "severity": "ERROR",
-                        "code": "PROPOSED_OBJECT_ALREADY_EXISTS_REVIEW_CONTRACT",
+                        "code": "UNCONFIRMED_AVERAGE_SHARES_NOT_EXTENSION",
                         "dataset_id": dataset_id,
                     }
                 )
 
-        if dataset_id == "zj":
-            if dataset.get("sign_policy") != "PRESERVE_SOURCE_SIGN":
-                issues.append(
-                    {
-                        "severity": "ERROR",
-                        "code": "MONEY_FLOW_SIGN_POLICY_INVALID",
-                    }
-                )
+        if dataset_id == "zj" and dataset.get("sign_policy") != "PRESERVE_SOURCE_SIGN":
+            issues.append(
+                {
+                    "severity": "ERROR",
+                    "code": "MONEY_FLOW_SIGN_POLICY_INVALID",
+                }
+            )
 
-    proposals = contract.raw.get(
-        "proposed_dictionary_changes",
-        [],
+    implemented = contract.raw.get(
+        "implemented_dictionary_changes", []
     )
-    proposal_ids = {
+    implemented_ids = {
         str(item.get("change_id", ""))
-        for item in proposals
+        for item in implemented
         if isinstance(item, dict)
+        and item.get("status") == "IMPLEMENTED"
     }
-    required_proposals = {
+    required_ids = {
         "ADD_CLASSIFICATION_MARKET_SNAPSHOT",
         "AUCTION_TIME_PRECISION_GOVERNANCE",
     }
-    if not required_proposals.issubset(proposal_ids):
+    if not required_ids.issubset(implemented_ids):
         issues.append(
             {
                 "severity": "ERROR",
-                "code": "REQUIRED_DICTIONARY_PROPOSAL_MISSING",
+                "code": "IMPLEMENTED_DICTIONARY_CHANGE_MISSING",
             }
         )
 
     errors = [
-        issue
-        for issue in issues
+        issue for issue in issues
         if issue["severity"] == "ERROR"
     ]
+    ready_count = sum(
+        1 for item in contract.datasets.values()
+        if item.get("readiness") == "READY_WITH_WARNING"
+    )
+    blocked_count = sum(
+        1 for item in contract.datasets.values()
+        if str(item.get("readiness", "")).startswith("BLOCKED_")
+    )
     return {
-        "task_id": "TASK_017A",
+        "task_id": "TASK_017B",
         "contract_version": contract.contract_version,
         "dictionary_revision": dictionary_revision,
         "dataset_count": len(contract.datasets),
-        "existing_ready_with_warning_count": sum(
-            1
-            for item in contract.datasets.values()
-            if item.get("readiness")
-            == "READY_WITH_WARNING"
-        ),
-        "blocked_schema_gap_count": sum(
-            1
-            for item in contract.datasets.values()
-            if str(item.get("readiness", "")).startswith(
-                "BLOCKED_"
-            )
-        ),
-        "proposed_dictionary_change_count": len(proposals),
-        "overall_status": (
-            "PASSED_WITH_REVIEW_ITEMS"
-            if not errors
-            else "FAILED"
-        ),
+        "ready_with_warning_count": ready_count,
+        "blocked_count": blocked_count,
+        "implemented_dictionary_change_count": len(implemented),
+        "overall_status": "PASSED_WITH_WARNINGS" if not errors else "FAILED",
         "issues": issues,
     }

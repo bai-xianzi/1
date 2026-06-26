@@ -1,5 +1,5 @@
 dictionary_name: A股量化投资辅助操作系统统一字段字典
-dictionary_revision: '0.5.1'
+dictionary_revision: '0.6.0'
 status: official_institutional_research_and_execution_governance
 principles:
 - 逻辑字段字典不等于一张超宽数据库表；按领域对象和事件扩展表实现。
@@ -956,13 +956,24 @@ domains:
     data_type: STRING
     nullable: false
     lifecycle_stage: core
-    definition: 竞价阶段
+    definition: 集合竞价所处阶段
+    value_domain_kind: CLOSED_ENUM
+    enum_ref: auction_phase
   - canonical_name: snapshot_time
     chinese_name: 竞价快照时间
     data_type: TIMESTAMP
+    nullable: true
+    lifecycle_stage: core
+    definition: 来源明确提供的竞价快照时间；来源仅有交易日期时必须为空，禁止使用文件修改时间、入库时间、午夜或固定09:25代替
+    time_semantics: observation_time
+  - canonical_name: snapshot_time_precision
+    chinese_name: 竞价快照时间精度
+    data_type: STRING
     nullable: false
     lifecycle_stage: core
-    definition: 竞价快照时间
+    definition: 快照时间可证明的精度；日期级来源使用DATE_ONLY且snapshot_time为空
+    value_domain_kind: CLOSED_ENUM
+    enum_ref: snapshot_time_precision
   - canonical_name: indicative_price_cny
     chinese_name: 竞价指示价格
     data_type: DECIMAL
@@ -1837,7 +1848,8 @@ domains:
     data_type: STRING
     nullable: false
     lifecycle_stage: core
-    definition: 如申万、中信、证监会、Wind、自定义概念
+    definition: 如申万、中信、证监会、Wind、自定义概念或来源供应商体系
+    value_domain_kind: OPEN_CODE
   - canonical_name: classification_version
     chinese_name: 分类体系版本
     data_type: STRING
@@ -1849,7 +1861,9 @@ domains:
     data_type: STRING
     nullable: false
     lifecycle_stage: core
-    definition: INDUSTRY/CONCEPT/INDEX/THEME/REGION
+    definition: INDUSTRY/CONCEPT/INDEX/THEME/REGION/OTHER
+    value_domain_kind: CLOSED_ENUM
+    enum_ref: classification_type
   - canonical_name: node_id
     chinese_name: 分类节点ID
     data_type: STRING
@@ -7887,4 +7901,241 @@ domains:
     lifecycle_stage: future_reserved
     definition: 核对记录生成时间
     time_semantics: system_time
+- domain_code: classification_market
+  domain_name_cn: 分类节点市场快照
+  canonical_object: ClassificationMarketSnapshot
+  description: 行业、概念、指数、主题或地区等分类节点在交易日和市场阶段上的聚合行情、广度、成交与估值快照；不得与ClassificationMembership成员关系混用
+  fields:
+  - canonical_name: classification_system
+    chinese_name: 分类体系
+    data_type: STRING
+    nullable: false
+    lifecycle_stage: core
+    definition: 分类节点所属体系；来源暂未提供权威体系时可使用明确版本化的来源体系代码
+    value_domain_kind: OPEN_CODE
+  - canonical_name: classification_version
+    chinese_name: 分类体系版本
+    data_type: STRING
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类体系版本；来源未提供时为空
+  - canonical_name: classification_type
+    chinese_name: 分类类型
+    data_type: STRING
+    nullable: false
+    lifecycle_stage: core
+    definition: INDUSTRY/CONCEPT/INDEX/THEME/REGION/OTHER
+    value_domain_kind: CLOSED_ENUM
+    enum_ref: classification_type
+  - canonical_name: node_id
+    chinese_name: 分类节点ID
+    data_type: STRING
+    nullable: false
+    lifecycle_stage: core
+    definition: 分类体系内稳定节点标识；临时哈希ID必须通过质量标记说明且不得冒充跨供应商统一ID
+    value_domain_kind: IDENTIFIER
+  - canonical_name: node_code
+    chinese_name: 分类节点代码
+    data_type: STRING
+    nullable: true
+    lifecycle_stage: core
+    definition: 来源或主数据提供的分类节点代码
+    value_domain_kind: OPEN_CODE
+  - canonical_name: node_name_cn
+    chinese_name: 分类节点中文名
+    data_type: STRING
+    nullable: false
+    lifecycle_stage: core
+    definition: 分类节点中文名称
+    value_domain_kind: FREE_TEXT
+  - canonical_name: node_level
+    chinese_name: 分类层级
+    data_type: INT
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点层级；来源未提供时为空
+  - canonical_name: parent_node_id
+    chinese_name: 父节点ID
+    data_type: STRING
+    nullable: true
+    lifecycle_stage: core
+    definition: 父分类节点标识；来源未提供时为空
+    value_domain_kind: IDENTIFIER
+  - canonical_name: trade_date
+    chinese_name: 交易日期
+    data_type: DATE
+    nullable: false
+    lifecycle_stage: core
+    definition: 聚合市场快照所属交易日
+    time_semantics: trade_date
+  - canonical_name: snapshot_phase
+    chinese_name: 市场快照阶段
+    data_type: STRING
+    nullable: false
+    lifecycle_stage: core
+    definition: CLOSE、OPENING_AUCTION等市场阶段；阶段不等于精确时间戳
+    value_domain_kind: CLOSED_ENUM
+    enum_ref: snapshot_phase
+  - canonical_name: pct_change_pct
+    chinese_name: 节点涨跌幅
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点聚合涨跌幅
+    unit: percent_points
+  - canonical_name: return_3d_pct
+    chinese_name: 三日收益率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点三日聚合收益率
+    unit: percent_points
+  - canonical_name: return_5d_pct
+    chinese_name: 五日收益率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点五日聚合收益率
+    unit: percent_points
+  - canonical_name: return_10d_pct
+    chinese_name: 十日收益率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点十日聚合收益率
+    unit: percent_points
+  - canonical_name: return_20d_pct
+    chinese_name: 二十日收益率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点二十日聚合收益率
+    unit: percent_points
+  - canonical_name: speed_pct
+    chinese_name: 涨速
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 来源报告的分类节点涨速
+    unit: percent_points
+  - canonical_name: leading_instrument_id
+    chinese_name: 领涨证券统一标识
+    data_type: STRING
+    nullable: true
+    lifecycle_stage: core
+    definition: 领涨证券统一标识；来源只提供名称且无法可靠解析时为空
+    value_domain_kind: IDENTIFIER
+  - canonical_name: leading_instrument_name_cn
+    chinese_name: 领涨证券中文名
+    data_type: STRING
+    nullable: true
+    lifecycle_stage: core
+    definition: 来源报告的领涨证券中文名称
+    value_domain_kind: FREE_TEXT
+  - canonical_name: up_count
+    chinese_name: 上涨成分数量
+    data_type: INT
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点内上涨成分数量
+    unit: count
+  - canonical_name: down_count
+    chinese_name: 下跌成分数量
+    data_type: INT
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点内下跌成分数量
+    unit: count
+  - canonical_name: limit_up_count
+    chinese_name: 涨停成分数量
+    data_type: INT
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点内涨停成分数量
+    unit: count
+  - canonical_name: breadth_ratio
+    chinese_name: 涨跌家数比
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 上涨成分数量与下跌成分数量之比；全涨、全跌等不可用单一数值表达的状态由breadth_status记录
+    unit: ratio
+  - canonical_name: breadth_status
+    chinese_name: 市场广度状态
+    data_type: STRING
+    nullable: false
+    lifecycle_stage: core
+    definition: NORMAL/ALL_UP/ALL_DOWN/RATIO_MISMATCH_WARNING/UNKNOWN
+    value_domain_kind: CLOSED_ENUM
+    enum_ref: breadth_status
+  - canonical_name: turnover_rate_pct
+    chinese_name: 节点换手率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点聚合换手率
+    unit: percent_points
+  - canonical_name: volume_ratio
+    chinese_name: 节点量比
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点聚合量比
+    unit: ratio
+  - canonical_name: turnover_3d_pct
+    chinese_name: 三日换手率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点三日聚合换手率
+    unit: percent_points
+  - canonical_name: volume_lots
+    chinese_name: 节点成交量（手）
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点聚合成交量（手）
+    unit: lots
+  - canonical_name: volume_shares
+    chinese_name: 节点成交量（股）
+    data_type: LONG
+    nullable: true
+    lifecycle_stage: core
+    definition: 由确认的手数口径乘以100得到的分类节点聚合成交量（股）；单位未确认时不得生成
+    unit: shares
+  - canonical_name: amount_cny
+    chinese_name: 节点成交额
+    data_type: DECIMAL
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点聚合成交额
+    unit: CNY
+  - canonical_name: total_market_cap_cny
+    chinese_name: 节点总市值
+    data_type: DECIMAL
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点成分证券总市值聚合
+    unit: CNY
+  - canonical_name: float_market_cap_cny
+    chinese_name: 节点流通市值
+    data_type: DECIMAL
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点成分证券流通市值聚合
+    unit: CNY
+  - canonical_name: average_return_pct
+    chinese_name: 成分平均收益率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 分类节点成分证券平均收益率
+    unit: percent_points
+  - canonical_name: pe_ratio
+    chinese_name: 节点市盈率
+    data_type: DOUBLE
+    nullable: true
+    lifecycle_stage: core
+    definition: 来源报告的分类节点市盈率口径
+    unit: ratio
 field_identity_rule: 机器唯一字段引用优先使用 domain_code.canonical_name；同名字段只有语义完全相同时才允许跨对象复用；允许例外和迁移计划以field_governance_contract.yaml为准。
