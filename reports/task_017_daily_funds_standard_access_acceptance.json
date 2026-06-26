@@ -1,0 +1,82 @@
+{
+  "task_id": "TASK_017",
+  "status": "PASSED_WITH_WARNINGS",
+  "accepted_at": "2026-06-27",
+  "git_head_before_closure": "88627ff feat: register daily funds standard data providers",
+  "database_uri": "dfs://A_STOCK_DAILY_FUNDS_DB",
+  "dictionary_revision": "0.6.0",
+  "canonical_service_version": "0.1.0",
+  "mapping_version": "0.2.0",
+  "dataset_count": 7,
+  "provider_count": 7,
+  "canonical_object_count": 4,
+  "selector_mode_counts": {
+    "INSTRUMENT_ID": 3,
+    "ENTITY_ID": 4
+  },
+  "unified_query_count": 7,
+  "historical_gate_block_count": 7,
+  "write_operation_count": 0,
+  "datasets": [
+    {
+      "dataset_id": "hq",
+      "provider_id": "dolphindb_daily_funds_hq_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_object": "DailyBar"
+    },
+    {
+      "dataset_id": "hy",
+      "provider_id": "dolphindb_daily_funds_hy_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_object": "ClassificationMarketSnapshot"
+    },
+    {
+      "dataset_id": "gn",
+      "provider_id": "dolphindb_daily_funds_gn_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_object": "ClassificationMarketSnapshot"
+    },
+    {
+      "dataset_id": "kphq",
+      "provider_id": "dolphindb_daily_funds_kphq_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_object": "AuctionSnapshot"
+    },
+    {
+      "dataset_id": "kphy",
+      "provider_id": "dolphindb_daily_funds_kphy_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_object": "ClassificationMarketSnapshot"
+    },
+    {
+      "dataset_id": "kpgn",
+      "provider_id": "dolphindb_daily_funds_kpgn_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_object": "ClassificationMarketSnapshot"
+    },
+    {
+      "dataset_id": "zj",
+      "provider_id": "dolphindb_daily_funds_zj_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_object": "MoneyFlowSnapshot"
+    }
+  ],
+  "remaining_warnings": [
+    "hq仍是补充和对账来源，不替代权威日K。",
+    "kphq只有DATE_ONLY时间精度，不伪造09:25。",
+    "分类节点ID当前由来源名称稳定派生，仍需权威分类主数据。",
+    "分类领先证券ID尚未解析。",
+    "average_shares来源单位仍未确认。",
+    "zj资金流口径仍需供应商文档确认。",
+    "七类数据没有可靠available_at，因此严格历史回测和历史模型训练继续阻断。"
+  ],
+  "next_task": {
+    "task_id": "TASK_018",
+    "name": "统一数据质量门禁与数据就绪度服务",
+    "scope": [
+      "统一日K、基本面和七类快照的质量状态。",
+      "统一覆盖、时效、血缘、时点和用途级门禁。",
+      "输出可供市场状态MVP使用的数据就绪度报告。"
+    ]
+  }
+}

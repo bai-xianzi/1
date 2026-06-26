@@ -1,13 +1,13 @@
 # A股量化投资辅助操作系统——项目状态
 
-更新日期：2026-06-26
+更新日期：2026-06-27
 
 ## 一、当前阶段
 
 ```text
-阶段：七类日线资金Raw接入完成，进入Canonical标准化服务建设
-当前工作：关闭 TASK_015 / TASK_016，并启动 TASK_017
-下一任务：TASK_017 七类快照Canonical标准化服务与StandardDataService Provider
+阶段：七类日线资金Canonical统一入口完成，进入统一数据质量门禁建设
+当前工作：关闭 TASK_017，并启动 TASK_018
+下一任务：TASK_018 统一数据质量门禁与数据就绪度服务
 ```
 
 当前阶段仍然不开发复杂因子库、选股模型、自动交易或前端系统。
@@ -44,6 +44,7 @@
 - TASK_014：基本面标准化服务、用途级时点门禁、StandardDataService Provider 与真实抽样验收。
 - TASK_015：七类快照来源治理、完整画像、字典审计与接入合同。
 - TASK_016：七类日线资金预导入、DolphinDB Raw层真实导入与幂等验收。
+- TASK_017：七类日线资金Canonical字典升级、只读标准化服务、七个StandardDataService Provider与真实统一入口验收。
 
 ---
 
@@ -528,30 +529,115 @@ TSDB幂等恢复、批次日志、文件日志和隔离日志。
 
 ---
 
-## 十、当前任务：TASK_017
+## 十、TASK_017 最终状态
+
+### TASK_017A：Canonical接入合同
+
+```text
+来源数据集：7
+初始READY_WITH_WARNING：2
+初始BLOCKED缺口：5
+合同状态：PASSED_WITH_REVIEW_ITEMS
+```
+
+确认结论：
+
+- `hq`只能作为`DailyBar`补充和对账来源；
+- `kphq`不得伪造09:25；
+- 行业和概念聚合行情不是成员关系；
+- `zj`保留来源资金流符号；
+- 来源扩展和完整血缘必须保留。
+
+### TASK_017B：字段字典升级
+
+```text
+dictionary_revision：0.6.0
+领域数量：46
+字段出现次数：1,235
+Canonical阻断来源：0
+```
+
+新增`ClassificationMarketSnapshot`，并为
+`AuctionSnapshot`增加日期级时间精度治理。
+`average_shares`因单位未确认继续留在来源扩展。
+
+### TASK_017C：只读Canonical服务
+
+```text
+服务版本：0.1.0
+映射版本：0.2.0
+真实来源：7
+数据库写操作：0
+状态：PASSED_WITH_WARNINGS
+```
+
+真实抽样对象：
+
+```text
+hq    → DailyBar
+kphq  → AuctionSnapshot
+hy    → ClassificationMarketSnapshot
+gn    → ClassificationMarketSnapshot
+kphy  → ClassificationMarketSnapshot
+kpgn  → ClassificationMarketSnapshot
+zj    → MoneyFlowSnapshot
+```
+
+### TASK_017D：统一StandardDataService入口
+
+```text
+Provider：7
+统一真实查询：7
+INSTRUMENT_ID Provider：3
+ENTITY_ID Provider：4
+严格历史用途阻断：7
+数据库写操作：0
+状态：PASSED_WITH_WARNINGS
+```
+
+用途门禁：
+
+```text
+当前快照研究：允许，但保留WARNING
+同日人工辅助决策：阻断
+严格历史回测：阻断
+历史模型训练：阻断
+```
+
+剩余WARNING不得静默消除：
+
+- `hq`不是权威日K；
+- `kphq`只有`DATE_ONLY`时间精度；
+- 分类节点ID仍是来源名称的稳定派生ID；
+- 分类领先证券ID尚未解析；
+- `average_shares`来源单位未确认；
+- 资金流方法仍需供应商文档；
+- 缺少可靠`available_at`，不能用于严格历史点时用途。
+
+---
+
+## 十一、当前任务：TASK_018
 
 任务名称：
 
 ```text
-TASK_017 七类快照Canonical标准化服务与StandardDataService Provider
+TASK_018 统一数据质量门禁与数据就绪度服务
 ```
 
 目标：
 
-- 为三张Raw表建立只读DolphinDB适配器；
-- 将七类来源映射为稳定Canonical对象；
-- 保留来源扩展、原始行和血缘；
-- 建立单位、符号、日期和快照阶段转换；
-- 建立用途级时点与质量门禁；
-- 接入StandardDataService；
-- 完成真实数据库抽样验收；
-- 不开发复杂因子、模型、回测、自动交易或前端。
+- 统一日K、基本面和七类快照的质量状态；
+- 统一覆盖率、时效性、血缘和时点门禁；
+- 把`PASSED`、`WARNING`、`BLOCKED`转换为稳定服务合同；
+- 输出数据集级和用途级数据就绪度报告；
+- 为后续市场状态MVP提供唯一的数据准入入口；
+- 不开发复杂因子、模型、自动交易或前端。
 
-TASK_017完成前，七类Raw数据不能被策略层直接读取。
+TASK_018完成前，市场状态模块不得直接绕过质量门禁读取数据。
 
 ---
 
-## 十一、CWMS 长期定位
+## 十二、CWMS 长期定位
 
 CWMS 因果世界—市场仿真引擎属于长期研究底座。
 
@@ -566,7 +652,7 @@ CWMS 因果世界—市场仿真引擎属于长期研究底座。
 
 ---
 
-## 十二、Git 与 GitHub 交付闭环
+## 十三、Git 与 GitHub 交付闭环
 
 每个任务只有同时满足以下条件才算完成：
 
@@ -582,4 +668,4 @@ HEAD 与两个远程 main 一致
 任务标签已建立并推送
 ```
 
-当前 TASK_014 在完成本文件替换、最终测试、提交、双远程推送和 `task-014` 标签后正式闭环。
+当前 TASK_017 在完成本文件更新、最终测试、提交、双远程推送和 `task-017` 标签后正式闭环。
