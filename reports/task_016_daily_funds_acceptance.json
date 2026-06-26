@@ -1,0 +1,46 @@
+{
+  "task_id": "TASK_016",
+  "status": "PASSED",
+  "accepted_at": "2026-06-26",
+  "git_head_before_closure": "d258e8f feat: add DolphinDB daily funds raw import",
+  "database_uri": "dfs://A_STOCK_DAILY_FUNDS_DB",
+  "server_version": "3.00.5",
+  "python_client_version": "3.0.4.2",
+  "source_dataset_count": 7,
+  "physical_table_count": 6,
+  "main_raw_table_count": 3,
+  "source_file_count": 185,
+  "ready_file_count": 184,
+  "quarantined_file_count": 1,
+  "blocked_file_count": 0,
+  "planned_row_count": 461966,
+  "first_import": {
+    "batch_id": "task016b_20260626T145157982798Z",
+    "inserted_row_count": 461966,
+    "skipped_idempotent_row_count": 0,
+    "failed_file_count": 0,
+    "quarantined_leak_count": 0
+  },
+  "idempotency_rerun": {
+    "batch_id": "task016b_20260626T145844726851Z",
+    "inserted_row_count": 0,
+    "skipped_idempotent_row_count": 461966,
+    "failed_file_count": 0,
+    "quarantined_leak_count": 0
+  },
+  "main_table_row_counts": {
+    "security_market_snapshot_raw": 278786,
+    "classification_market_snapshot_raw": 24648,
+    "money_flow_snapshot_raw": 158532
+  },
+  "quarantine_rule": {
+    "dataset_id": "kphq",
+    "snapshot_date": "2025-12-23",
+    "source_row_count": 288,
+    "main_raw_leak_count": 0
+  },
+  "next_task": {
+    "task_id": "TASK_017",
+    "name": "七类快照Canonical标准化服务与StandardDataService Provider"
+  }
+}
