@@ -1,0 +1,32 @@
+﻿severity,snapshot_date,dataset_id,type,detail
+ERROR,20251223.0,kphq,UNIVERSE_COVERAGE_INCOMPLETE,"{""snapshot_date"": ""20251223"", ""dataset_id"": ""kphq"", ""reference_dataset_id"": ""hq"", ""intersection_count"": 288, ""child_only_count"": 0, ""reference_only_count"": 5184, ""coverage_ratio"": 0.05263157894736842}"
+WARNING,,gn,SCHEMA_DRIFT,"exact_versions=2, semantic_versions=2"
+WARNING,,hy,SCHEMA_DRIFT,"exact_versions=2, semantic_versions=2"
+WARNING,,kpgn,SCHEMA_DRIFT,"exact_versions=2, semantic_versions=2"
+WARNING,,kphq,SCHEMA_DRIFT,"exact_versions=3, semantic_versions=2"
+WARNING,,kphy,SCHEMA_DRIFT,"exact_versions=2, semantic_versions=2"
+WARNING,20251126.0,kpgn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251126\kpgn.xls
+WARNING,20251126.0,kphq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251126\kphq.xls
+WARNING,20251126.0,kphy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251126\kphy.xls
+WARNING,20251127.0,kpgn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251127\kpgn.xls
+WARNING,20251127.0,kphq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251127\kphq.xls
+WARNING,20251127.0,kphy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251127\kphy.xls
+WARNING,20251202.0,gn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251202\gn.xls
+WARNING,20251202.0,hq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251202\hq.xls
+WARNING,20251202.0,hy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251202\hy.xls
+WARNING,20251202.0,zj,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251202\zj.xls
+WARNING,20251210.0,kpgn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251210\kpgn.xls
+WARNING,20251210.0,kphq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251210\kphq.xls
+WARNING,20251210.0,kphy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251210\kphy.xls
+WARNING,20251211.0,kpgn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251211\kpgn.xls
+WARNING,20251211.0,kphq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251211\kphq.xls
+WARNING,20251211.0,kphy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251211\kphy.xls
+WARNING,20251215.0,kpgn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251215\kpgn.xls
+WARNING,20251215.0,kphq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251215\kphq.xls
+WARNING,20251215.0,kphy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251215\kphy.xls
+WARNING,20251219.0,kpgn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251219\kpgn.xls
+WARNING,20251219.0,kphq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251219\kphq.xls
+WARNING,20251219.0,kphy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251219\kphy.xls
+WARNING,20251230.0,kpgn,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251230\kpgn.xls
+WARNING,20251230.0,kphq,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251230\kphq.xls
+WARNING,20251230.0,kphy,MISSING_FILE,D:\Users\Administrator\Desktop\数据导入\日线资金\2025\2025\2025\20251230\kphy.xls

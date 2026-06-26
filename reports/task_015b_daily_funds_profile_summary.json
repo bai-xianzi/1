@@ -1,0 +1,54 @@
+{
+  "task_id": "TASK_015B",
+  "generated_at": "2026-06-24T17:04:41",
+  "snapshot_directory_count": 30,
+  "profiled_file_count": 185,
+  "profiled_dataset_counts": {
+    "gn": 29,
+    "hq": 29,
+    "hy": 29,
+    "kpgn": 23,
+    "kphq": 23,
+    "kphy": 23,
+    "zj": 29
+  },
+  "schema_version_counts": {
+    "gn": 2,
+    "hq": 1,
+    "hy": 2,
+    "kpgn": 2,
+    "kphq": 3,
+    "kphy": 2,
+    "zj": 1
+  },
+  "anomaly_counts": {
+    "MISSING_FILE": 25,
+    "SCHEMA_DRIFT": 5,
+    "UNIVERSE_COVERAGE_INCOMPLETE": 1
+  },
+  "error_count": 1,
+  "warning_count": 30,
+  "row_counts": {
+    "gn": 11252,
+    "hq": 158532,
+    "hy": 2494,
+    "kpgn": 8924,
+    "kphq": 120542,
+    "kphy": 1978,
+    "zj": 158532
+  },
+  "total_row_count": 462254,
+  "approved_quarantine": {
+    "snapshot_date": "20251223",
+    "dataset_id": "kphq",
+    "row_count": 288,
+    "reason": "UNIVERSE_COVERAGE_INCOMPLETE",
+    "coverage_ratio": 0.05263157894736842
+  },
+  "notes": [
+    "源文件扩展名为.xls，实际是GB18030编码制表符文本。",
+    "快照日期来自父目录YYYYMMDD。",
+    "TASK_016A只读预导入应识别13个已知Schema版本。",
+    "缺失文件是WARNING；未知Schema或解析错误是BLOCKING。"
+  ]
+}
