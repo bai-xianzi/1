@@ -1,5 +1,5 @@
 dictionary_name: A股量化投资辅助操作系统统一字段字典
-dictionary_revision: '0.5'
+dictionary_revision: '0.5.1'
 status: official_institutional_research_and_execution_governance
 principles:
 - 逻辑字段字典不等于一张超宽数据库表；按领域对象和事件扩展表实现。
@@ -950,6 +950,7 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 交易日期
+    time_semantics: trade_date
   - canonical_name: auction_phase
     chinese_name: 竞价阶段
     data_type: STRING
@@ -1090,6 +1091,7 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 交易日期
+    time_semantics: trade_date
   - canonical_name: inflow_total_cny
     chinese_name: 总流入额
     data_type: DECIMAL
@@ -1223,6 +1225,7 @@ domains:
     nullable: true
     lifecycle_stage: core
     definition: 公告日期
+    time_semantics: publication_date
   - canonical_name: record_date
     chinese_name: 股权登记日
     data_type: DATE
@@ -1908,12 +1911,14 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 成员生效时间
+    time_semantics: effective_interval
   - canonical_name: effective_to
     chinese_name: 成员失效时间
     data_type: TIMESTAMP
     nullable: true
     lifecycle_stage: core
     definition: 成员失效时间
+    time_semantics: effective_interval
   - canonical_name: membership_reason
     chinese_name: 纳入原因
     data_type: STRING
@@ -2301,6 +2306,7 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 发布时间
+    time_semantics: publication_time
   - canonical_name: collected_at
     chinese_name: 采集时间
     data_type: TIMESTAMP
@@ -2455,6 +2461,7 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 发布时间
+    time_semantics: publication_time
   - canonical_name: collected_at
     chinese_name: 采集时间
     data_type: TIMESTAMP
@@ -2609,6 +2616,7 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 发布时间
+    time_semantics: publication_time
   - canonical_name: collected_at
     chinese_name: 采集时间
     data_type: TIMESTAMP
@@ -3281,6 +3289,7 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 事件时间
+    time_semantics: event_time
   - canonical_name: reported_at
     chinese_name: 首次报道时间
     data_type: TIMESTAMP
@@ -3941,6 +3950,7 @@ domains:
     nullable: false
     lifecycle_stage: core
     definition: 交易日期
+    time_semantics: trade_date
   - canonical_name: market_scope_code
     chinese_name: 市场范围代码
     data_type: STRING
@@ -4270,6 +4280,7 @@ domains:
     nullable: true
     lifecycle_stage: core
     definition: 交易日期
+    time_semantics: trade_date
   - canonical_name: feature_value
     chinese_name: 特征值
     data_type: DOUBLE
@@ -4696,6 +4707,7 @@ domains:
     nullable: true
     lifecycle_stage: core
     definition: 交易日期
+    time_semantics: trade_date
   - canonical_name: portfolio_nav
     chinese_name: 组合净值
     data_type: DOUBLE
@@ -5968,12 +5980,14 @@ domains:
     nullable: true
     lifecycle_stage: future_reserved
     definition: 该版本规则生效起点
+    time_semantics: effective_interval
   - canonical_name: effective_to
     chinese_name: 规则失效时间
     data_type: TIMESTAMP
     nullable: true
     lifecycle_stage: future_reserved
     definition: 该版本规则结束时间
+    time_semantics: effective_interval
   - canonical_name: review_status_code
     chinese_name: 规则审核状态
     data_type: STRING
@@ -6366,12 +6380,14 @@ domains:
     nullable: true
     lifecycle_stage: future_reserved
     definition: 关系有效起点
+    time_semantics: effective_interval
   - canonical_name: effective_to
     chinese_name: 暴露关系失效时间
     data_type: TIMESTAMP
     nullable: true
     lifecycle_stage: future_reserved
     definition: 关系有效终点
+    time_semantics: effective_interval
 - domain_code: synthetic_market
   domain_name_cn: 因果行情生成运行
   canonical_object: SyntheticMarketRun
@@ -6859,6 +6875,7 @@ domains:
     nullable: false
     lifecycle_stage: future_reserved
     definition: 创建时间
+    time_semantics: system_time
   - canonical_name: review_status_code
     chinese_name: 审核状态
     data_type: STRING
@@ -6972,12 +6989,14 @@ domains:
     nullable: true
     lifecycle_stage: future_reserved
     definition: 实体地理纬度
+    unit: degrees
   - canonical_name: longitude
     chinese_name: 经度
     data_type: DOUBLE
     nullable: true
     lifecycle_stage: future_reserved
     definition: 实体地理经度
+    unit: degrees
   - canonical_name: active_flag
     chinese_name: 实体是否有效
     data_type: BOOL
@@ -7016,12 +7035,14 @@ domains:
     nullable: true
     lifecycle_stage: future_reserved
     definition: 该实体记录生效起点
+    time_semantics: effective_interval
   - canonical_name: effective_to
     chinese_name: 实体关系失效时间
     data_type: TIMESTAMP
     nullable: true
     lifecycle_stage: future_reserved
     definition: 该实体记录失效终点
+    time_semantics: effective_interval
 - domain_code: entity_relation
   domain_name_cn: 通用实体关系
   canonical_object: EntityRelation
@@ -7140,12 +7161,14 @@ domains:
     nullable: true
     lifecycle_stage: future_reserved
     definition: 关系有效起点
+    time_semantics: effective_interval
   - canonical_name: effective_to
     chinese_name: 关系失效时间
     data_type: TIMESTAMP
     nullable: true
     lifecycle_stage: future_reserved
     definition: 关系有效终点
+    time_semantics: effective_interval
 - domain_code: world_event
   domain_name_cn: 现实世界通用事件
   canonical_object: WorldEvent
@@ -7223,12 +7246,14 @@ domains:
     nullable: true
     lifecycle_stage: future_reserved
     definition: 事件地理纬度
+    unit: degrees
   - canonical_name: longitude
     chinese_name: 事件经度
     data_type: DOUBLE
     nullable: true
     lifecycle_stage: future_reserved
     definition: 事件地理经度
+    unit: degrees
   - canonical_name: event_severity_score
     chinese_name: 事件严重程度评分
     data_type: DOUBLE
@@ -7655,6 +7680,7 @@ domains:
     nullable: true
     lifecycle_stage: near_term
     definition: 实验登记时间
+    time_semantics: system_time
   - canonical_name: completed_at
     chinese_name: 实验完成时间
     data_type: TIMESTAMP
@@ -7702,6 +7728,7 @@ domains:
     nullable: false
     lifecycle_stage: future_reserved
     definition: 核对所属交易日
+    time_semantics: trade_date
   - canonical_name: environment_code
     chinese_name: 运行环境
     data_type: STRING
@@ -7859,4 +7886,5 @@ domains:
     nullable: true
     lifecycle_stage: future_reserved
     definition: 核对记录生成时间
-field_identity_rule: 机器唯一字段引用优先使用 domain_code.canonical_name；同名字段只有语义完全相同时才允许跨对象复用。
+    time_semantics: system_time
+field_identity_rule: 机器唯一字段引用优先使用 domain_code.canonical_name；同名字段只有语义完全相同时才允许跨对象复用；允许例外和迁移计划以field_governance_contract.yaml为准。

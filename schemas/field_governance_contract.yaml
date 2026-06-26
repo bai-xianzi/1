@@ -1,0 +1,191 @@
+contract_name: field_governance_contract
+contract_revision: '0.1'
+dictionary_revision: 0.5.1
+status: official
+principles:
+- 同名字段只有语义完全相同时才允许跨Domain复用。
+- 来源字段不得因为字段名相似而直接提升为Canonical。
+- 封闭枚举、受控代码集、开放代码、标识符和自由文本必须区分。
+- 时间字段必须声明可比较的时间语义；未知时进入人工复核。
+- 允许的上下文类型差异必须登记，禁止静默漂移。
+- 破坏性字段变更必须新增字段并提供迁移计划。
+value_domain_kinds:
+  CLOSED_ENUM:
+    description: 有限、封闭、版本化的枚举值集合。
+    requires_ref: true
+  CONTROLLED_CODESET:
+    description: 交易所、币种、国家等外部或内部受控代码集。
+    requires_ref: true
+  OPEN_CODE:
+    description: metric_code、node_code等允许持续扩展的代码。
+    requires_ref: false
+  IDENTIFIER:
+    description: 证券代码、统一社会信用代码等身份标识。
+    requires_ref: false
+  FREE_TEXT:
+    description: 不受固定值域约束的文本。
+    requires_ref: false
+time_semantics_catalog:
+  event_time: 现实或市场事件实际发生时间。
+  observation_time: 系统或来源观测到事实的时间。
+  publication_time: 来源正式发布或披露时间。
+  publication_date: 来源正式发布或披露日期。
+  availability_time: 数据首次可用于决策的时间。
+  effective_interval: 记录或关系的生效起止区间。
+  trade_date: 交易所交易日，不代表采集或入库时间。
+  report_period: 会计或统计报告期。
+  system_time: 平台创建、更新或处理记录的系统时间。
+required_metadata:
+- domain_code: corporate_action
+  canonical_name: announcement_date
+  key: time_semantics
+  value: publication_date
+- domain_code: scenario_intervention
+  canonical_name: created_at
+  key: time_semantics
+  value: system_time
+- domain_code: research_experiment
+  canonical_name: created_at
+  key: time_semantics
+  value: system_time
+- domain_code: execution_reconciliation
+  canonical_name: created_at
+  key: time_semantics
+  value: system_time
+- domain_code: classification
+  canonical_name: effective_from
+  key: time_semantics
+  value: effective_interval
+- domain_code: classification
+  canonical_name: effective_to
+  key: time_semantics
+  value: effective_interval
+- domain_code: causal_rule
+  canonical_name: effective_from
+  key: time_semantics
+  value: effective_interval
+- domain_code: causal_rule
+  canonical_name: effective_to
+  key: time_semantics
+  value: effective_interval
+- domain_code: entity_exposure
+  canonical_name: effective_from
+  key: time_semantics
+  value: effective_interval
+- domain_code: entity_exposure
+  canonical_name: effective_to
+  key: time_semantics
+  value: effective_interval
+- domain_code: world_entity
+  canonical_name: effective_from
+  key: time_semantics
+  value: effective_interval
+- domain_code: world_entity
+  canonical_name: effective_to
+  key: time_semantics
+  value: effective_interval
+- domain_code: entity_relation
+  canonical_name: effective_from
+  key: time_semantics
+  value: effective_interval
+- domain_code: entity_relation
+  canonical_name: effective_to
+  key: time_semantics
+  value: effective_interval
+- domain_code: geopolitical_conflict
+  canonical_name: event_time
+  key: time_semantics
+  value: event_time
+- domain_code: document_news
+  canonical_name: published_at
+  key: time_semantics
+  value: publication_time
+- domain_code: social_post
+  canonical_name: published_at
+  key: time_semantics
+  value: publication_time
+- domain_code: comment_moderation
+  canonical_name: published_at
+  key: time_semantics
+  value: publication_time
+- domain_code: auction
+  canonical_name: trade_date
+  key: time_semantics
+  value: trade_date
+- domain_code: money_flow
+  canonical_name: trade_date
+  key: time_semantics
+  value: trade_date
+- domain_code: market_state
+  canonical_name: trade_date
+  key: time_semantics
+  value: trade_date
+- domain_code: factor_model
+  canonical_name: trade_date
+  key: time_semantics
+  value: trade_date
+- domain_code: backtest
+  canonical_name: trade_date
+  key: time_semantics
+  value: trade_date
+- domain_code: execution_reconciliation
+  canonical_name: trade_date
+  key: time_semantics
+  value: trade_date
+- domain_code: world_entity
+  canonical_name: latitude
+  key: unit
+  value: degrees
+- domain_code: world_entity
+  canonical_name: longitude
+  key: unit
+  value: degrees
+- domain_code: world_event
+  canonical_name: latitude
+  key: unit
+  value: degrees
+- domain_code: world_event
+  canonical_name: longitude
+  key: unit
+  value: degrees
+shared_field_contracts:
+- canonical_name: trade_count
+  resolution: SEMANTIC_COLLISION_MIGRATION_REQUIRED
+  variants:
+  - domain_code: market_daily
+    semantic_id: market_daily.trade_count
+    meaning: 市场成交笔数
+    data_type: LONG
+    unit: count
+  - domain_code: backtest
+    semantic_id: backtest.executed_trade_count
+    meaning: 策略实际交易笔数
+    current_canonical_name: trade_count
+    target_canonical_name: executed_trade_count
+    data_type: INT
+    unit: count
+  migration:
+    status: PLANNED
+    breaking_change_allowed: false
+    old_field_deprecation_required: true
+    reference_scan_required: true
+    golden_case_required: true
+- canonical_name: value_numeric
+  resolution: CONTEXTUAL_TYPE_VARIANT_ALLOWED
+  variants:
+  - domain_code: macro_policy
+    data_type: DECIMAL
+    numeric_role: reported_observation
+  - domain_code: real_economy
+    data_type: DECIMAL
+    numeric_role: reported_observation
+  - domain_code: simulation_value
+    data_type: DOUBLE
+    numeric_role: simulation_state
+  - domain_code: scenario_intervention
+    data_type: DOUBLE
+    numeric_role: simulation_intervention
+  rules:
+  - DECIMAL与DOUBLE不得在同一Domain内静默互换。
+  - 来源映射必须保留原始精度和转换证据。
+  - 跨Domain连接时必须显式选择精度转换策略。

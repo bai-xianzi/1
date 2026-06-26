@@ -2,7 +2,7 @@
 
 > 本字典是多源数据统一语言、CWMS变量宇宙、研究实验治理和未来执行安全的共同标准。
 
-- 字典修订：`0.5`
+- 字典修订：`0.5.1`
 - 状态：`official_institutional_research_and_execution_governance`
 - 领域数量：**45**
 - 字段总数：**1201**
@@ -1479,8 +1479,8 @@ TradingView式工作台中的人工标注、事件和交易证据
 | `country_code` | 国家代码 | `STRING` |  | `future_reserved` | 实体所在国家 |
 | `region_code` | 地区代码 | `STRING` |  | `future_reserved` | 实体所在地区 |
 | `location_name` | 地点名称 | `STRING` |  | `future_reserved` | 工厂、仓库、港口或市场所在地 |
-| `latitude` | 纬度 | `DOUBLE` |  | `future_reserved` | 实体地理纬度 |
-| `longitude` | 经度 | `DOUBLE` |  | `future_reserved` | 实体地理经度 |
+| `latitude` | 纬度 | `DOUBLE` | degrees | `future_reserved` | 实体地理纬度 |
+| `longitude` | 经度 | `DOUBLE` | degrees | `future_reserved` | 实体地理经度 |
 | `active_flag` | 实体是否有效 | `BOOL` |  | `future_reserved` | 实体是否处于有效生命周期 |
 | `operational_status_code` | 运营状态代码 | `STRING` |  | `future_reserved` | 正常、受限、部分停产、完全停产、恢复中等 |
 | `criticality_score` | 关键性评分 | `DOUBLE` | score_0_100 | `future_reserved` | 该实体对上级经济体、行业或公司的重要程度 |
@@ -1538,8 +1538,8 @@ TradingView式工作台中的人工标注、事件和交易证据
 | `country_codes` | 涉及国家代码集合 | `STRING[]` |  | `future_reserved` | 事件涉及国家 |
 | `region_codes` | 涉及地区代码集合 | `STRING[]` |  | `future_reserved` | 事件涉及地区 |
 | `location_name` | 事件地点 | `STRING` |  | `future_reserved` | 事件发生地点 |
-| `latitude` | 事件纬度 | `DOUBLE` |  | `future_reserved` | 事件地理纬度 |
-| `longitude` | 事件经度 | `DOUBLE` |  | `future_reserved` | 事件地理经度 |
+| `latitude` | 事件纬度 | `DOUBLE` | degrees | `future_reserved` | 事件地理纬度 |
+| `longitude` | 事件经度 | `DOUBLE` | degrees | `future_reserved` | 事件地理经度 |
 | `event_severity_score` | 事件严重程度评分 | `DOUBLE` | score_0_100 | `future_reserved` | 事件自身严重程度，不等同于对任一实体的损失 |
 | `event_probability` | 事件发生概率 | `DOUBLE` | 0-1 | `future_reserved` | 预测或场景事件发生概率 |
 | `surprise_score` | 事件突发性评分 | `DOUBLE` | score_0_100 | `future_reserved` | 相对于市场预期的意外程度 |

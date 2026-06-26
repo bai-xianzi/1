@@ -4,6 +4,7 @@
 
 - `canonical_fields.yaml`：统一字段和领域对象；
 - `enum_definitions.yaml`：统一枚举；
+- `field_governance_contract.yaml`：值域分类、时间语义、跨领域同名字段和迁移治理合同；
 - `simulation_variables.yaml`：变量激活、可控权限和传播方式；
 - `causal_rules.yaml`：因果规则与硬逻辑；
 - `scenario_catalog.yaml`：标准场景模板；
