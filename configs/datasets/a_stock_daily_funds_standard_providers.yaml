@@ -1,0 +1,42 @@
+task_id: TASK_017D
+registry_id: a_stock_daily_funds_standard_providers
+registry_version: "0.1.0"
+standard_query_contract_version: "0.2.0"
+status: IMPLEMENTED_WITH_WARNINGS
+canonical_service_id: dolphindb_daily_funds_canonical_service
+canonical_service_config: configs/datasets/a_stock_daily_funds_standard_service.yaml
+provider_module: a_stock_quant.daily_funds_standard_provider
+usage_gate:
+  current_snapshot_research: ALLOWED_WITH_WARNINGS
+  manual_decision_support: BLOCK_SAME_DAY_UNPROVEN_AVAILABILITY
+  strict_historical_backtest: BLOCKED
+  historical_model_training: BLOCKED
+providers:
+  hq:
+    provider_id: dolphindb_daily_funds_hq_standard_provider
+    selector_mode: INSTRUMENT_ID
+    canonical_object: DailyBar
+  hy:
+    provider_id: dolphindb_daily_funds_hy_standard_provider
+    selector_mode: ENTITY_ID
+    canonical_object: ClassificationMarketSnapshot
+  gn:
+    provider_id: dolphindb_daily_funds_gn_standard_provider
+    selector_mode: ENTITY_ID
+    canonical_object: ClassificationMarketSnapshot
+  kphq:
+    provider_id: dolphindb_daily_funds_kphq_standard_provider
+    selector_mode: INSTRUMENT_ID
+    canonical_object: AuctionSnapshot
+  kphy:
+    provider_id: dolphindb_daily_funds_kphy_standard_provider
+    selector_mode: ENTITY_ID
+    canonical_object: ClassificationMarketSnapshot
+  kpgn:
+    provider_id: dolphindb_daily_funds_kpgn_standard_provider
+    selector_mode: ENTITY_ID
+    canonical_object: ClassificationMarketSnapshot
+  zj:
+    provider_id: dolphindb_daily_funds_zj_standard_provider
+    selector_mode: INSTRUMENT_ID
+    canonical_object: MoneyFlowSnapshot

@@ -1,0 +1,147 @@
+{
+  "task_id": "TASK_017D",
+  "mode": "REAL_STANDARD_DATA_SERVICE_ACCEPTANCE",
+  "generated_at": "2026-06-26T17:53:03.561691+00:00",
+  "database_uri": "dfs://A_STOCK_DAILY_FUNDS_DB",
+  "provider_count": 7,
+  "unified_query_count": 7,
+  "historical_gate_block_count": 7,
+  "write_operation_count": 0,
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "datasets": [
+    {
+      "dataset_id": "hq",
+      "provider_id": "dolphindb_daily_funds_hq_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "selector": "300774",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "DailyBar",
+      "result_count": 1,
+      "status": "WARNING",
+      "blocks_downstream": false,
+      "strict_historical_blocks": true,
+      "lineage_item_count": 17,
+      "primary_key": {
+        "instrument_id": "300774",
+        "trade_date": "2025-11-20"
+      }
+    },
+    {
+      "dataset_id": "hy",
+      "provider_id": "dolphindb_daily_funds_hy_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "selector": "能源金属",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "result_count": 1,
+      "status": "WARNING",
+      "blocks_downstream": false,
+      "strict_historical_blocks": true,
+      "lineage_item_count": 33,
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "INDUSTRY",
+        "node_id": "SOURCE_VENDOR:INDUSTRY:87FA7AF278FCE809933A",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "CLOSE"
+      }
+    },
+    {
+      "dataset_id": "gn",
+      "provider_id": "dolphindb_daily_funds_gn_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "selector": "租售同权",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "result_count": 1,
+      "status": "WARNING",
+      "blocks_downstream": false,
+      "strict_historical_blocks": true,
+      "lineage_item_count": 33,
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "CONCEPT",
+        "node_id": "SOURCE_VENDOR:CONCEPT:F5A0BCC48398C2B65ECE",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "CLOSE"
+      }
+    },
+    {
+      "dataset_id": "kphq",
+      "provider_id": "dolphindb_daily_funds_kphq_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "selector": "300093",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "AuctionSnapshot",
+      "result_count": 1,
+      "status": "WARNING",
+      "blocks_downstream": false,
+      "strict_historical_blocks": true,
+      "lineage_item_count": 13,
+      "primary_key": {
+        "instrument_id": "300093",
+        "trade_date": "2025-11-20",
+        "auction_phase": "OPENING_CALL",
+        "snapshot_time_precision": "DATE_ONLY"
+      }
+    },
+    {
+      "dataset_id": "kphy",
+      "provider_id": "dolphindb_daily_funds_kphy_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "selector": "证券",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "result_count": 1,
+      "status": "WARNING",
+      "blocks_downstream": false,
+      "strict_historical_blocks": true,
+      "lineage_item_count": 33,
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "INDUSTRY",
+        "node_id": "SOURCE_VENDOR:INDUSTRY:05ECD86CA885BBCC5905",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "OPENING_AUCTION"
+      }
+    },
+    {
+      "dataset_id": "kpgn",
+      "provider_id": "dolphindb_daily_funds_kpgn_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "selector": "CPO概念",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "result_count": 1,
+      "status": "WARNING",
+      "blocks_downstream": false,
+      "strict_historical_blocks": true,
+      "lineage_item_count": 33,
+      "primary_key": {
+        "classification_system": "SOURCE_VENDOR",
+        "classification_type": "CONCEPT",
+        "node_id": "SOURCE_VENDOR:CONCEPT:E5361B4F8BF5902444EB",
+        "trade_date": "2025-11-20",
+        "snapshot_phase": "OPENING_AUCTION"
+      }
+    },
+    {
+      "dataset_id": "zj",
+      "provider_id": "dolphindb_daily_funds_zj_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "selector": "300502",
+      "snapshot_date": "2025-11-20",
+      "canonical_object": "MoneyFlowSnapshot",
+      "result_count": 1,
+      "status": "WARNING",
+      "blocks_downstream": false,
+      "strict_historical_blocks": true,
+      "lineage_item_count": 9,
+      "primary_key": {
+        "instrument_id": "300502",
+        "trade_date": "2025-11-20",
+        "flow_method_code": "VENDOR_ORDER_SIZE_BUCKET_V1"
+      }
+    }
+  ]
+}

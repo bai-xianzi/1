@@ -5,7 +5,7 @@
 目标：
 1. 下游不直接调用 DolphinDB 或任何来源专属查询接口；
 2. 所有数据集通过统一 Provider 接入；
-3. 查询请求显式携带数据集、标准对象、证券、日期和时点边界；
+3. 查询请求显式携带数据集、标准对象、实体选择器、日期和时点边界；
 4. 查询结果统一携带覆盖版本、映射版本、字典版本、质量和血缘；
 5. 日K只是第一个 Provider，后续基本面和七类快照复用同一合同。
 
@@ -24,6 +24,14 @@ from uuid import uuid4
 from .data_contracts import (
     DataContractError,
     QualityStatus,
+)
+
+
+STANDARD_QUERY_CONTRACT_VERSION = "0.2.0"
+INSTRUMENT_SELECTOR_MODE = "INSTRUMENT_ID"
+ENTITY_SELECTOR_MODE = "ENTITY_ID"
+_ALLOWED_SELECTOR_MODES = frozenset(
+    {INSTRUMENT_SELECTOR_MODE, ENTITY_SELECTOR_MODE}
 )
 
 
@@ -109,6 +117,7 @@ class StandardDataQuery:
     start_date: date
     end_date: date
     fields: tuple[str, ...] = ()
+    entity_ids: tuple[str, ...] = ()
     as_of_date: date | None = None
     usage: StandardDataUsage = (
         StandardDataUsage.CURRENT_SNAPSHOT_RESEARCH
@@ -139,8 +148,24 @@ class StandardDataQuery:
             _normalise_unique_texts(
                 self.instrument_ids,
                 "instrument_ids",
+                allow_empty=True,
             ),
         )
+        object.__setattr__(
+            self,
+            "entity_ids",
+            _normalise_unique_texts(
+                self.entity_ids,
+                "entity_ids",
+                allow_empty=True,
+            ),
+        )
+
+        if bool(self.instrument_ids) == bool(self.entity_ids):
+            raise DataContractError(
+                "instrument_ids 与 entity_ids 必须且只能提供一种。"
+            )
+
         object.__setattr__(
             self,
             "fields",
@@ -245,6 +270,18 @@ class StandardDataQuery:
             raise DataContractError(
                 "limit_per_instrument 必须是1到5000之间的整数。"
             )
+
+    @property
+    def selector_mode(self) -> str:
+        return (
+            INSTRUMENT_SELECTOR_MODE
+            if self.instrument_ids
+            else ENTITY_SELECTOR_MODE
+        )
+
+    @property
+    def selector_ids(self) -> tuple[str, ...]:
+        return self.instrument_ids or self.entity_ids
 
     def to_dict(self) -> dict[str, Any]:
         return _json_safe(asdict(self))
@@ -458,6 +495,47 @@ class ProviderDescriptor:
     coverage_version: str
     mapping_version: str
     dictionary_revision: str
+    selector_mode: str = INSTRUMENT_SELECTOR_MODE
+
+    def __post_init__(self) -> None:
+        for field_name in (
+            "provider_id",
+            "dataset_id",
+            "coverage_version",
+            "mapping_version",
+            "dictionary_revision",
+        ):
+            object.__setattr__(
+                self,
+                field_name,
+                _require_text(
+                    getattr(self, field_name),
+                    field_name,
+                ),
+            )
+
+        object.__setattr__(
+            self,
+            "supported_objects",
+            _normalise_unique_texts(
+                self.supported_objects,
+                "supported_objects",
+            ),
+        )
+
+        selector_mode = _require_text(
+            self.selector_mode,
+            "selector_mode",
+        ).upper()
+        if selector_mode not in _ALLOWED_SELECTOR_MODES:
+            raise DataContractError(
+                "selector_mode 只支持 INSTRUMENT_ID 或 ENTITY_ID。"
+            )
+        object.__setattr__(
+            self,
+            "selector_mode",
+            selector_mode,
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return _json_safe(asdict(self))
@@ -528,10 +606,18 @@ class StandardDataService:
         request: StandardDataQuery,
     ) -> StandardQueryResult:
         provider = self.get_provider(request.dataset_id)
+        descriptor = provider.descriptor
+
+        if request.selector_mode != descriptor.selector_mode:
+            raise DataContractError(
+                "查询实体选择器与 Provider 不一致："
+                f"query={request.selector_mode}, "
+                f"provider={descriptor.selector_mode}"
+            )
 
         if (
             request.canonical_object
-            not in provider.descriptor.supported_objects
+            not in descriptor.supported_objects
         ):
             raise DataContractError(
                 "Provider 不支持标准对象："
