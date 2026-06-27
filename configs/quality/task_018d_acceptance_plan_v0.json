@@ -1,0 +1,76 @@
+{
+  "contract_version": "0.1.0",
+  "task_id": "TASK_018D",
+  "mode": "REAL_END_TO_END_READINESS_GATE_ACCEPTANCE",
+  "as_of_date": "2026-06-27",
+  "manual_decision_time": "2026-06-27T15:00:00+08:00",
+  "external_evidence_config": "configs/quality/data_readiness_external_evidence_v0.json",
+  "readiness_policy": "configs/quality/data_readiness_policy_v0.json",
+  "evidence_rules": "configs/quality/data_readiness_evidence_rules_v0.json",
+  "usages": [
+    "CURRENT_SNAPSHOT_RESEARCH",
+    "MANUAL_DECISION_SUPPORT",
+    "STRICT_HISTORICAL_BACKTEST",
+    "HISTORICAL_MODEL_TRAINING"
+  ],
+  "datasets": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "canonical_object": "DailyBar",
+      "sample_strategy": "PREFERRED_SELECTOR_LATEST",
+      "preferred_selector": "000001"
+    },
+    {
+      "dataset_id": "a_stock_fundamental_snapshot",
+      "canonical_object": "FundamentalSnapshot",
+      "sample_strategy": "PREFERRED_SELECTOR_LATEST",
+      "preferred_selector": "000001"
+    },
+    {
+      "dataset_id": "hq",
+      "canonical_object": "DailyBar",
+      "sample_strategy": "LATEST_SOURCE_ROW"
+    },
+    {
+      "dataset_id": "hy",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "sample_strategy": "LATEST_SOURCE_ROW"
+    },
+    {
+      "dataset_id": "gn",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "sample_strategy": "LATEST_SOURCE_ROW"
+    },
+    {
+      "dataset_id": "kphq",
+      "canonical_object": "AuctionSnapshot",
+      "sample_strategy": "LATEST_SOURCE_ROW"
+    },
+    {
+      "dataset_id": "kphy",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "sample_strategy": "LATEST_SOURCE_ROW"
+    },
+    {
+      "dataset_id": "kpgn",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "sample_strategy": "LATEST_SOURCE_ROW"
+    },
+    {
+      "dataset_id": "zj",
+      "canonical_object": "MoneyFlowSnapshot",
+      "sample_strategy": "LATEST_SOURCE_ROW"
+    }
+  ],
+  "acceptance_invariants": {
+    "provider_count": 9,
+    "usage_count": 4,
+    "assessment_count": 36,
+    "evidence_dimension_count_per_assessment": 8,
+    "current_research_usable_count": 9,
+    "manual_decision_block_count": 9,
+    "historical_minimum_block_count": 8,
+    "historical_activation_failed_count": 8,
+    "database_write_operation_count": 0
+  }
+}
