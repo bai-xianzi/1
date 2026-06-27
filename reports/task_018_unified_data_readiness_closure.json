@@ -1,0 +1,61 @@
+{
+  "task_id": "TASK_018",
+  "task_name": "统一数据质量门禁与数据就绪度服务",
+  "closure_status": "PASSED_WITH_WARNINGS",
+  "closure_date": "2026-06-27",
+  "subtasks": {
+    "TASK_018A": {
+      "status": "PASSED_OFFLINE",
+      "deliverable": "统一数据就绪度合同与用途级政策"
+    },
+    "TASK_018B": {
+      "status": "PASSED_OFFLINE",
+      "deliverable": "StandardQueryResult到八维ReadinessEvidence适配"
+    },
+    "TASK_018C": {
+      "status": "PASSED_WITH_WARNINGS",
+      "deliverable": "报告支持的覆盖、交易日时效和用途启用证据"
+    },
+    "TASK_018D": {
+      "status": "PASSED_WITH_WARNINGS",
+      "deliverable": "九数据集、四用途真实端到端统一门禁验收"
+    }
+  },
+  "real_acceptance": {
+    "provider_count": 9,
+    "dataset_count": 9,
+    "usage_count": 4,
+    "assessment_count": 36,
+    "evidence_dimension_count": 8,
+    "current_research_usable_count": 9,
+    "current_research_warning_count": 9,
+    "manual_decision_block_count": 9,
+    "strict_historical_block_count": 9,
+    "historical_training_block_count": 9,
+    "database_connection_attempted": true,
+    "database_readonly_query_mode": true,
+    "write_operation_count": 0,
+    "issues": []
+  },
+  "architecture_result": {
+    "mandatory_entrypoint": "ReadinessGatedStandardDataService",
+    "raw_access_forbidden_for_downstream": true,
+    "provider_gate_cannot_be_skipped": true,
+    "readiness_gate_cannot_be_skipped": true,
+    "market_state_must_use_gated_service": true
+  },
+  "remaining_warnings": [
+    "日K当前时效落后，并保留来源涨跌幅符号语义警告",
+    "基本面可靠公告可见时间尚未证明",
+    "七类快照未证明全实体覆盖",
+    "竞价数据只有日期级时间精度",
+    "分类实体ID和领先证券ID仍需权威主数据",
+    "average_shares单位和资金流方法仍需供应商文档",
+    "七类快照缺少可靠available_at"
+  ],
+  "next_task": {
+    "task_id": "TASK_019",
+    "task_name": "市场状态输入合同与可解释基线"
+  },
+  "database_write_operation_count": 0
+}
