@@ -1,0 +1,249 @@
+{
+  "task_id": "TASK_019B",
+  "spec_version": "0.1.0",
+  "input_contract_version": "0.1.0",
+  "output_object": "MarketStateFeatureSnapshot",
+  "output_scope": "RESEARCH_ONLY",
+  "allowed_usage": "CURRENT_SNAPSHOT_RESEARCH",
+  "manual_decision_allowed": false,
+  "official_market_state_allowed": false,
+  "regime_label_allowed": false,
+  "date_alignment_policy": "LATEST_COMMON_TRADE_DATE",
+  "required_source_datasets": [
+    "a_stock_daily_k",
+    "hy"
+  ],
+  "required_feature_families": [
+    "TREND",
+    "BREADTH",
+    "LIQUIDITY",
+    "VOLATILITY",
+    "SECTOR_DIFFUSION"
+  ],
+  "feature_definitions": [
+    {
+      "feature_id": "daily_positive_return_ratio",
+      "family": "TREND",
+      "unit": "ratio",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "pct_change_pct"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "count(pct_change_pct > 0) / count(non_null_pct_change_pct)",
+      "interpretation": "越高表示当日上涨证券覆盖更广；不直接等于牛市。"
+    },
+    {
+      "feature_id": "daily_mean_return_pct",
+      "family": "TREND",
+      "unit": "percent_points",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "pct_change_pct"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "mean(pct_change_pct)",
+      "interpretation": "等权横截面平均涨跌幅。"
+    },
+    {
+      "feature_id": "daily_median_return_pct",
+      "family": "TREND",
+      "unit": "percent_points",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "pct_change_pct"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "median(pct_change_pct)",
+      "interpretation": "对极端值更稳健的市场中位涨跌幅。"
+    },
+    {
+      "feature_id": "industry_advance_ratio",
+      "family": "BREADTH",
+      "unit": "ratio",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "required_fields": [
+        "up_count",
+        "down_count"
+      ],
+      "minimum_observation_count": 2,
+      "formula": "sum(up_count) / (sum(up_count) + sum(down_count))",
+      "interpretation": "行业节点内上涨证券占可比较上涨与下跌证券的比例。"
+    },
+    {
+      "feature_id": "industry_breadth_ratio_median",
+      "family": "BREADTH",
+      "unit": "ratio",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "required_fields": [
+        "breadth_ratio"
+      ],
+      "minimum_observation_count": 2,
+      "formula": "median(breadth_ratio)",
+      "interpretation": "来源行业宽度比率的中位数，保留供应商原始定义。"
+    },
+    {
+      "feature_id": "industry_limit_up_share_of_up",
+      "family": "BREADTH",
+      "unit": "ratio",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "required_fields": [
+        "limit_up_count",
+        "up_count"
+      ],
+      "minimum_observation_count": 2,
+      "formula": "sum(limit_up_count) / sum(up_count); 0 when total_up_count = 0",
+      "interpretation": "上涨证券中涨停证券所占比例。"
+    },
+    {
+      "feature_id": "market_amount_total_cny",
+      "family": "LIQUIDITY",
+      "unit": "CNY",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "amount_cny"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "sum(non_null_amount_cny)",
+      "interpretation": "查询证券集合的当日成交额总和，不自动代表全市场成交额。"
+    },
+    {
+      "feature_id": "turnover_rate_median_pct",
+      "family": "LIQUIDITY",
+      "unit": "percent_points",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "turnover_rate_pct"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "median(turnover_rate_pct)",
+      "interpretation": "横截面换手率中位数。"
+    },
+    {
+      "feature_id": "amount_field_coverage_ratio",
+      "family": "LIQUIDITY",
+      "unit": "ratio",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "amount_cny"
+      ],
+      "minimum_observation_count": 1,
+      "formula": "count(non_null_amount_cny) / source_record_count",
+      "interpretation": "成交额字段在输入证券集合中的非空覆盖率。"
+    },
+    {
+      "feature_id": "cross_section_return_std_pct",
+      "family": "VOLATILITY",
+      "unit": "percent_points",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "pct_change_pct"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "population_stddev(pct_change_pct)",
+      "interpretation": "证券横截面涨跌幅离散度。"
+    },
+    {
+      "feature_id": "intraday_range_median_pct",
+      "family": "VOLATILITY",
+      "unit": "percent_points",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "high_raw_cny",
+        "low_raw_cny",
+        "close_raw_cny"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "median((high_raw_cny - low_raw_cny) / close_raw_cny * 100)",
+      "interpretation": "使用当日收盘价归一化的日内振幅中位数。"
+    },
+    {
+      "feature_id": "absolute_return_median_pct",
+      "family": "VOLATILITY",
+      "unit": "percent_points",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "required_fields": [
+        "pct_change_pct"
+      ],
+      "minimum_observation_count": 3,
+      "formula": "median(abs(pct_change_pct))",
+      "interpretation": "证券绝对涨跌幅中位数。"
+    },
+    {
+      "feature_id": "positive_industry_ratio",
+      "family": "SECTOR_DIFFUSION",
+      "unit": "ratio",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "required_fields": [
+        "pct_change_pct"
+      ],
+      "minimum_observation_count": 2,
+      "formula": "count(industry_pct_change_pct > 0) / count(non_null_industry_pct_change_pct)",
+      "interpretation": "上涨行业节点占有有效涨跌幅行业节点的比例。"
+    },
+    {
+      "feature_id": "industry_return_std_pct",
+      "family": "SECTOR_DIFFUSION",
+      "unit": "percent_points",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "required_fields": [
+        "pct_change_pct"
+      ],
+      "minimum_observation_count": 2,
+      "formula": "population_stddev(industry_pct_change_pct)",
+      "interpretation": "行业节点涨跌幅离散度。"
+    },
+    {
+      "feature_id": "positive_average_return_ratio",
+      "family": "SECTOR_DIFFUSION",
+      "unit": "ratio",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "required_fields": [
+        "average_return_pct"
+      ],
+      "minimum_observation_count": 2,
+      "formula": "count(average_return_pct > 0) / count(non_null_average_return_pct)",
+      "interpretation": "行业内部平均收益为正的行业节点比例。"
+    }
+  ],
+  "hard_rules": [
+    "必须先通过TASK_019A输入合同门禁。",
+    "只在两个必需数据集的最新共同交易日计算特征。",
+    "没有共同交易日时必须BLOCKED。",
+    "必需特征缺失或有效观测数不足时必须BLOCKED。",
+    "输入WARNING和质量警告必须进入特征快照。",
+    "MarketStateFeatureSnapshot不得包含牛市、熊市、震荡市或仓位标签。",
+    "成交额总和只代表查询证券集合，不能在未证明全集覆盖时称为全市场成交额。",
+    "TASK_019B不得启用人工辅助决策、正式状态发布或交易执行。"
+  ]
+}
