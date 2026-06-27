@@ -1,0 +1,796 @@
+{
+  "task_id": "TASK_019C",
+  "mode": "REAL_READONLY_MARKET_STATE_FEATURE_ACCEPTANCE",
+  "generated_at": "2026-06-27T07:33:48.588550+00:00",
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "as_of_date": "2026-06-27",
+  "common_trade_date": "2025-12-31",
+  "candidate_dates_checked": 1,
+  "required_dataset_count": 2,
+  "required_feature_family_count": 5,
+  "feature_definition_count": 15,
+  "generated_feature_count": 15,
+  "generated_feature_family_count": 5,
+  "unique_source_query_id_count": 2,
+  "source_query_ids": [
+    "da9fffc6-33ad-4722-b7cf-50544cce0cce",
+    "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+  ],
+  "input_assessment_status": "READY_WITH_WARNINGS",
+  "feature_snapshot_status": "READY_WITH_WARNINGS",
+  "research_feature_build_allowed": true,
+  "manual_decision_allowed": false,
+  "official_market_state_allowed": false,
+  "regime_label": null,
+  "universe_scope": "DETERMINISTIC_CAPPED_REAL_QUERY_UNIVERSE",
+  "claim_full_market_coverage": false,
+  "query_summaries": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "canonical_object": "DailyBar",
+      "selector_mode": "INSTRUMENT_ID",
+      "selector_count": 30,
+      "selectors": [
+        "000001",
+        "000002",
+        "000004",
+        "000006",
+        "000007",
+        "000008",
+        "000009",
+        "000010",
+        "000011",
+        "000012",
+        "000014",
+        "000016",
+        "000017",
+        "000019",
+        "000020",
+        "000021",
+        "000025",
+        "000026",
+        "000027",
+        "000028",
+        "000029",
+        "000030",
+        "000031",
+        "000032",
+        "000034",
+        "000035",
+        "000036",
+        "000037",
+        "000039",
+        "000042"
+      ],
+      "query_id": "ff6cdf05-31bb-4a10-baaf-906dedc4ab52",
+      "provider_id": "dolphindb_daily_k_standard_provider",
+      "provider_status": "PASSED",
+      "provider_warnings": [],
+      "result_count": 30,
+      "lineage_item_count": 510,
+      "readiness_status": "WARNING",
+      "readiness_warnings": [
+        "FRESHNESS:TRADING_SESSION_LAG_EXCEEDS_SLA",
+        "SEMANTIC_CONFIDENCE:SEMANTIC_WARNINGS_PRESENT"
+      ],
+      "blocks_downstream": false,
+      "evidence": {
+        "CONTRACT": {
+          "status": "PASSED",
+          "code": "CONTRACT_MATCHED",
+          "message": "统一查询合同、版本和Provider描述一致。",
+          "metrics": {
+            "failures": [],
+            "supported_objects": [
+              "DailyBar",
+              "OwnershipSnapshot"
+            ],
+            "selector_mode": "INSTRUMENT_ID"
+          },
+          "evidence_refs": [
+            "query:ff6cdf05-31bb-4a10-baaf-906dedc4ab52",
+            "provider:dolphindb_daily_k_standard_provider",
+            "coverage:a_stock_daily_k@2026-05-29",
+            "mapping:0.2.0",
+            "dictionary:0.5"
+          ]
+        },
+        "QUERY_EXECUTION": {
+          "status": "PASSED",
+          "code": "QUERY_COMPLETED",
+          "message": "标准查询已完成并生成结构化结果。",
+          "metrics": {
+            "quality_status": "PASSED",
+            "blocks_downstream": false,
+            "source_row_count": 30,
+            "result_count": 30
+          },
+          "evidence_refs": [
+            "query:ff6cdf05-31bb-4a10-baaf-906dedc4ab52",
+            "provider:dolphindb_daily_k_standard_provider"
+          ]
+        },
+        "COVERAGE": {
+          "status": "PASSED",
+          "code": "FULL_DATABASE_SNAPSHOT_COVERAGE_PROVEN",
+          "message": "日K数据库边界、实体数和声明截止日由真实覆盖报告证明。",
+          "metrics": {
+            "coverage_scope": "FULL_DATABASE_SNAPSHOT",
+            "row_count": 16548275,
+            "entity_count": 5523,
+            "min_data_date": "1990-12-19T00:00:00",
+            "max_data_date": "2026-05-29T00:00:00",
+            "declared_cutoff_date": "2026-05-29",
+            "database_matches_declared_cutoff": true
+          },
+          "evidence_refs": [
+            "external_snapshot:task-018c-external-evidence@2026-06-27",
+            "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+            "report:reports/task_008_dataset_coverage.json"
+          ]
+        },
+        "FRESHNESS": {
+          "status": "WARNING",
+          "code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+          "message": "真实报告截止日落后于用途对应的交易日时效阈值。",
+          "metrics": {
+            "latest_available_date": "2026-05-29",
+            "expected_latest_trading_date": "2026-06-26",
+            "trading_session_lag": 19,
+            "maximum_allowed_trading_session_lag": 1,
+            "usage": "CURRENT_SNAPSHOT_RESEARCH",
+            "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+          },
+          "evidence_refs": [
+            "external_snapshot:task-018c-external-evidence@2026-06-27",
+            "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+            "report:reports/task_008_dataset_coverage.json"
+          ]
+        },
+        "LINEAGE": {
+          "status": "PASSED",
+          "code": "LINEAGE_COMPLETE",
+          "message": "所有标准记录均包含来源标识和字段血缘。",
+          "metrics": {
+            "record_count": 30,
+            "source_record_id_count": 30,
+            "records_with_lineage": 30,
+            "metadata_lineage_item_count": 510,
+            "calculated_lineage_item_count": 510
+          },
+          "evidence_refs": [
+            "query:ff6cdf05-31bb-4a10-baaf-906dedc4ab52",
+            "provider:dolphindb_daily_k_standard_provider",
+            "source:000001|2025-12-31",
+            "source:000002|2025-12-31",
+            "source:000004|2025-12-31",
+            "source:000006|2025-12-31",
+            "source:000007|2025-12-31",
+            "source:000008|2025-12-31",
+            "source:000009|2025-12-31",
+            "source:000010|2025-12-31",
+            "source:000011|2025-12-31",
+            "source:000012|2025-12-31",
+            "source:000014|2025-12-31",
+            "source:000016|2025-12-31",
+            "source:000017|2025-12-31",
+            "source:000019|2025-12-31",
+            "source:000020|2025-12-31",
+            "source:000021|2025-12-31",
+            "source:000025|2025-12-31",
+            "source:000026|2025-12-31",
+            "source:000027|2025-12-31",
+            "source:000028|2025-12-31",
+            "source:000029|2025-12-31",
+            "source:000030|2025-12-31",
+            "source:000031|2025-12-31",
+            "source:000032|2025-12-31",
+            "source:000034|2025-12-31",
+            "source:000035|2025-12-31",
+            "source:000036|2025-12-31",
+            "source:000037|2025-12-31",
+            "source:000039|2025-12-31",
+            "source:000042|2025-12-31"
+          ]
+        },
+        "TEMPORAL_SAFETY": {
+          "status": "PASSED",
+          "code": "AS_OF_BOUNDARY_ENFORCED",
+          "message": "查询显式携带并通过as_of_date边界。",
+          "metrics": {
+            "as_of_date": "2026-06-27",
+            "decision_time": null,
+            "temporal_markers": []
+          },
+          "evidence_refs": [
+            "query:ff6cdf05-31bb-4a10-baaf-906dedc4ab52",
+            "provider:dolphindb_daily_k_standard_provider"
+          ]
+        },
+        "SEMANTIC_CONFIDENCE": {
+          "status": "WARNING",
+          "code": "SEMANTIC_WARNINGS_PRESENT",
+          "message": "标准结果仍包含来源语义或质量警告。",
+          "metrics": {
+            "quality_flags": [
+              "SOURCE_PCT_CHANGE_SIGN_INVERTED"
+            ],
+            "warnings": [],
+            "quality_status": "PASSED"
+          },
+          "evidence_refs": [
+            "query:ff6cdf05-31bb-4a10-baaf-906dedc4ab52",
+            "provider:dolphindb_daily_k_standard_provider"
+          ]
+        },
+        "ACTIVATION": {
+          "status": "PASSED",
+          "code": "DATASET_USAGE_ACTIVATION_VERIFIED",
+          "message": "独立启用注册表确认该数据集可用于当前用途。",
+          "metrics": {
+            "enabled": true,
+            "effective": true,
+            "activation_state": "RESEARCH_AND_HISTORICAL_CANDIDATE",
+            "allowed_usages": [
+              "CURRENT_SNAPSHOT_RESEARCH",
+              "HISTORICAL_MODEL_TRAINING",
+              "STRICT_HISTORICAL_BACKTEST"
+            ],
+            "requested_usage": "CURRENT_SNAPSHOT_RESEARCH",
+            "effective_from": "2026-06-27",
+            "evidence_note": "允许研究和历史候选用途；人工辅助决策仍需数据更新与独立激活。"
+          },
+          "evidence_refs": [
+            "external_snapshot:task-018c-external-evidence@2026-06-27",
+            "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+            "report:reports/task_008_dataset_coverage.json",
+            "config:configs/quality/data_readiness_dataset_activation_v0.json"
+          ]
+        }
+      }
+    },
+    {
+      "dataset_id": "hy",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "selector_mode": "ENTITY_ID",
+      "selector_count": 30,
+      "selectors": [
+        "专业服务",
+        "专用设备",
+        "中药",
+        "互联网服务",
+        "交运设备",
+        "仪器仪表",
+        "保险",
+        "光伏设备",
+        "光学光电子",
+        "公用事业",
+        "农牧饲渔",
+        "农药兽药",
+        "包装材料",
+        "化学制品",
+        "化学制药",
+        "化学原料",
+        "化纤行业",
+        "化肥行业",
+        "医疗器械",
+        "医疗服务",
+        "医药商业",
+        "半导体",
+        "商业百货",
+        "塑料制品",
+        "多元金融",
+        "家用轻工",
+        "家电行业",
+        "小金属",
+        "工程咨询服务",
+        "工程建设"
+      ],
+      "query_id": "da9fffc6-33ad-4722-b7cf-50544cce0cce",
+      "provider_id": "dolphindb_daily_funds_hy_standard_provider",
+      "provider_status": "WARNING",
+      "provider_warnings": [
+        "DAILY_FUNDS_EXACT_AVAILABLE_AT_UNPROVEN"
+      ],
+      "result_count": 30,
+      "lineage_item_count": 990,
+      "readiness_status": "WARNING",
+      "readiness_warnings": [
+        "QUERY_EXECUTION:QUERY_COMPLETED_WITH_WARNINGS",
+        "COVERAGE:DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+        "FRESHNESS:TRADING_SESSION_LAG_EXCEEDS_SLA",
+        "TEMPORAL_SAFETY:TEMPORAL_WARNING_PRESENT",
+        "SEMANTIC_CONFIDENCE:SEMANTIC_WARNINGS_PRESENT"
+      ],
+      "blocks_downstream": false,
+      "evidence": {
+        "CONTRACT": {
+          "status": "PASSED",
+          "code": "CONTRACT_MATCHED",
+          "message": "统一查询合同、版本和Provider描述一致。",
+          "metrics": {
+            "failures": [],
+            "supported_objects": [
+              "ClassificationMarketSnapshot"
+            ],
+            "selector_mode": "ENTITY_ID"
+          },
+          "evidence_refs": [
+            "query:da9fffc6-33ad-4722-b7cf-50544cce0cce",
+            "provider:dolphindb_daily_funds_hy_standard_provider",
+            "coverage:daily-funds-raw@2025-11-20..2025-12-31",
+            "mapping:0.2.0",
+            "dictionary:0.6.0"
+          ]
+        },
+        "QUERY_EXECUTION": {
+          "status": "WARNING",
+          "code": "QUERY_COMPLETED_WITH_WARNINGS",
+          "message": "标准查询已完成并生成结构化结果。",
+          "metrics": {
+            "quality_status": "WARNING",
+            "blocks_downstream": false,
+            "source_row_count": 30,
+            "result_count": 30
+          },
+          "evidence_refs": [
+            "query:da9fffc6-33ad-4722-b7cf-50544cce0cce",
+            "provider:dolphindb_daily_funds_hy_standard_provider"
+          ]
+        },
+        "COVERAGE": {
+          "status": "WARNING",
+          "code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+          "message": "七类快照已通过真实Canonical和统一入口抽样验收，但尚无完整实体全集覆盖证明。",
+          "metrics": {
+            "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+            "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+            "canonical_result_count": 1,
+            "unified_result_count": 1,
+            "selector_mode": "ENTITY_ID",
+            "exhaustive_entity_coverage_proven": false
+          },
+          "evidence_refs": [
+            "external_snapshot:task-018c-external-evidence@2026-06-27",
+            "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+            "report:reports/task_017c_real_acceptance.json",
+            "report:reports/task_017d_real_acceptance.json"
+          ]
+        },
+        "FRESHNESS": {
+          "status": "WARNING",
+          "code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+          "message": "真实报告截止日落后于用途对应的交易日时效阈值。",
+          "metrics": {
+            "latest_available_date": "2025-12-31",
+            "expected_latest_trading_date": "2026-06-26",
+            "trading_session_lag": 114,
+            "maximum_allowed_trading_session_lag": 1,
+            "usage": "CURRENT_SNAPSHOT_RESEARCH",
+            "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+          },
+          "evidence_refs": [
+            "external_snapshot:task-018c-external-evidence@2026-06-27",
+            "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+            "report:reports/task_017c_real_acceptance.json",
+            "report:reports/task_017d_real_acceptance.json"
+          ]
+        },
+        "LINEAGE": {
+          "status": "PASSED",
+          "code": "LINEAGE_COMPLETE",
+          "message": "所有标准记录均包含来源标识和字段血缘。",
+          "metrics": {
+            "record_count": 30,
+            "source_record_id_count": 30,
+            "records_with_lineage": 30,
+            "metadata_lineage_item_count": 990,
+            "calculated_lineage_item_count": 990
+          },
+          "evidence_refs": [
+            "query:da9fffc6-33ad-4722-b7cf-50544cce0cce",
+            "provider:dolphindb_daily_funds_hy_standard_provider",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:66",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:4",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:44",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:65",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:81",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:74",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:22",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:14",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:39",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:46",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:54",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:31",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:32",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:34",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:51",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:78",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:86",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:68",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:30",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:11",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:7",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:57",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:82",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:21",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:77",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:69",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:58",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:25",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:75",
+            "source:hy:fa172779fc73f019390f323281bd8ea1fda4c3ffce260a1a69bc6f864431aced:19"
+          ]
+        },
+        "TEMPORAL_SAFETY": {
+          "status": "WARNING",
+          "code": "TEMPORAL_WARNING_PRESENT",
+          "message": "结果包含无法证明精确可见时间的警告。",
+          "metrics": {
+            "as_of_date": "2026-06-27",
+            "decision_time": null,
+            "temporal_markers": [
+              "DAILY_FUNDS_EXACT_AVAILABLE_AT_UNPROVEN"
+            ]
+          },
+          "evidence_refs": [
+            "query:da9fffc6-33ad-4722-b7cf-50544cce0cce",
+            "provider:dolphindb_daily_funds_hy_standard_provider"
+          ]
+        },
+        "SEMANTIC_CONFIDENCE": {
+          "status": "WARNING",
+          "code": "SEMANTIC_WARNINGS_PRESENT",
+          "message": "标准结果仍包含来源语义或质量警告。",
+          "metrics": {
+            "quality_flags": [
+              "PROVISIONAL_NODE_ID_FROM_SOURCE_NAME",
+              "LEADING_INSTRUMENT_ID_UNRESOLVED",
+              "AVERAGE_SHARES_SOURCE_UNIT_UNCONFIRMED",
+              "VOLUME_LOT_TO_SHARE_DERIVED",
+              "MAPPING_WARNING_NODE_ID",
+              "MAPPING_WARNING_LEADING_INSTRUMENT_NAME_CN"
+            ],
+            "warnings": [
+              "DAILY_FUNDS_EXACT_AVAILABLE_AT_UNPROVEN"
+            ],
+            "quality_status": "WARNING"
+          },
+          "evidence_refs": [
+            "query:da9fffc6-33ad-4722-b7cf-50544cce0cce",
+            "provider:dolphindb_daily_funds_hy_standard_provider"
+          ]
+        },
+        "ACTIVATION": {
+          "status": "PASSED",
+          "code": "DATASET_USAGE_ACTIVATION_VERIFIED",
+          "message": "独立启用注册表确认该数据集可用于当前用途。",
+          "metrics": {
+            "enabled": true,
+            "effective": true,
+            "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+            "allowed_usages": [
+              "CURRENT_SNAPSHOT_RESEARCH"
+            ],
+            "requested_usage": "CURRENT_SNAPSHOT_RESEARCH",
+            "effective_from": "2026-06-27",
+            "evidence_note": "行业聚合快照仅用于当前研究。"
+          },
+          "evidence_refs": [
+            "external_snapshot:task-018c-external-evidence@2026-06-27",
+            "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+            "report:reports/task_017c_real_acceptance.json",
+            "report:reports/task_017d_real_acceptance.json",
+            "config:configs/quality/data_readiness_dataset_activation_v0.json"
+          ]
+        }
+      }
+    }
+  ],
+  "features": [
+    {
+      "feature_id": "daily_positive_return_ratio",
+      "family": "TREND",
+      "value": 0.36666666666666664,
+      "unit": "ratio",
+      "as_of_date": "2025-12-31",
+      "formula": "count(pct_change_pct > 0) / count(non_null_pct_change_pct)",
+      "interpretation": "越高表示当日上涨证券覆盖更广；不直接等于牛市。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "daily_mean_return_pct",
+      "family": "TREND",
+      "value": 0.2704935333333333,
+      "unit": "percent_points",
+      "as_of_date": "2025-12-31",
+      "formula": "mean(pct_change_pct)",
+      "interpretation": "等权横截面平均涨跌幅。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "daily_median_return_pct",
+      "family": "TREND",
+      "value": -0.1504085,
+      "unit": "percent_points",
+      "as_of_date": "2025-12-31",
+      "formula": "median(pct_change_pct)",
+      "interpretation": "对极端值更稳健的市场中位涨跌幅。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "industry_advance_ratio",
+      "family": "BREADTH",
+      "value": 0.44833782569631625,
+      "unit": "ratio",
+      "as_of_date": "2025-12-31",
+      "formula": "sum(up_count) / (sum(up_count) + sum(down_count))",
+      "interpretation": "行业节点内上涨证券占可比较上涨与下跌证券的比例。",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "source_query_ids": [
+        "da9fffc6-33ad-4722-b7cf-50544cce0cce"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "industry_breadth_ratio_median",
+      "family": "BREADTH",
+      "value": 0.72,
+      "unit": "ratio",
+      "as_of_date": "2025-12-31",
+      "formula": "median(breadth_ratio)",
+      "interpretation": "来源行业宽度比率的中位数，保留供应商原始定义。",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "source_query_ids": [
+        "da9fffc6-33ad-4722-b7cf-50544cce0cce"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 29,
+      "missing_observation_count": 1,
+      "warnings": []
+    },
+    {
+      "feature_id": "industry_limit_up_share_of_up",
+      "family": "BREADTH",
+      "value": 0.018036072144288578,
+      "unit": "ratio",
+      "as_of_date": "2025-12-31",
+      "formula": "sum(limit_up_count) / sum(up_count); 0 when total_up_count = 0",
+      "interpretation": "上涨证券中涨停证券所占比例。",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "source_query_ids": [
+        "da9fffc6-33ad-4722-b7cf-50544cce0cce"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "market_amount_total_cny",
+      "family": "LIQUIDITY",
+      "value": 9604044032.0,
+      "unit": "CNY",
+      "as_of_date": "2025-12-31",
+      "formula": "sum(non_null_amount_cny)",
+      "interpretation": "查询证券集合的当日成交额总和，不自动代表全市场成交额。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": [
+        "QUERY_UNIVERSE_TOTAL_NOT_PROVEN_FULL_MARKET"
+      ]
+    },
+    {
+      "feature_id": "turnover_rate_median_pct",
+      "family": "LIQUIDITY",
+      "value": 1.2639999999999998,
+      "unit": "percent_points",
+      "as_of_date": "2025-12-31",
+      "formula": "median(turnover_rate_pct)",
+      "interpretation": "横截面换手率中位数。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "amount_field_coverage_ratio",
+      "family": "LIQUIDITY",
+      "value": 1.0,
+      "unit": "ratio",
+      "as_of_date": "2025-12-31",
+      "formula": "count(non_null_amount_cny) / source_record_count",
+      "interpretation": "成交额字段在输入证券集合中的非空覆盖率。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "cross_section_return_std_pct",
+      "family": "VOLATILITY",
+      "value": 2.129311390850005,
+      "unit": "percent_points",
+      "as_of_date": "2025-12-31",
+      "formula": "population_stddev(pct_change_pct)",
+      "interpretation": "证券横截面涨跌幅离散度。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "intraday_range_median_pct",
+      "family": "VOLATILITY",
+      "value": 2.0558627177735325,
+      "unit": "percent_points",
+      "as_of_date": "2025-12-31",
+      "formula": "median((high_raw_cny - low_raw_cny) / close_raw_cny * 100)",
+      "interpretation": "使用当日收盘价归一化的日内振幅中位数。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "absolute_return_median_pct",
+      "family": "VOLATILITY",
+      "value": 0.749521,
+      "unit": "percent_points",
+      "as_of_date": "2025-12-31",
+      "formula": "median(abs(pct_change_pct))",
+      "interpretation": "证券绝对涨跌幅中位数。",
+      "source_dataset_ids": [
+        "a_stock_daily_k"
+      ],
+      "source_query_ids": [
+        "ff6cdf05-31bb-4a10-baaf-906dedc4ab52"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "positive_industry_ratio",
+      "family": "SECTOR_DIFFUSION",
+      "value": 0.43333333333333335,
+      "unit": "ratio",
+      "as_of_date": "2025-12-31",
+      "formula": "count(industry_pct_change_pct > 0) / count(non_null_industry_pct_change_pct)",
+      "interpretation": "上涨行业节点占有有效涨跌幅行业节点的比例。",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "source_query_ids": [
+        "da9fffc6-33ad-4722-b7cf-50544cce0cce"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "industry_return_std_pct",
+      "family": "SECTOR_DIFFUSION",
+      "value": 0.6667367463166319,
+      "unit": "percent_points",
+      "as_of_date": "2025-12-31",
+      "formula": "population_stddev(industry_pct_change_pct)",
+      "interpretation": "行业节点涨跌幅离散度。",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "source_query_ids": [
+        "da9fffc6-33ad-4722-b7cf-50544cce0cce"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    },
+    {
+      "feature_id": "positive_average_return_ratio",
+      "family": "SECTOR_DIFFUSION",
+      "value": 0.9666666666666667,
+      "unit": "ratio",
+      "as_of_date": "2025-12-31",
+      "formula": "count(average_return_pct > 0) / count(non_null_average_return_pct)",
+      "interpretation": "行业内部平均收益为正的行业节点比例。",
+      "source_dataset_ids": [
+        "hy"
+      ],
+      "source_query_ids": [
+        "da9fffc6-33ad-4722-b7cf-50544cce0cce"
+      ],
+      "source_record_count": 30,
+      "valid_observation_count": 30,
+      "missing_observation_count": 0,
+      "warnings": []
+    }
+  ],
+  "warnings": [
+    "a_stock_daily_k:FRESHNESS:TRADING_SESSION_LAG_EXCEEDS_SLA",
+    "a_stock_daily_k:SEMANTIC_CONFIDENCE:SEMANTIC_WARNINGS_PRESENT",
+    "a_stock_daily_k:READINESS_STATUS:WARNING",
+    "hy:DAILY_FUNDS_EXACT_AVAILABLE_AT_UNPROVEN",
+    "hy:QUERY_EXECUTION:QUERY_COMPLETED_WITH_WARNINGS",
+    "hy:COVERAGE:DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+    "hy:FRESHNESS:TRADING_SESSION_LAG_EXCEEDS_SLA",
+    "hy:TEMPORAL_SAFETY:TEMPORAL_WARNING_PRESENT",
+    "hy:SEMANTIC_CONFIDENCE:SEMANTIC_WARNINGS_PRESENT",
+    "hy:READINESS_STATUS:WARNING",
+    "QUERY_UNIVERSE_TOTAL_NOT_PROVEN_FULL_MARKET"
+  ],
+  "database_connection_attempted": true,
+  "database_readonly_query_mode": true,
+  "write_operation_count": 0,
+  "issues": []
+}

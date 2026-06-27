@@ -1,0 +1,54 @@
+{
+  "contract_version": "0.1.0",
+  "task_id": "TASK_019C",
+  "mode": "REAL_READONLY_MARKET_STATE_FEATURE_ACCEPTANCE",
+  "as_of_date": "2026-06-27",
+  "external_evidence_config": "configs/quality/data_readiness_external_evidence_v0.json",
+  "readiness_policy": "configs/quality/data_readiness_policy_v0.json",
+  "evidence_rules": "configs/quality/data_readiness_evidence_rules_v0.json",
+  "market_state_input_contract": "configs/market_state/market_state_input_contract_v0.json",
+  "market_state_feature_spec": "configs/market_state/market_state_feature_spec_v0.json",
+  "required_datasets": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "canonical_object": "DailyBar",
+      "selector_mode": "INSTRUMENT_ID",
+      "selector_limit": 30,
+      "minimum_result_count": 3,
+      "limit_per_selector": 1
+    },
+    {
+      "dataset_id": "hy",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "selector_mode": "ENTITY_ID",
+      "selector_limit": 30,
+      "minimum_result_count": 2,
+      "limit_per_selector": 1
+    }
+  ],
+  "common_date_discovery": {
+    "candidate_dataset_id": "hy",
+    "candidate_date_row_scan_limit": 20000,
+    "maximum_candidate_dates_to_check": 250,
+    "policy": "LATEST_COMMON_TRADE_DATE"
+  },
+  "universe_policy": {
+    "scope": "DETERMINISTIC_CAPPED_REAL_QUERY_UNIVERSE",
+    "selector_order": "SOURCE_ENTITY_ID_ASC",
+    "claim_full_market_coverage": false,
+    "notes": "用于真实端到端验收的确定性截面，不声明全市场全集覆盖。"
+  },
+  "acceptance_invariants": {
+    "required_dataset_count": 2,
+    "required_feature_family_count": 5,
+    "feature_definition_count": 15,
+    "generated_feature_count": 15,
+    "unique_source_query_id_count": 2,
+    "database_connection_attempted": true,
+    "database_readonly_query_mode": true,
+    "database_write_operation_count": 0,
+    "manual_decision_allowed": false,
+    "official_market_state_allowed": false,
+    "regime_label": null
+  }
+}
