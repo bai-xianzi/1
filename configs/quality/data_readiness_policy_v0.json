@@ -1,0 +1,311 @@
+{
+  "contract_version": "0.1.0",
+  "policy_version": "0.1.0",
+  "status": "IMPLEMENTED_OFFLINE",
+  "decision_statuses": [
+    "PASSED",
+    "WARNING",
+    "BLOCKED"
+  ],
+  "evidence_statuses": [
+    "PASSED",
+    "WARNING",
+    "FAILED",
+    "UNKNOWN"
+  ],
+  "dimensions": [
+    "CONTRACT",
+    "QUERY_EXECUTION",
+    "COVERAGE",
+    "FRESHNESS",
+    "LINEAGE",
+    "TEMPORAL_SAFETY",
+    "SEMANTIC_CONFIDENCE",
+    "ACTIVATION"
+  ],
+  "source_access_policy": {
+    "raw_access_forbidden": true,
+    "standard_data_service_required": true,
+    "downstream_bypass_forbidden": true
+  },
+  "dataset_catalog": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "family": "DAILY_MARKET_HISTORY",
+      "provider_id": "dolphindb_daily_k_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_objects": [
+        "DailyBar",
+        "OwnershipSnapshot"
+      ]
+    },
+    {
+      "dataset_id": "a_stock_fundamental_snapshot",
+      "family": "FUNDAMENTAL_SNAPSHOT",
+      "provider_id": "dolphindb_fundamental_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_objects": [
+        "FundamentalSnapshot",
+        "OwnershipSnapshot",
+        "Instrument",
+        "ClassificationMembership"
+      ]
+    },
+    {
+      "dataset_id": "hq",
+      "family": "DAILY_FUNDS_SECURITY_MARKET",
+      "provider_id": "dolphindb_daily_funds_hq_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_objects": [
+        "DailyBar"
+      ]
+    },
+    {
+      "dataset_id": "hy",
+      "family": "DAILY_FUNDS_CLASSIFICATION_MARKET",
+      "provider_id": "dolphindb_daily_funds_hy_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_objects": [
+        "ClassificationMarketSnapshot"
+      ]
+    },
+    {
+      "dataset_id": "gn",
+      "family": "DAILY_FUNDS_CLASSIFICATION_MARKET",
+      "provider_id": "dolphindb_daily_funds_gn_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_objects": [
+        "ClassificationMarketSnapshot"
+      ]
+    },
+    {
+      "dataset_id": "kphq",
+      "family": "DAILY_FUNDS_AUCTION",
+      "provider_id": "dolphindb_daily_funds_kphq_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_objects": [
+        "AuctionSnapshot"
+      ]
+    },
+    {
+      "dataset_id": "kphy",
+      "family": "DAILY_FUNDS_CLASSIFICATION_AUCTION",
+      "provider_id": "dolphindb_daily_funds_kphy_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_objects": [
+        "ClassificationMarketSnapshot"
+      ]
+    },
+    {
+      "dataset_id": "kpgn",
+      "family": "DAILY_FUNDS_CLASSIFICATION_AUCTION",
+      "provider_id": "dolphindb_daily_funds_kpgn_standard_provider",
+      "selector_mode": "ENTITY_ID",
+      "canonical_objects": [
+        "ClassificationMarketSnapshot"
+      ]
+    },
+    {
+      "dataset_id": "zj",
+      "family": "DAILY_FUNDS_MONEY_FLOW",
+      "provider_id": "dolphindb_daily_funds_zj_standard_provider",
+      "selector_mode": "INSTRUMENT_ID",
+      "canonical_objects": [
+        "MoneyFlowSnapshot"
+      ]
+    }
+  ],
+  "usage_policies": {
+    "CURRENT_SNAPSHOT_RESEARCH": {
+      "required_dimensions": [
+        "CONTRACT",
+        "QUERY_EXECUTION",
+        "COVERAGE",
+        "FRESHNESS",
+        "LINEAGE",
+        "TEMPORAL_SAFETY",
+        "SEMANTIC_CONFIDENCE",
+        "ACTIVATION"
+      ],
+      "blocked_statuses": {
+        "CONTRACT": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "QUERY_EXECUTION": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "COVERAGE": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "FRESHNESS": [
+          "FAILED"
+        ],
+        "LINEAGE": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "TEMPORAL_SAFETY": [
+          "FAILED"
+        ],
+        "SEMANTIC_CONFIDENCE": [
+          "FAILED"
+        ],
+        "ACTIVATION": [
+          "FAILED"
+        ]
+      }
+    },
+    "MANUAL_DECISION_SUPPORT": {
+      "required_dimensions": [
+        "CONTRACT",
+        "QUERY_EXECUTION",
+        "COVERAGE",
+        "FRESHNESS",
+        "LINEAGE",
+        "TEMPORAL_SAFETY",
+        "SEMANTIC_CONFIDENCE",
+        "ACTIVATION"
+      ],
+      "blocked_statuses": {
+        "CONTRACT": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "QUERY_EXECUTION": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "COVERAGE": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "FRESHNESS": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "LINEAGE": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "TEMPORAL_SAFETY": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "SEMANTIC_CONFIDENCE": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "ACTIVATION": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ]
+      }
+    },
+    "STRICT_HISTORICAL_BACKTEST": {
+      "required_dimensions": [
+        "CONTRACT",
+        "QUERY_EXECUTION",
+        "COVERAGE",
+        "FRESHNESS",
+        "LINEAGE",
+        "TEMPORAL_SAFETY",
+        "SEMANTIC_CONFIDENCE",
+        "ACTIVATION"
+      ],
+      "blocked_statuses": {
+        "CONTRACT": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "QUERY_EXECUTION": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "COVERAGE": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "FRESHNESS": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "LINEAGE": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "TEMPORAL_SAFETY": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "SEMANTIC_CONFIDENCE": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "ACTIVATION": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ]
+      }
+    },
+    "HISTORICAL_MODEL_TRAINING": {
+      "required_dimensions": [
+        "CONTRACT",
+        "QUERY_EXECUTION",
+        "COVERAGE",
+        "FRESHNESS",
+        "LINEAGE",
+        "TEMPORAL_SAFETY",
+        "SEMANTIC_CONFIDENCE",
+        "ACTIVATION"
+      ],
+      "blocked_statuses": {
+        "CONTRACT": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "QUERY_EXECUTION": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "COVERAGE": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "FRESHNESS": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "LINEAGE": [
+          "FAILED",
+          "UNKNOWN"
+        ],
+        "TEMPORAL_SAFETY": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "SEMANTIC_CONFIDENCE": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ],
+        "ACTIVATION": [
+          "FAILED",
+          "UNKNOWN",
+          "WARNING"
+        ]
+      }
+    }
+  }
+}
