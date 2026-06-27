@@ -1,0 +1,33 @@
+{
+  "rules_version": "0.1.0",
+  "entity_key_candidates": [
+    "instrument_id",
+    "node_id",
+    "entity_id",
+    "security_id",
+    "actor_id"
+  ],
+  "date_field_candidates": [
+    "trade_date",
+    "snapshot_date",
+    "as_of_date",
+    "report_period",
+    "published_date"
+  ],
+  "temporal_warning_markers": [
+    "AVAILABLE_AT",
+    "TIME_UNAVAILABLE",
+    "DATE_ONLY",
+    "SAME_DAY",
+    "TEMPORAL",
+    "SNAPSHOT_TIME",
+    "UNPROVEN",
+    "HISTORICAL_USAGE_BLOCKED",
+    "FUTURE_DATA"
+  ],
+  "default_minimum_coverage_ratio": 1.0,
+  "default_max_freshness_lag_days": 0,
+  "coverage_scope_requires_external_evidence": true,
+  "freshness_scope_requires_external_evidence": true,
+  "activation_requires_external_verification": true
+}
