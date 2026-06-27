@@ -1,0 +1,209 @@
+{
+  "contract_version": "0.1.0",
+  "task_id": "TASK_019A",
+  "name_cn": "市场状态输入合同与用途边界",
+  "allowed_usage": "CURRENT_SNAPSHOT_RESEARCH",
+  "output_scope": "RESEARCH_ONLY",
+  "manual_decision_allowed": false,
+  "official_market_state_allowed": false,
+  "required_feature_families": [
+    "TREND",
+    "BREADTH",
+    "LIQUIDITY",
+    "VOLATILITY",
+    "SECTOR_DIFFUSION"
+  ],
+  "dataset_requirements": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "canonical_object": "DailyBar",
+      "selector_mode": "INSTRUMENT_ID",
+      "role": "PRIMARY",
+      "required": true,
+      "allow_warning": true,
+      "feature_families": [
+        "TREND",
+        "LIQUIDITY",
+        "VOLATILITY"
+      ],
+      "required_fields": [
+        "trade_date",
+        "close_raw_cny",
+        "high_raw_cny",
+        "low_raw_cny",
+        "volume_shares",
+        "amount_cny",
+        "pct_change_pct",
+        "turnover_rate_pct"
+      ],
+      "notes": "市场趋势、流动性和波动率主来源；当前时效和来源语义警告必须保留。"
+    },
+    {
+      "dataset_id": "hy",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "selector_mode": "ENTITY_ID",
+      "role": "PRIMARY",
+      "required": true,
+      "allow_warning": true,
+      "feature_families": [
+        "BREADTH",
+        "SECTOR_DIFFUSION"
+      ],
+      "required_fields": [
+        "trade_date",
+        "pct_change_pct",
+        "up_count",
+        "down_count",
+        "limit_up_count",
+        "breadth_ratio",
+        "amount_cny",
+        "average_return_pct"
+      ],
+      "notes": "行业市场宽度和扩散主来源。"
+    },
+    {
+      "dataset_id": "gn",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "selector_mode": "ENTITY_ID",
+      "role": "SUPPLEMENTAL",
+      "required": false,
+      "allow_warning": true,
+      "feature_families": [
+        "SECTOR_DIFFUSION"
+      ],
+      "required_fields": [
+        "trade_date",
+        "pct_change_pct",
+        "breadth_ratio",
+        "amount_cny",
+        "average_return_pct"
+      ],
+      "notes": "概念扩散补充来源，不可替代行业主来源。"
+    },
+    {
+      "dataset_id": "hq",
+      "canonical_object": "DailyBar",
+      "selector_mode": "INSTRUMENT_ID",
+      "role": "SUPPLEMENTAL",
+      "required": false,
+      "allow_warning": true,
+      "feature_families": [
+        "TREND",
+        "LIQUIDITY"
+      ],
+      "required_fields": [
+        "trade_date",
+        "close_raw_cny",
+        "volume_shares",
+        "amount_cny",
+        "pct_change_pct",
+        "turnover_rate_pct"
+      ],
+      "notes": "仅用于当前快照补充和交叉核对，不得替代权威日K。"
+    },
+    {
+      "dataset_id": "zj",
+      "canonical_object": "MoneyFlowSnapshot",
+      "selector_mode": "INSTRUMENT_ID",
+      "role": "OPTIONAL",
+      "required": false,
+      "allow_warning": true,
+      "feature_families": [
+        "CAPITAL_FLOW"
+      ],
+      "required_fields": [
+        "trade_date",
+        "net_inflow_total_cny",
+        "net_inflow_main_cny",
+        "main_flow_ratio",
+        "flow_method_code"
+      ],
+      "notes": "资金流方法未获供应商文档确认，只能作为可解释辅助证据。"
+    },
+    {
+      "dataset_id": "kphq",
+      "canonical_object": "AuctionSnapshot",
+      "selector_mode": "INSTRUMENT_ID",
+      "role": "OPTIONAL",
+      "required": false,
+      "allow_warning": true,
+      "feature_families": [
+        "AUCTION_CONFIRMATION"
+      ],
+      "required_fields": [
+        "trade_date",
+        "snapshot_time_precision",
+        "indicative_price_cny",
+        "matched_volume_shares",
+        "open_gap_pct"
+      ],
+      "notes": "只有DATE_ONLY时间精度时不得伪造09:25时间。"
+    },
+    {
+      "dataset_id": "kphy",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "selector_mode": "ENTITY_ID",
+      "role": "OPTIONAL",
+      "required": false,
+      "allow_warning": true,
+      "feature_families": [
+        "AUCTION_CONFIRMATION",
+        "SECTOR_DIFFUSION"
+      ],
+      "required_fields": [
+        "trade_date",
+        "pct_change_pct",
+        "breadth_ratio",
+        "average_return_pct"
+      ],
+      "notes": "行业竞价聚合仅作确认信号。"
+    },
+    {
+      "dataset_id": "kpgn",
+      "canonical_object": "ClassificationMarketSnapshot",
+      "selector_mode": "ENTITY_ID",
+      "role": "OPTIONAL",
+      "required": false,
+      "allow_warning": true,
+      "feature_families": [
+        "AUCTION_CONFIRMATION",
+        "SECTOR_DIFFUSION"
+      ],
+      "required_fields": [
+        "trade_date",
+        "pct_change_pct",
+        "breadth_ratio",
+        "average_return_pct"
+      ],
+      "notes": "概念竞价聚合仅作确认信号。"
+    },
+    {
+      "dataset_id": "a_stock_fundamental_snapshot",
+      "canonical_object": "FundamentalSnapshot",
+      "selector_mode": "INSTRUMENT_ID",
+      "role": "CONTEXT",
+      "required": false,
+      "allow_warning": true,
+      "feature_families": [
+        "FUNDAMENTAL_CONTEXT"
+      ],
+      "required_fields": [
+        "report_period",
+        "revenue_cny",
+        "net_profit_parent_cny",
+        "total_assets_cny",
+        "total_liabilities_cny"
+      ],
+      "notes": "基本面不进入短周期市场状态核心分数，只保留为中期背景。"
+    }
+  ],
+  "hard_rules": [
+    "只接受ReadinessGatedStandardDataService产生的组合结果。",
+    "所有输入必须使用CURRENT_SNAPSHOT_RESEARCH用途。",
+    "必需数据集缺失、被门禁阻断或返回空结果时，输入包必须BLOCKED。",
+    "WARNING必须原样进入输入包，禁止静默消除。",
+    "TASK_019A只允许研究特征构建，不允许人工决策或正式市场状态发布。",
+    "hq不得替代a_stock_daily_k。",
+    "可选资金流和竞价证据不得成为唯一状态依据。"
+  ]
+}
