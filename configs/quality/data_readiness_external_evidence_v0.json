@@ -1,0 +1,106 @@
+{
+  "contract_version": "0.1.0",
+  "snapshot_id": "task-018c-external-evidence@2026-06-27",
+  "as_of_date": "2026-06-27",
+  "calendar_path": "configs/quality/a_share_trading_calendar_2026.json",
+  "activation_path": "configs/quality/data_readiness_dataset_activation_v0.json",
+  "datasets": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "report_kind": "DAILY_K_COVERAGE",
+      "report_paths": [
+        "reports/task_008_dataset_coverage.json"
+      ],
+      "coverage_scope": "FULL_DATABASE_SNAPSHOT",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    },
+    {
+      "dataset_id": "a_stock_fundamental_snapshot",
+      "report_kind": "FUNDAMENTAL_PROFILE",
+      "report_paths": [
+        "reports/task_013_fundamental_profile.json"
+      ],
+      "coverage_scope": "FULL_CURRENT_SNAPSHOT",
+      "max_current_lag_sessions": 10,
+      "max_manual_lag_sessions": 5
+    },
+    {
+      "dataset_id": "hq",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "report_paths": [
+        "reports/task_017c_real_acceptance.json",
+        "reports/task_017d_real_acceptance.json"
+      ],
+      "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    },
+    {
+      "dataset_id": "hy",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "report_paths": [
+        "reports/task_017c_real_acceptance.json",
+        "reports/task_017d_real_acceptance.json"
+      ],
+      "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    },
+    {
+      "dataset_id": "gn",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "report_paths": [
+        "reports/task_017c_real_acceptance.json",
+        "reports/task_017d_real_acceptance.json"
+      ],
+      "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    },
+    {
+      "dataset_id": "kphq",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "report_paths": [
+        "reports/task_017c_real_acceptance.json",
+        "reports/task_017d_real_acceptance.json"
+      ],
+      "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    },
+    {
+      "dataset_id": "kphy",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "report_paths": [
+        "reports/task_017c_real_acceptance.json",
+        "reports/task_017d_real_acceptance.json"
+      ],
+      "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    },
+    {
+      "dataset_id": "kpgn",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "report_paths": [
+        "reports/task_017c_real_acceptance.json",
+        "reports/task_017d_real_acceptance.json"
+      ],
+      "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    },
+    {
+      "dataset_id": "zj",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "report_paths": [
+        "reports/task_017c_real_acceptance.json",
+        "reports/task_017d_real_acceptance.json"
+      ],
+      "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+      "max_current_lag_sessions": 1,
+      "max_manual_lag_sessions": 0
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "registry_version": "0.1.0",
+  "effective_as_of": "2026-06-27",
+  "default_deny": true,
+  "datasets": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "enabled": true,
+      "activation_state": "RESEARCH_AND_HISTORICAL_CANDIDATE",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH",
+        "STRICT_HISTORICAL_BACKTEST",
+        "HISTORICAL_MODEL_TRAINING"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "允许研究和历史候选用途；人工辅助决策仍需数据更新与独立激活。"
+    },
+    {
+      "dataset_id": "a_stock_fundamental_snapshot",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "当前只有2026-06-19观察快照，严格历史用途未激活。"
+    },
+    {
+      "dataset_id": "hq",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "补充行情快照仅用于当前研究，不替代权威日K。"
+    },
+    {
+      "dataset_id": "hy",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "行业聚合快照仅用于当前研究。"
+    },
+    {
+      "dataset_id": "gn",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "概念聚合快照仅用于当前研究。"
+    },
+    {
+      "dataset_id": "kphq",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "开盘竞价快照只有日期级时间精度，仅用于当前研究。"
+    },
+    {
+      "dataset_id": "kphy",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "行业竞价聚合快照仅用于当前研究。"
+    },
+    {
+      "dataset_id": "kpgn",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "概念竞价聚合快照仅用于当前研究。"
+    },
+    {
+      "dataset_id": "zj",
+      "enabled": true,
+      "activation_state": "CURRENT_SNAPSHOT_RESEARCH_ONLY",
+      "allowed_usages": [
+        "CURRENT_SNAPSHOT_RESEARCH"
+      ],
+      "effective_from": "2026-06-27",
+      "evidence_note": "资金流快照口径仍需供应商文档，仅用于当前研究。"
+    }
+  ]
+}

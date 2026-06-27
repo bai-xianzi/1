@@ -1,0 +1,329 @@
+{
+  "task_id": "TASK_018C",
+  "mode": "REPORT_BACKED_EXTERNAL_EVIDENCE_ACCEPTANCE",
+  "generated_at": "2026-06-27T05:41:22.834804+00:00",
+  "external_evidence_version": "0.1.0",
+  "snapshot_id": "task-018c-external-evidence@2026-06-27",
+  "as_of_date": "2026-06-27",
+  "expected_latest_trading_date": "2026-06-26",
+  "dataset_count": 9,
+  "coverage_passed_count": 2,
+  "coverage_warning_count": 7,
+  "current_freshness_passed_count": 1,
+  "current_freshness_warning_count": 8,
+  "current_activation_passed_count": 9,
+  "historical_activation_passed_count": 1,
+  "historical_activation_failed_count": 8,
+  "database_connection_attempted": false,
+  "write_operation_count": 0,
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "datasets": [
+    {
+      "dataset_id": "a_stock_daily_k",
+      "report_kind": "DAILY_K_COVERAGE",
+      "coverage_status": "PASSED",
+      "coverage_code": "FULL_DATABASE_SNAPSHOT_COVERAGE_PROVEN",
+      "coverage_metrics": {
+        "coverage_scope": "FULL_DATABASE_SNAPSHOT",
+        "row_count": 16548275,
+        "entity_count": 5523,
+        "min_data_date": "1990-12-19T00:00:00",
+        "max_data_date": "2026-05-29T00:00:00",
+        "declared_cutoff_date": "2026-05-29",
+        "database_matches_declared_cutoff": true
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2026-05-29",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 19,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "PASSED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_008_dataset_coverage.json"
+      ]
+    },
+    {
+      "dataset_id": "a_stock_fundamental_snapshot",
+      "report_kind": "FUNDAMENTAL_PROFILE",
+      "coverage_status": "PASSED",
+      "coverage_code": "CURRENT_FUNDAMENTAL_SNAPSHOT_COVERAGE_PROVEN",
+      "coverage_metrics": {
+        "coverage_scope": "FULL_CURRENT_SNAPSHOT",
+        "row_count": 5541,
+        "entity_count": 5541,
+        "min_snapshot_date": "2026-06-19T00:00:00",
+        "max_snapshot_date": "2026-06-19T00:00:00",
+        "profile_status": "PENDING_CONFIRMATION",
+        "allows_current_snapshot_research": true,
+        "duplicate_extra_row_count": 0
+      },
+      "current_freshness_status": "PASSED",
+      "current_freshness_code": "TRADING_SESSION_FRESHNESS_WITHIN_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2026-06-19",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 5,
+        "maximum_allowed_trading_session_lag": 10,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_013_fundamental_profile.json"
+      ]
+    },
+    {
+      "dataset_id": "hq",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "coverage_status": "WARNING",
+      "coverage_code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+      "coverage_metrics": {
+        "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+        "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+        "canonical_result_count": 1,
+        "unified_result_count": 1,
+        "selector_mode": "INSTRUMENT_ID",
+        "exhaustive_entity_coverage_proven": false
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2025-12-31",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 114,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_017c_real_acceptance.json",
+        "report:reports/task_017d_real_acceptance.json"
+      ]
+    },
+    {
+      "dataset_id": "hy",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "coverage_status": "WARNING",
+      "coverage_code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+      "coverage_metrics": {
+        "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+        "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+        "canonical_result_count": 1,
+        "unified_result_count": 1,
+        "selector_mode": "ENTITY_ID",
+        "exhaustive_entity_coverage_proven": false
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2025-12-31",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 114,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_017c_real_acceptance.json",
+        "report:reports/task_017d_real_acceptance.json"
+      ]
+    },
+    {
+      "dataset_id": "gn",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "coverage_status": "WARNING",
+      "coverage_code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+      "coverage_metrics": {
+        "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+        "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+        "canonical_result_count": 1,
+        "unified_result_count": 1,
+        "selector_mode": "ENTITY_ID",
+        "exhaustive_entity_coverage_proven": false
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2025-12-31",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 114,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_017c_real_acceptance.json",
+        "report:reports/task_017d_real_acceptance.json"
+      ]
+    },
+    {
+      "dataset_id": "kphq",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "coverage_status": "WARNING",
+      "coverage_code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+      "coverage_metrics": {
+        "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+        "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+        "canonical_result_count": 1,
+        "unified_result_count": 1,
+        "selector_mode": "INSTRUMENT_ID",
+        "exhaustive_entity_coverage_proven": false
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2025-12-31",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 114,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_017c_real_acceptance.json",
+        "report:reports/task_017d_real_acceptance.json"
+      ]
+    },
+    {
+      "dataset_id": "kphy",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "coverage_status": "WARNING",
+      "coverage_code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+      "coverage_metrics": {
+        "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+        "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+        "canonical_result_count": 1,
+        "unified_result_count": 1,
+        "selector_mode": "ENTITY_ID",
+        "exhaustive_entity_coverage_proven": false
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2025-12-31",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 114,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_017c_real_acceptance.json",
+        "report:reports/task_017d_real_acceptance.json"
+      ]
+    },
+    {
+      "dataset_id": "kpgn",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "coverage_status": "WARNING",
+      "coverage_code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+      "coverage_metrics": {
+        "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+        "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+        "canonical_result_count": 1,
+        "unified_result_count": 1,
+        "selector_mode": "ENTITY_ID",
+        "exhaustive_entity_coverage_proven": false
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2025-12-31",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 114,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_017c_real_acceptance.json",
+        "report:reports/task_017d_real_acceptance.json"
+      ]
+    },
+    {
+      "dataset_id": "zj",
+      "report_kind": "DAILY_FUNDS_ACCEPTANCE",
+      "coverage_status": "WARNING",
+      "coverage_code": "DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+      "coverage_metrics": {
+        "coverage_scope": "DATE_RANGE_AND_REAL_ACCEPTANCE_SAMPLE",
+        "coverage_version": "daily-funds-raw@2025-11-20..2025-12-31",
+        "canonical_result_count": 1,
+        "unified_result_count": 1,
+        "selector_mode": "INSTRUMENT_ID",
+        "exhaustive_entity_coverage_proven": false
+      },
+      "current_freshness_status": "WARNING",
+      "current_freshness_code": "TRADING_SESSION_LAG_EXCEEDS_SLA",
+      "current_freshness_metrics": {
+        "latest_available_date": "2025-12-31",
+        "expected_latest_trading_date": "2026-06-26",
+        "trading_session_lag": 114,
+        "maximum_allowed_trading_session_lag": 1,
+        "usage": "CURRENT_SNAPSHOT_RESEARCH",
+        "calendar_source_title": "关于上海证券交易所2026年部分节假日休市安排的通知"
+      },
+      "current_activation_status": "PASSED",
+      "historical_freshness_status": "PASSED",
+      "historical_activation_status": "FAILED",
+      "evidence_refs": [
+        "calendar:SSE_A_SHARE_2026_OFFICIAL_HOLIDAYS_V1",
+        "config:configs/quality/data_readiness_dataset_activation_v0.json",
+        "external_snapshot:task-018c-external-evidence@2026-06-27",
+        "report:reports/task_017c_real_acceptance.json",
+        "report:reports/task_017d_real_acceptance.json"
+      ]
+    }
+  ]
+}
