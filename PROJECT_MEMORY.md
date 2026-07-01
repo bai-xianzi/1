@@ -1617,3 +1617,21 @@ LIVE
 
 这些长期要求不得阻塞当前DolphinDB数据适配和质量验收，但所有后续模块应预留相应接口和状态。
 
+
+<!-- TASK_020A_UNIVERSAL_ADAPTER_MEMORY -->
+
+## 全供应商适配永久原则
+
+项目长期目标是供应商无关的全数据源和全券商SDK适配，不得把系统等同于Wind、iFinD、银河证券星耀数智或任何单一平台的客户端。
+
+新增来源必须通过能力发现、Source Adapter、Canonical映射、血缘、时点与Readiness门禁接入。下游研究、模型、组合和报告不得依赖供应商原始字段。
+
+当前个人硬件继续坚持“逻辑可以机构级，实现必须个人级”：模块化单体、小批次、低并发、增量、幂等、断点续跑和磁盘配额优先。
+
+机器可读依据：
+
+```text
+MULTI_SOURCE_ADAPTER_ARCHITECTURE.md
+configs/providers/provider_capability_matrix_v0.json
+configs/runtime/windows_single_machine_resource_profile_v0.json
+```

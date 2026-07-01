@@ -108,3 +108,19 @@ Codex或其他开发代理开始任何任务前，必须阅读：
 - 是否修改数据库；
 - 是否影响已有功能；
 - 如何撤销本次修改。
+
+<!-- TASK_020A_UNIVERSAL_ADAPTER_AGENTS -->
+
+## 全供应商适配执行规则
+
+代理不得把Wind、iFinD、银河证券星耀数智、QMT、PTrade或任何单一来源写成核心系统唯一入口。
+
+开发具体Provider前必须读取：
+
+```text
+MULTI_SOURCE_ADAPTER_ARCHITECTURE.md
+configs/providers/provider_capability_matrix_v0.json
+configs/runtime/windows_single_machine_resource_profile_v0.json
+```
+
+没有真实SDK、实际授权和文档时，只能登记目标和发现任务，不得伪造实现或能力。当前单机任务必须遵守资源档案的并发、批次、磁盘和GPU边界。

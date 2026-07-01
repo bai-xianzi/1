@@ -251,3 +251,24 @@ RESEARCH → VALIDATED → PAPER → LIMITED_LIVE → LIVE
 
 - `APPLIED_STATISTICAL_EVIDENCE_INTELLIGENCE.md`
 
+
+<!-- TASK_020A_UNIVERSAL_ADAPTER_GUIDANCE -->
+
+## 新Provider开发强制流程
+
+```text
+登记目标
+→ 实际SDK与授权发现
+→ 许可证和认证边界
+→ 能力合同
+→ Raw适配
+→ Canonical映射
+→ 时点、质量和血缘
+→ 合同测试
+→ 真实验收
+→ 人工激活
+```
+
+禁止凭供应商名称或宣传材料假设实际能力。禁止在核心模块直接导入厂商SDK。禁止把账号、密码、Token或券商账户信息写入Git。
+
+当前单机开发默认Provider、CPU和数据库并行度均不超过2；大于5GB下载需要人工覆盖；不自动导入35GB分钟数据。

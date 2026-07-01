@@ -1,0 +1,92 @@
+{
+  "task_id": "TASK_020A",
+  "profile_version": "0.1.0",
+  "profile_status": "PROVISIONAL_SAFE_DEFAULTS",
+  "profile_id": "windows_single_machine_i7_10750h_16gb_gtx1650ti",
+  "machine": {
+    "operating_system": "Windows",
+    "cpu_model": "Intel i7-10750H",
+    "physical_core_count": 6,
+    "logical_thread_count": 12,
+    "memory_gib": 16,
+    "gpu_model": "NVIDIA GTX 1650 Ti",
+    "gpu_memory_gib": 4,
+    "database": "LOCAL_DOLPHINDB"
+  },
+  "architecture_mode": "MODULAR_MONOLITH",
+  "default_execution": {
+    "max_parallel_provider_calls": 2,
+    "max_parallel_cpu_jobs": 2,
+    "max_parallel_database_queries": 2,
+    "default_batch_rows": 20000,
+    "large_batch_rows": 50000,
+    "maximum_batch_rows_without_override": 100000,
+    "maximum_in_memory_result_mib": 768,
+    "process_memory_soft_limit_mib": 3072,
+    "provider_request_timeout_seconds": 60,
+    "database_query_timeout_seconds": 180,
+    "retry_attempts": 3,
+    "retry_backoff_seconds": [
+      2,
+      5,
+      15
+    ],
+    "checkpoint_every_batches": 1
+  },
+  "storage_safety": {
+    "runtime_free_space_probe_required": true,
+    "minimum_free_space_gib": 15,
+    "temporary_directory_quota_gib": 8,
+    "cache_quota_gib": 8,
+    "report_retention_days": 180,
+    "raw_cache_retention_days": 30,
+    "abort_before_large_download": true,
+    "large_download_threshold_gib": 5,
+    "automatic_35gb_minute_data_import_allowed": false
+  },
+  "gpu_policy": {
+    "enabled_by_default": false,
+    "allowed_for_adapter_layer": false,
+    "allowed_for_small_model_experiments": true,
+    "maximum_expected_gpu_memory_gib": 3,
+    "fallback_to_cpu_required": true
+  },
+  "workload_classes": {
+    "METADATA_DISCOVERY": {
+      "batch_rows": 5000,
+      "parallelism": 1
+    },
+    "DAILY_MARKET_QUERY": {
+      "batch_rows": 20000,
+      "parallelism": 2
+    },
+    "HISTORICAL_EOD_BACKFILL": {
+      "batch_rows": 50000,
+      "parallelism": 1,
+      "checkpoint_required": true
+    },
+    "INTRADAY_FILE_IMPORT": {
+      "batch_rows": 20000,
+      "parallelism": 1,
+      "checkpoint_required": true,
+      "disk_preflight_required": true
+    },
+    "REALTIME_SUBSCRIPTION": {
+      "enabled": false,
+      "reason": "当前阶段不优先建设全市场实时和Level-2。"
+    },
+    "MODEL_TRAINING_SMALL": {
+      "parallelism": 2,
+      "gpu_optional": true
+    }
+  },
+  "hard_rules": [
+    "实际运行前必须探测可用内存和剩余磁盘。",
+    "磁盘空间低于安全阈值时禁止下载、解压和导入大文件。",
+    "默认不把完整Provider响应复制多份。",
+    "大任务必须支持断点、幂等和批次日志。",
+    "不得为了速度绕过数据质量、血缘和时点门禁。",
+    "不得默认启用GPU、微服务、集群、Kafka或分布式训练。",
+    "所有数值是当前单机的保守初值，必须通过真实基准测试调整。"
+  ]
+}

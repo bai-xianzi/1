@@ -732,3 +732,21 @@ available_at <= decision_time
 7. 如何验证旧功能继续可用。
 
 ---
+
+<!-- TASK_020A_UNIVERSAL_ADAPTER_ARCHITECTURE -->
+
+## 全供应商适配架构补充
+
+多源接入层必须覆盖商业数据终端、券商和机构平台、官方来源、公共API、本地数据库和文件。
+
+```text
+供应商SDK/API/文件/数据库
+→ 角色化Adapter
+→ 能力发现
+→ Raw与来源扩展
+→ Canonical与语义适配
+→ Readiness
+→ StandardDataService
+```
+
+数据、研究内容、组合分析、账户、持仓和交易执行能力必须分层。新增Provider不得要求修改上层市场状态、因子、模型、组合和报告模块。
