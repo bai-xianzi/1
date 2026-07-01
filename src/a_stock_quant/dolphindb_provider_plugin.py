@@ -947,7 +947,6 @@ class DolphinDBProviderPluginBridge:
         # - 为什么这样写：先给中间结果命名，便于后续校验、错误定位和审计，不重复执行同一表达式。
         warnings: list[str] = [
             "LEGACY_ADAPTER_BRIDGE",
-            "REGISTRY_ACTIVATION_REQUIRES_SEPARATE_TASK",
         ]
         # 条件门禁：判断`not installed`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。

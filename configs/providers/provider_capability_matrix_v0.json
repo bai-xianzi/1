@@ -1,7 +1,7 @@
 {
   "task_id": "TASK_020A",
-  "matrix_version": "0.1.0",
-  "matrix_status": "ARCHITECTURE_CONTRACT",
+  "matrix_version": "0.2.0",
+  "matrix_status": "LOCAL_DOLPHINDB_PROVIDER_ACTIVATED",
   "provider_neutral": true,
   "automatic_activation_allowed": false,
   "secret_storage_allowed": false,
@@ -49,20 +49,20 @@
       "provider_id": "local_dolphindb",
       "display_name": "本地DolphinDB",
       "provider_kind": "LOCAL_DATABASE",
-      "lifecycle": "IMPLEMENTED_FOUNDATION",
+      "lifecycle": "ACTIVATED",
       "integration_mode": "NATIVE_CLIENT",
       "authentication_mode": "LOCAL_CREDENTIAL",
-      "discovery_status": "VERIFIED_IN_PROJECT",
+      "discovery_status": "DISCOVERY_COMPLETE",
       "capabilities": {
-        "EOD_MARKET_DATA": "IMPLEMENTED",
-        "FUNDAMENTAL_DATA": "IMPLEMENTED",
-        "CLASSIFICATION_DATA": "IMPLEMENTED",
-        "MONEY_FLOW": "IMPLEMENTED",
-        "AUCTION_DATA": "IMPLEMENTED"
+        "EOD_MARKET_DATA": "VERIFIED",
+        "FUNDAMENTAL_DATA": "VERIFIED",
+        "CLASSIFICATION_DATA": "VERIFIED",
+        "MONEY_FLOW": "VERIFIED",
+        "AUCTION_DATA": "VERIFIED"
       },
       "license_review_required": false,
       "execution_capability": false,
-      "notes": "当前正式数据底座和首个真实Provider，不是总体架构唯一边界。"
+      "notes": "TASK_020C 真实只读验收通过；TASK_022 已正式激活数据路由。该 Provider 不具备交易执行能力。"
     },
     {
       "provider_id": "wind",

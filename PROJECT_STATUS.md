@@ -869,3 +869,16 @@ GITHUB_COMMIT_BLOCKED：true
 GITHUB_PUSH_BLOCKED：true
 USER_CONFIRMATION_REQUIRED：true
 ```
+
+<!-- TASK_022_STATUS_START -->
+
+## TASK_022：DolphinDB Provider 正式激活与真实注册表路由回归
+
+- 状态：`CLOSED`
+- 真实验收：`PASSED` 或 `PASSED_WITH_WARNINGS`
+- 验收报告：`reports/task_022_real_dolphindb_provider_activation.json`
+- 教学式注释审计：`reports/task_022_teaching_comment_audit.json`
+- 安全边界：只读；数据库写操作为 0；未启用交易能力。
+- 阶段终点：本状态文件与 TASK_022 全部成果将由完成脚本提交并推送到 GitHub `main`。
+
+<!-- TASK_022_STATUS_END -->

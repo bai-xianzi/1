@@ -387,15 +387,22 @@ class TestProviderPluginProtocol(unittest.TestCase):
             },
         )
 
-    # 测试函数 `test_seed_registry_has_no_enabled_routes`：验证 `seed、registry、has、no、enabled、routes` 场景是否满足既定预期。
-    # - 输入：测试对象状态、固定样例或当前测试夹具。
-    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
-    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
-    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
-    def test_seed_registry_has_no_enabled_routes(self):
+    # 测试函数 `test_registry_enables_only_local_dolphindb`：验证正式注册表只启用已真实验收的本地 Provider。
+    # - 输入：TASK_022 已更新的 Provider 注册表。
+    # - 处理：提取 enabled_for_routing 为真的 Provider，并检查其余条目仍保持禁用。
+    # - 输出：启用集合必须严格等于 local_dolphindb。
+    # - 为什么这样写：TASK_022 关闭了“种子注册表零路由”阶段，但不能连带启用商业或交易 Provider。
+    def test_registry_enables_only_local_dolphindb(self):
+        enabled = tuple(
+            entry.provider_id
+            for entry in self.registry.entries
+            if entry.enabled_for_routing
+        )
+        self.assertEqual(enabled, ("local_dolphindb",))
         self.assertTrue(
             all(
-                not entry.enabled_for_routing
+                entry.provider_id == "local_dolphindb"
+                or not entry.enabled_for_routing
                 for entry in self.registry.entries
             )
         )

@@ -1,0 +1,34 @@
+{
+  "task_id": "TASK_022",
+  "mode": "REAL_CONFIG_READONLY_ROUTE_REGRESSION",
+  "generated_at": "2026-07-01T16:52:27.390682+00:00",
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "provider_id": "local_dolphindb",
+  "plugin_id": "builtin.local_dolphindb.plugin_bridge",
+  "registry_status": "LOCAL_DOLPHINDB_PLUGIN_ACTIVE",
+  "matrix_status": "LOCAL_DOLPHINDB_PROVIDER_ACTIVATED",
+  "health_status": "HEALTHY",
+  "discovery_outcome": "COMPLETE",
+  "query_result_count": 5,
+  "eligible_provider_ids": [
+    "local_dolphindb"
+  ],
+  "route_decision": "ELIGIBLE",
+  "route_score": 99.0,
+  "warnings": [
+    "LEGACY_ADAPTER_BRIDGE"
+  ],
+  "issues": [],
+  "database_write_operations": 0,
+  "registry_entry": {
+    "provider_id": "local_dolphindb",
+    "plugin_id": "builtin.local_dolphindb.plugin_bridge",
+    "registration_status": "AVAILABLE",
+    "entrypoint": "a_stock_quant.dolphindb_provider_plugin:DolphinDBProviderPluginBridge",
+    "priority": 10,
+    "enabled_for_routing": true,
+    "discovery_result_ref": "reports/task_022_real_dolphindb_provider_activation.json",
+    "authentication_reference_ref": "env://DOLPHINDB_PASSWORD",
+    "notes": "TASK_020C 已完成真实只读验收；TASK_022 正式激活并要求真实注册表路由回归。"
+  }
+}

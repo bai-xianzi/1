@@ -146,15 +146,19 @@ class TestProviderCapabilities(unittest.TestCase):
     def test_automatic_activation_is_forbidden(self):
         self.assertFalse(self.matrix.automatic_activation_allowed)
 
-    # 测试函数 `test_unaccepted_provider_is_not_eligible`：验证 `unaccepted、provider、is、not、eligible` 场景是否满足既定预期。
-    # - 输入：测试对象状态、固定样例或当前测试夹具。
-    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
-    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
-    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
-    def test_unaccepted_provider_is_not_eligible(self):
+    # 测试函数 `test_only_activated_provider_is_eligible`：验证正式激活后只有本地 DolphinDB 可参与日线能力路由。
+    # - 输入：TASK_022 已激活的能力矩阵和 EOD_MARKET_DATA 能力代码。
+    # - 处理：调用正式 eligible_providers 接口，并比较返回 Provider 身份和生命周期。
+    # - 输出：只允许 local_dolphindb，且其生命周期必须为 ACTIVATED。
+    # - 为什么这样写：TASK_022 有意改变旧“没有任何可路由 Provider”的种子状态，测试必须验证新合同而非旧快照。
+    def test_only_activated_provider_is_eligible(self):
+        providers = self.matrix.eligible_providers("EOD_MARKET_DATA")
         self.assertEqual(
-            self.matrix.eligible_providers("EOD_MARKET_DATA"),
-            (),
+            tuple(item.provider_id for item in providers),
+            ("local_dolphindb",),
+        )
+        self.assertTrue(
+            all(item.lifecycle is ProviderLifecycle.ACTIVATED for item in providers)
         )
 
     # 测试函数 `test_profile_matches_known_machine`：验证 `profile、matches、known、machine` 场景是否满足既定预期。

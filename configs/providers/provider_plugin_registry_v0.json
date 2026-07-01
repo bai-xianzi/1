@@ -1,19 +1,19 @@
 {
   "task_id": "TASK_020B",
-  "registry_version": "0.1.0",
-  "registry_status": "SEED_REGISTRY_NO_ACTIVE_VENDOR_PLUGIN",
+  "registry_version": "0.2.0",
+  "registry_status": "LOCAL_DOLPHINDB_PLUGIN_ACTIVE",
   "automatic_activation_allowed": false,
   "entries": [
     {
       "provider_id": "local_dolphindb",
-      "plugin_id": "builtin.local_dolphindb.legacy_bridge",
-      "registration_status": "LEGACY_BRIDGE_REQUIRED",
-      "entrypoint": "a_stock_quant.dolphindb_adapter:DolphinDBDataSourceAdapter",
+      "plugin_id": "builtin.local_dolphindb.plugin_bridge",
+      "registration_status": "AVAILABLE",
+      "entrypoint": "a_stock_quant.dolphindb_provider_plugin:DolphinDBProviderPluginBridge",
       "priority": 10,
-      "enabled_for_routing": false,
-      "discovery_result_ref": null,
+      "enabled_for_routing": true,
+      "discovery_result_ref": "reports/task_022_real_dolphindb_provider_activation.json",
       "authentication_reference_ref": "env://DOLPHINDB_PASSWORD",
-      "notes": "当前Adapter已存在，但尚未包装为TASK_020B通用插件协议。"
+      "notes": "TASK_020C 已完成真实只读验收；TASK_022 正式激活并要求真实注册表路由回归。"
     },
     {
       "provider_id": "wind",
