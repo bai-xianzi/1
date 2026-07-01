@@ -15,16 +15,17 @@ RESERVED：自动券商交易、订单状态机、账实核对、复杂工作台
 
 Codex或其他开发代理开始任何任务前，必须阅读：
 
-1. `PROJECT_MEMORY.md`
-2. `SYSTEM_ARCHITECTURE.md`
-3. `PROJECT_STATUS.md`
-4. `DEVELOPMENT_GUIDANCE.md`
-5. `CODEX_EXECUTION_POLICY.md`
-6. `PROJECT_CONTEXT.md`
-7. `schemas/canonical_fields.yaml`
-8. `APPLIED_STATISTICAL_EVIDENCE_INTELLIGENCE.md`
-9. `schemas/enum_definitions.yaml`
-10. 与本任务直接相关的映射或专项文件
+1. `REUSE_FIRST_ENGINEERING_POLICY.md`
+2. `PROJECT_MEMORY.md`
+3. `SYSTEM_ARCHITECTURE.md`
+4. `PROJECT_STATUS.md`
+5. `DEVELOPMENT_GUIDANCE.md`
+6. `CODEX_EXECUTION_POLICY.md`
+7. `PROJECT_CONTEXT.md`
+8. `schemas/canonical_fields.yaml`
+9. `APPLIED_STATISTICAL_EVIDENCE_INTELLIGENCE.md`
+10. `schemas/enum_definitions.yaml`
+11. 与本任务直接相关的映射或专项文件
 
 发生冲突时，先停止实施并报告，不得自行选择一个版本继续。
 
@@ -38,14 +39,15 @@ Codex或其他开发代理开始任何任务前，必须阅读：
 
 ## 4. 总体工程原则
 
-1. 使用模块化单体，不采用微服务、Kubernetes或复杂消息队列。
-2. 下游业务只能依赖标准字段和标准对象，不得直接依赖DolphinDB来源字段。
-3. DolphinDB是当前正式数据底座和首个真实适配器，不是总体架构唯一边界。
-4. 原始数据、来源字段、映射、单位转换、时间可见性和血缘必须保留。
-5. 不确认的复权、单位、报告期和日期语义必须标记`PENDING_CONFIRMATION`，不得猜测。
-6. 新来源通常通过新增适配器和映射接入，不重写下游模块。
-7. 当前不用的远期模块只保留文档、字段或接口边界，不建立大量空代码。
-8. 先完成最小可运行链路，再小步扩展，不进行无关重构。
+1. 所有新功能先调查项目已有能力、官方SDK、行业标准和成熟开源实现；优先复用或薄适配，最后才允许最小自研。
+2. 使用模块化单体，不采用微服务、Kubernetes或复杂消息队列。
+3. 下游业务只能依赖标准字段和标准对象，不得直接依赖DolphinDB来源字段。
+4. DolphinDB是当前正式数据底座和首个真实适配器，不是总体架构唯一边界。
+5. 原始数据、来源字段、映射、单位转换、时间可见性和血缘必须保留。
+6. 不确认的复权、单位、报告期和日期语义必须标记`PENDING_CONFIRMATION`，不得猜测。
+7. 新来源通常通过新增适配器和映射接入，不重写下游模块。
+8. 当前不用的远期模块只保留文档、字段或接口边界，不建立大量空代码。
+9. 先完成最小可运行链路，再小步扩展，不进行无关重构。
 
 ## 5. 当前允许开发
 
@@ -129,9 +131,19 @@ configs/runtime/windows_single_machine_resource_profile_v0.json
 
 ## 代理复用优先规则
 
-代理生成新代码前必须先检查项目内是否已有同类模块。存在可复用实现时，应优先组合、继承或建立薄Bridge。
+该规则是编码前的P0门禁，完整要求以 `REUSE_FIRST_ENGINEERING_POLICY.md` 为准。
 
-没有真实SDK或文档时，不得臆造厂商接口。不得复制未知许可证代码。建议引入第三方依赖时，必须说明来源、许可证、维护状态、兼容性和替换方案。
+代理生成新代码前必须：
+
+1. 搜索项目内是否已有同类模块；
+2. 调查官方SDK、行业标准和成熟开源候选；
+3. 记录来源、版本、许可证、维护、安全、兼容性和资源要求；
+4. 明确直接复用、薄适配和必须自研的边界；
+5. 说明第三方替换和回滚路径。
+
+存在可复用实现时，应优先组合、继承或建立薄Bridge。没有完成复用调查，不得创建新的通用客户端、Adapter、重试器、分页器、缓存器、配置系统、算法基础设施或图表基础组件。
+
+没有真实SDK或文档时，不得臆造厂商接口。不得复制未知许可证代码。自研必须说明现有方案为什么无法满足，并把实现范围压缩到最小。
 
 <!-- TASK_021A_COMMENT_AGENTS -->
 

@@ -12,6 +12,7 @@
 - `PROJECT_STATUS.md`：当前阶段、未决问题和下一步；
 - `README_PROJECT_MEMORY.md`：使用规则；
 - `DEVELOPMENT_GUIDANCE.md`：开发大局观、通用数据架构和渐进式实施规则；
+- `REUSE_FIRST_ENGINEERING_POLICY.md`：最高优先级的复用、借鉴、第三方评估和自研批准门禁；
 - `CODEX_EXECUTION_POLICY.md`：Codex上下文隔离、任务包和验收规则；
 - `CAUSAL_MARKET_SIMULATION_ENGINE.md`：CWMS专项设计；
 - `schemas/`：字段、仿真变量、用户干预、因果规则、场景和企业暴露的机器契约；
@@ -26,8 +27,9 @@
 3. 当前进度变化：更新 `PROJECT_STATUS.md`；
 4. 标杆研究结论变化：同步更新 `SYSTEM_ARCHITECTURE.md` 和对应的 `benchmarks/` 资料；
 5. 数据源与适配器变化：检查字段字典、映射、血缘和总体结构；
-6. Codex任务规则变化：更新 `CODEX_EXECUTION_POLICY.md`；
-7. 各文件存在冲突时，必须先统一再继续开发。
+6. 新功能、重大重构或第三方组件变化：先更新或引用 `REUSE_FIRST_ENGINEERING_POLICY.md` 的复用决策记录；
+7. Codex任务规则变化：更新 `CODEX_EXECUTION_POLICY.md`；
+8. 各文件存在冲突时，必须先统一再继续开发。
 
 新开的所有对话都属于同一个 `wjx--` 项目，应共同使用这套项目级记忆。
 
@@ -36,6 +38,9 @@
 
 后续任何重大开发或项目记忆更新，都必须同时检查：
 
+- 是否已经调查项目已有、官方和开源成熟方案；
+- 是否优先采用复用、组合或薄适配而不是从零重写；
+- 自研部分是否已经缩小到必要范围；
 - 是否保留已有可运行功能；
 - 是否影响统一字段字典；
 - 是否影响总体结构图；

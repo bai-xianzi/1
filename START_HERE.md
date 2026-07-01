@@ -4,7 +4,7 @@
 
 这是项目正式启动的第一个动作：
 
-> 把最新权威记忆、字段字典和工程规则放入正式Git仓库，并替换旧的`AGENTS.md`和`PROJECT_CONTEXT.md`。
+> 把最新权威记忆、字段字典、复用优先政策和工程规则放入正式Git仓库，并替换旧的`AGENTS.md`和`PROJECT_CONTEXT.md`。
 
 这一步不编写业务代码，不连接DolphinDB，不修改数据库。
 
@@ -28,6 +28,7 @@ PROJECT_MEMORY.md
 SYSTEM_ARCHITECTURE.md
 PROJECT_STATUS.md
 DEVELOPMENT_GUIDANCE.md
+REUSE_FIRST_ENGINEERING_POLICY.md
 CODEX_EXECUTION_POLICY.md
 schemas/canonical_fields.yaml
 schemas/enum_definitions.yaml
@@ -39,7 +40,7 @@ schemas/enum_definitions.yaml
 
 - 仓库不再出现“当前仍处于第0步”的错误描述；
 - `CURRENT / NEXT / FUTURE / RESERVED`边界清晰；
-- Codex能够找到全部权威文件；
+- 开发执行者能够找到全部权威文件，并在编码前读取复用优先政策；
 - 没有修改DolphinDB；
 - 没有创建业务代码；
 - Git差异只包含项目上下文和权威文件。
