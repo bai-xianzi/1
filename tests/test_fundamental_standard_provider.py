@@ -1,4 +1,9 @@
 """测试基本面Provider与用途级时点门禁。"""
+# 测试模块总览：验证 `test_fundamental_standard_provider` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 
 from __future__ import annotations
 
@@ -37,20 +42,45 @@ CONFIG_PATH = (
 )
 
 
+# 测试类 `FakeAdapter`：集中验证 `test_fundamental_standard_provider` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class FakeAdapter:
+    # 测试函数 `__init__`：封装 `__init__` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：rows。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def __init__(self, rows: list[dict[str, Any]]) -> None:
         self.rows = rows
 
+    # 测试函数 `run_readonly_query`：封装 `run_readonly_query` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：script。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def run_readonly_query(self, script: str) -> Any:
         return list(self.rows)
 
 
+# 测试函数 `load_registration`：封装 `load_registration` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def load_registration() -> DatasetRegistration:
     return DatasetRegistration.from_dict(
         json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     )
 
 
+# 测试函数 `make_row`：封装 `make_row` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：**overrides。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def make_row(**overrides: Any) -> dict[str, Any]:
     values: dict[str, Any] = {
         "stock_code": "000001",
@@ -83,6 +113,11 @@ def make_row(**overrides: Any) -> dict[str, Any]:
     return values
 
 
+# 测试函数 `make_provider`：封装 `make_provider` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：rows。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def make_provider(
     rows: list[dict[str, Any]] | None = None,
 ) -> FundamentalStandardDataProvider:
@@ -94,6 +129,11 @@ def make_provider(
     return FundamentalStandardDataProvider(service)
 
 
+# 测试函数 `make_query`：封装 `make_query` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：**overrides。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def make_query(**overrides: Any) -> StandardDataQuery:
     values = {
         "dataset_id": "a_stock_fundamental_snapshot",
@@ -108,7 +148,17 @@ def make_query(**overrides: Any) -> StandardDataQuery:
     return StandardDataQuery(**values)
 
 
+# 测试类 `TestFundamentalProvider`：集中验证 `test_fundamental_standard_provider` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestFundamentalProvider(unittest.TestCase):
+    # 测试函数 `test_registers_with_standard_data_service`：验证 `registers、with、standard、data、service` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_registers_with_standard_data_service(self) -> None:
         service = StandardDataService()
         service.register_provider(make_provider())
@@ -118,27 +168,50 @@ class TestFundamentalProvider(unittest.TestCase):
         self.assertEqual(descriptor.dictionary_revision, "0.5")
         self.assertIn("FundamentalSnapshot", descriptor.supported_objects)
 
+    # 测试函数 `test_current_snapshot_research_is_warning_not_blocked`：验证 `current、snapshot、research、is、warning、not、blocked` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_current_snapshot_research_is_warning_not_blocked(self) -> None:
         result = make_provider().query(make_query())
         self.assertEqual(result.metadata.status, QualityStatus.WARNING)
         self.assertFalse(result.metadata.blocks_downstream)
         self.assertEqual(len(result.records), 1)
 
+    # 测试函数 `test_historical_backtest_is_blocked`：验证 `historical、backtest、is、blocked` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_historical_backtest_is_blocked(self) -> None:
         result = make_provider().query(
             make_query(usage=StandardDataUsage.STRICT_HISTORICAL_BACKTEST)
         )
         self.assertEqual(result.metadata.status, QualityStatus.FAILED)
         self.assertTrue(result.metadata.blocks_downstream)
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             result.assert_usable()
 
+    # 测试函数 `test_historical_training_is_blocked`：验证 `historical、training、is、blocked` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_historical_training_is_blocked(self) -> None:
         result = make_provider().query(
             make_query(usage=StandardDataUsage.HISTORICAL_MODEL_TRAINING)
         )
         self.assertTrue(result.metadata.blocks_downstream)
 
+    # 测试函数 `test_precoverage_query_is_blocked`：验证 `precoverage、query、is、blocked` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_precoverage_query_is_blocked(self) -> None:
         result = make_provider().query(
             make_query(
@@ -151,14 +224,35 @@ class TestFundamentalProvider(unittest.TestCase):
         self.assertTrue(result.metadata.blocks_downstream)
         self.assertEqual(result.metadata.status, QualityStatus.FAILED)
 
+    # 测试函数 `test_decision_time_requires_timezone`：验证 `decision、time、requires、timezone` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_decision_time_requires_timezone(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(decision_time=datetime(2026, 6, 20, 9, 0))
 
+    # 测试函数 `test_manual_decision_requires_decision_time`：验证 `manual、decision、requires、decision、time` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_manual_decision_requires_decision_time(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(usage=StandardDataUsage.MANUAL_DECISION_SUPPORT)
 
+    # 测试函数 `test_manual_decision_next_day_is_allowed_with_warning`：验证 `manual、decision、next、day、is、allowed、with、warning` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_manual_decision_next_day_is_allowed_with_warning(self) -> None:
         result = make_provider().query(
             make_query(
@@ -171,6 +265,11 @@ class TestFundamentalProvider(unittest.TestCase):
         self.assertFalse(result.metadata.blocks_downstream)
         self.assertEqual(result.metadata.status, QualityStatus.WARNING)
 
+    # 测试函数 `test_manual_decision_same_day_is_blocked_without_timezone_proof`：验证 `manual、decision、same、day、is、blocked、without、timezone、proof` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_manual_decision_same_day_is_blocked_without_timezone_proof(self) -> None:
         result = make_provider().query(
             make_query(
@@ -190,6 +289,11 @@ class TestFundamentalProvider(unittest.TestCase):
             1,
         )
 
+    # 测试函数 `test_missing_imported_at_is_blocked`：验证 `missing、imported、at、is、blocked` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_missing_imported_at_is_blocked(self) -> None:
         result = make_provider([make_row(imported_at=None)]).query(make_query())
         self.assertEqual(result.records, ())
@@ -201,6 +305,11 @@ class TestFundamentalProvider(unittest.TestCase):
             1,
         )
 
+    # 测试函数 `test_empty_financial_payload_blocks_fundamental_query`：验证 `empty、financial、payload、blocks、fundamental、query` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_empty_financial_payload_blocks_fundamental_query(self) -> None:
         empty = make_row(
             stock_code="001248",
@@ -230,6 +339,11 @@ class TestFundamentalProvider(unittest.TestCase):
         self.assertTrue(result.metadata.blocks_downstream)
         self.assertEqual(result.metadata.status, QualityStatus.FAILED)
 
+    # 测试函数 `test_empty_financial_payload_still_exposes_instrument_candidate`：验证 `empty、financial、payload、still、exposes、instrument、candidate` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_empty_financial_payload_still_exposes_instrument_candidate(self) -> None:
         empty = make_row(
             stock_code="001248",
@@ -261,6 +375,11 @@ class TestFundamentalProvider(unittest.TestCase):
         self.assertEqual(len(result.records), 1)
         self.assertFalse(result.metadata.blocks_downstream)
 
+    # 测试函数 `test_field_projection_and_lineage`：验证 `field、projection、and、lineage` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_field_projection_and_lineage(self) -> None:
         result = make_provider().query(
             make_query(fields=("revenue_cny",))
@@ -275,10 +394,23 @@ class TestFundamentalProvider(unittest.TestCase):
             "revenue_cny",
         )
 
+    # 测试函数 `test_unknown_field_is_rejected`：验证 `unknown、field、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_field_is_rejected(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_provider().query(make_query(fields=("unknown",)))
 
+    # 测试函数 `test_source_extensions_are_opt_in`：验证 `source、extensions、are、opt、in` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_source_extensions_are_opt_in(self) -> None:
         hidden = make_provider().query(make_query())
         visible = make_provider().query(
@@ -291,6 +423,11 @@ class TestFundamentalProvider(unittest.TestCase):
             35_277_000.0,
         )
 
+    # 测试函数 `test_authoritative_classification_projection`：验证 `authoritative、classification、projection` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_authoritative_classification_projection(self) -> None:
         row = make_row(
             sw_sector_code="801780",

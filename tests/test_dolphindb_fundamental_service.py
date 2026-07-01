@@ -1,4 +1,9 @@
 """测试基本面标准化读取服务。"""
+# 测试模块总览：验证 `test_dolphindb_fundamental_service` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 
 from __future__ import annotations
 
@@ -32,36 +37,75 @@ CONFIG_PATH = (
 SCHEMA_PATH = PROJECT_ROOT / "schemas" / "canonical_fields.yaml"
 
 
+# 测试类 `FakeAdapter`：集中验证 `test_dolphindb_fundamental_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class FakeAdapter:
+    # 测试函数 `__init__`：封装 `__init__` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：rows。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def __init__(self, rows: list[dict[str, Any]]) -> None:
         self.rows = rows
         self.scripts: list[str] = []
 
+    # 测试函数 `run_readonly_query`：封装 `run_readonly_query` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：script。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def run_readonly_query(self, script: str) -> Any:
         self.scripts.append(script)
         return list(self.rows)
 
 
+# 测试函数 `load_registration`：封装 `load_registration` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：enabled。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def load_registration(*, enabled: bool = False) -> DatasetRegistration:
     value = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     value["enabled"] = enabled
     return DatasetRegistration.from_dict(value)
 
 
+# 测试函数 `load_authority_catalog`：封装 `load_authority_catalog` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def load_authority_catalog() -> dict[str, set[str]]:
     catalog: dict[str, set[str]] = {}
     current_object: str | None = None
+    # 参数化循环：逐项使用 `SCHEMA_PATH.read_text(encoding='utf-8').splitlines()` 验证同一合同。
+    # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+    # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
     for raw_line in SCHEMA_PATH.read_text(encoding="utf-8").splitlines():
         stripped = raw_line.strip()
+        # 测试分支：根据 `stripped.startswith('canonical_object:')` 选择对应断言或样例路径。
+        # - 处理：保持原条件和分支顺序，仅解释不同测试场景的进入条件。
+        # - 为什么这样写：显式覆盖条件差异，防止只验证单一路径造成回归盲区。
         if stripped.startswith("canonical_object:"):
             current_object = stripped.split(":", 1)[1].strip()
             catalog.setdefault(current_object, set())
+        # 测试分支：根据 `stripped.startswith('- canonical_name:') and current_object` 选择对应断言或样例路径。
+        # - 处理：保持原条件和分支顺序，仅解释不同测试场景的进入条件。
+        # - 为什么这样写：显式覆盖条件差异，防止只验证单一路径造成回归盲区。
         elif stripped.startswith("- canonical_name:") and current_object:
             name = stripped.split(":", 1)[1].strip()
             catalog[current_object].add(name)
     return catalog
 
 
+# 测试函数 `make_row`：封装 `make_row` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：**overrides。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def make_row(**overrides: Any) -> dict[str, Any]:
     values: dict[str, Any] = {
         "stock_code": "000001",
@@ -123,8 +167,21 @@ def make_row(**overrides: Any) -> dict[str, Any]:
     return values
 
 
+# 测试类 `TestFundamentalReadRequest`：集中验证 `test_dolphindb_fundamental_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestFundamentalReadRequest(unittest.TestCase):
+    # 测试函数 `test_rejects_invalid_stock_code`：验证 `rejects、invalid、stock、code` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_rejects_invalid_stock_code(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             FundamentalReadRequest(
                 instrument_ids=("000001.SZ",),
@@ -132,7 +189,15 @@ class TestFundamentalReadRequest(unittest.TestCase):
                 end_date=date(2026, 6, 19),
             )
 
+    # 测试函数 `test_rejects_duplicate_stock_code`：验证 `rejects、duplicate、stock、code` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_rejects_duplicate_stock_code(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             FundamentalReadRequest(
                 instrument_ids=("000001", "000001"),
@@ -141,7 +206,17 @@ class TestFundamentalReadRequest(unittest.TestCase):
             )
 
 
+# 测试类 `TestReportPeriodDerivation`：集中验证 `test_dolphindb_fundamental_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestReportPeriodDerivation(unittest.TestCase):
+    # 测试函数 `test_derives_current_year_q1`：验证 `derives、current、year、q1` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_derives_current_year_q1(self) -> None:
         result = derive_report_period(date(2026, 4, 25), 3)
         self.assertIsNotNone(result)
@@ -150,12 +225,22 @@ class TestReportPeriodDerivation(unittest.TestCase):
         self.assertEqual(result.period_type, "QUARTERLY")
         self.assertEqual(result.fiscal_quarter, 1)
 
+    # 测试函数 `test_derives_previous_year_q3`：验证 `derives、previous、year、q3` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_derives_previous_year_q3(self) -> None:
         result = derive_report_period(date(2026, 4, 29), 9)
         self.assertIsNotNone(result)
         assert result is not None
         self.assertEqual(result.report_period, date(2025, 9, 30))
 
+    # 测试函数 `test_derives_previous_year_annual`：验证 `derives、previous、year、annual` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_derives_previous_year_annual(self) -> None:
         result = derive_report_period(date(2026, 4, 29), 12)
         self.assertIsNotNone(result)
@@ -165,7 +250,17 @@ class TestReportPeriodDerivation(unittest.TestCase):
         self.assertEqual(result.fiscal_quarter, 4)
 
 
+# 测试类 `TestFundamentalStandardizedService`：集中验证 `test_dolphindb_fundamental_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestFundamentalStandardizedService(unittest.TestCase):
+    # 测试函数 `make_service`：封装 `make_service` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：rows。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def make_service(
         self,
         rows: list[dict[str, Any]] | None = None,
@@ -178,6 +273,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
         )
         return service, adapter
 
+    # 测试函数 `make_request`：封装 `make_request` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：instrument_id。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     @staticmethod
     def make_request(instrument_id: str = "000001") -> FundamentalReadRequest:
         return FundamentalReadRequest(
@@ -186,13 +286,26 @@ class TestFundamentalStandardizedService(unittest.TestCase):
             end_date=date(2026, 6, 19),
         )
 
+    # 测试函数 `test_disabled_registration_requires_explicit_acceptance`：验证 `disabled、registration、requires、explicit、acceptance` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_disabled_registration_requires_explicit_acceptance(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             DolphinDBFundamentalStandardizedService(
                 FakeAdapter([make_row()]),
                 load_registration(),
             )
 
+    # 测试函数 `test_enabled_registration_does_not_need_override`：验证 `enabled、registration、does、not、need、override` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_enabled_registration_does_not_need_override(self) -> None:
         service = DolphinDBFundamentalStandardizedService(
             FakeAdapter([make_row()]),
@@ -200,6 +313,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
         )
         self.assertEqual(service.registration.mapping_version, "0.2.0-rc2")
 
+    # 测试函数 `test_query_is_readonly_registered_and_filtered`：验证 `query、is、readonly、registered、and、filtered` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_query_is_readonly_registered_and_filtered(self) -> None:
         service, adapter = self.make_service()
         service.read(self.make_request())
@@ -212,6 +330,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
         self.assertNotIn(";", script)
         self.assertNotIn("D:\\Users\\Administrator\\Desktop", script)
 
+    # 测试函数 `test_scales_money_and_shares`：验证 `scales、money、and、shares` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_scales_money_and_shares(self) -> None:
         service, _ = self.make_service()
         batch = service.read(self.make_request())
@@ -237,20 +360,39 @@ class TestFundamentalStandardizedService(unittest.TestCase):
             19_405_601_200,
         )
 
+    # 测试函数 `test_only_emits_authoritative_canonical_fields`：验证 `only、emits、authoritative、canonical、fields` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_only_emits_authoritative_canonical_fields(self) -> None:
         service, _ = self.make_service()
         batch = service.read(self.make_request())
         catalog = load_authority_catalog()
+        # 参数化循环：逐项使用 `batch.records` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for record in batch.records:
             self.assertTrue(
                 set(record.values).issubset(catalog[record.canonical_object]),
                 (record.canonical_object, set(record.values) - catalog[record.canonical_object]),
             )
 
+    # 测试函数 `test_registration_mapped_targets_exist_in_authority_catalog`：验证 `registration、mapped、targets、exist、in、authority、catalog` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_registration_mapped_targets_exist_in_authority_catalog(self) -> None:
         registration = load_registration()
         catalog = load_authority_catalog()
+        # 参数化循环：逐项使用 `registration.field_mappings` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for rule in registration.field_mappings:
+            # 测试分支：根据 `rule.canonical_target is None` 选择对应断言或样例路径。
+            # - 处理：保持原条件和分支顺序，仅解释不同测试场景的进入条件。
+            # - 为什么这样写：显式覆盖条件差异，防止只验证单一路径造成回归盲区。
             if rule.canonical_target is None:
                 continue
             assert rule.target_object is not None
@@ -259,6 +401,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
             self.assertIn(rule.canonical_field, catalog[rule.target_object])
         self.assertTrue(registration.mapping_coverage()["all_source_fields_accounted"])
 
+    # 测试函数 `test_produces_derived_report_period_and_raw_extensions`：验证 `produces、derived、report、period、and、raw、extensions` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_produces_derived_report_period_and_raw_extensions(self) -> None:
         service, _ = self.make_service()
         batch = service.read(self.make_request())
@@ -278,6 +425,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
             1_000,
         )
 
+    # 测试函数 `test_empty_financial_payload_is_not_zero_filled`：验证 `empty、financial、payload、is、not、zero、filled` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_empty_financial_payload_is_not_zero_filled(self) -> None:
         empty = make_row(
             stock_code="001248",
@@ -309,6 +461,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
         self.assertNotIn("OwnershipSnapshot", objects)
         self.assertIn("001248 没有可用财务载荷。", batch.warnings)
 
+    # 测试函数 `test_incomplete_identity_is_preserved_with_warning`：验证 `incomplete、identity、is、preserved、with、warning` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_incomplete_identity_is_preserved_with_warning(self) -> None:
         row = make_row(
             stock_code="001235",
@@ -334,6 +491,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
             instrument.quality_flags,
         )
 
+    # 测试函数 `test_instrument_uses_authoritative_enums`：验证 `instrument、uses、authoritative、enums` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_instrument_uses_authoritative_enums(self) -> None:
         service, _ = self.make_service()
         batch = service.read(self.make_request())
@@ -346,6 +508,11 @@ class TestFundamentalStandardizedService(unittest.TestCase):
         self.assertEqual(instrument.values["security_type"], "COMMON_STOCK")
         self.assertEqual(instrument.values["trading_status"], "UNKNOWN")
 
+    # 测试函数 `test_classification_records_use_authoritative_names`：验证 `classification、records、use、authoritative、names` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_classification_records_use_authoritative_names(self) -> None:
         service, _ = self.make_service()
         batch = service.read(self.make_request())

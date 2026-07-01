@@ -1,3 +1,8 @@
+# 测试模块总览：验证 `test_dolphindb_daily_funds_service` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 from __future__ import annotations
 
 import copy
@@ -21,16 +26,36 @@ from a_stock_quant.dolphindb_daily_funds_service import (
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
+# 测试类 `FakeAdapter`：集中验证 `test_dolphindb_daily_funds_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class FakeAdapter:
+    # 测试函数 `__init__`：封装 `__init__` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：rows。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def __init__(self, rows: list[dict[str, Any]]) -> None:
         self.rows = rows
         self.scripts: list[str] = []
 
+    # 测试函数 `run_readonly_query`：封装 `run_readonly_query` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：script。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def run_readonly_query(self, script: str) -> Any:
         self.scripts.append(script)
         return copy.deepcopy(self.rows)
 
 
+# 测试函数 `common_row`：封装 `common_row` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：dataset_id、snapshot_date、source_hash、row_number、ingested_at。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def common_row(
     dataset_id: str,
     snapshot_date: date = date(2025, 11, 20),
@@ -59,13 +84,28 @@ def common_row(
     }
 
 
+# 测试类 `Task017CDailyFundsServiceTests`：集中验证 `test_dolphindb_daily_funds_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class Task017CDailyFundsServiceTests(unittest.TestCase):
+    # 测试函数 `service`：封装 `service` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：rows。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def service(self, rows: list[dict[str, Any]]) -> DolphinDBDailyFundsCanonicalService:
         return DolphinDBDailyFundsCanonicalService(
             FakeAdapter(rows),
             project_root=PROJECT_ROOT,
         )
 
+    # 测试函数 `test_local_service_contract_passes`：验证 `local、service、contract、passes` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_local_service_contract_passes(self) -> None:
         result = validate_daily_funds_service_contract(PROJECT_ROOT)
         self.assertEqual(result["overall_status"], "PASSED_WITH_WARNINGS")
@@ -74,6 +114,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         self.assertEqual(result["canonical_object_count"], 4)
         self.assertEqual(result["issues"], [])
 
+    # 测试函数 `test_hq_maps_volume_and_lineage`：验证 `hq、maps、volume、and、lineage` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_hq_maps_volume_and_lineage(self) -> None:
         row = common_row("hq")
         row.update(
@@ -124,6 +169,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         self.assertIn("dataset_id=`hq", script)
         self.assertNotIn("insert", script.lower())
 
+    # 测试函数 `test_kphq_keeps_time_null_and_date_only_precision`：验证 `kphq、keeps、time、null、and、date、only、precision` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_kphq_keeps_time_null_and_date_only_precision(self) -> None:
         row = common_row("kphq")
         row.update(
@@ -155,6 +205,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         self.assertEqual(values["order_imbalance_ratio"], -0.25)
         self.assertNotEqual(values.get("snapshot_time"), row["source_file_mtime_utc"])
 
+    # 测试函数 `test_classification_uses_node_identity_not_instrument`：验证 `classification、uses、node、identity、not、instrument` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_classification_uses_node_identity_not_instrument(self) -> None:
         row = common_row("hy")
         row.update(
@@ -202,6 +257,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         self.assertEqual(record.source_extensions["average_shares"], 123.0)
         self.assertNotIn("银行", service.adapter.scripts[0])
 
+    # 测试函数 `test_classification_can_query_by_provisional_id`：验证 `classification、can、query、by、provisional、id` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_classification_can_query_by_provisional_id(self) -> None:
         row = common_row("gn")
         row.update(
@@ -225,6 +285,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         self.assertEqual(len(batch.records), 1)
         self.assertEqual(batch.records[0].values["node_name_cn"], "人工智能")
 
+    # 测试函数 `test_money_flow_preserves_sign_and_sums_buckets`：验证 `money、flow、preserves、sign、and、sums、buckets` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_money_flow_preserves_sign_and_sums_buckets(self) -> None:
         row = common_row("zj")
         row.update(
@@ -257,6 +322,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
             -300.0,
         )
 
+    # 测试函数 `test_latest_raw_revision_wins`：验证 `latest、raw、revision、wins` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_latest_raw_revision_wins(self) -> None:
         older = common_row(
             "hq",
@@ -268,6 +338,9 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
             source_hash="c" * 64,
             ingested_at=datetime(2025, 11, 20, 12, 0),
         )
+        # 参数化循环：逐项使用 `((older, 10.0), (newer, 11.0))` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for row, close in ((older, 10.0), (newer, 11.0)):
             row.update(
                 {
@@ -288,6 +361,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         self.assertEqual(batch.records[0].values["close_raw_cny"], 11.0)
         self.assertIn("COLLAPSED_RAW_REVISIONS:1", batch.warnings)
 
+    # 测试函数 `test_known_quarantine_is_reported`：验证 `known、quarantine、is、reported` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_known_quarantine_is_reported(self) -> None:
         service = self.service([])
         batch = service.read(
@@ -306,8 +384,16 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         )
         self.assertIn("NO_DATA_FOR_ENTITY:000001", batch.warnings)
 
+    # 测试函数 `test_request_rejects_out_of_coverage`：验证 `request、rejects、out、of、coverage` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_request_rejects_out_of_coverage(self) -> None:
         service = self.service([])
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             service.read(
                 DailyFundsReadRequest(
@@ -318,8 +404,16 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
                 )
             )
 
+    # 测试函数 `test_security_query_rejects_non_six_digit_id`：验证 `security、query、rejects、non、six、digit、id` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_security_query_rejects_non_six_digit_id(self) -> None:
         service = self.service([])
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             service.read(
                 DailyFundsReadRequest(
@@ -330,6 +424,11 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
                 )
             )
 
+    # 测试函数 `test_no_data_warning_is_explicit`：验证 `no、data、warning、is、explicit` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_no_data_warning_is_explicit(self) -> None:
         service = self.service([])
         batch = service.read(
@@ -343,9 +442,20 @@ class Task017CDailyFundsServiceTests(unittest.TestCase):
         self.assertEqual(batch.records, ())
         self.assertIn("NO_DATA_FOR_ENTITY:000001", batch.warnings)
 
+    # 测试函数 `test_mapping_source_drift_fails_validation`：验证 `mapping、source、drift、fails、validation` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_mapping_source_drift_fails_validation(self) -> None:
+        # 测试上下文：通过 `tempfile.TemporaryDirectory()` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with tempfile.TemporaryDirectory() as tmp:
             temp_root = Path(tmp)
+            # 参数化循环：逐项使用 `('configs/datasets/a_stock_daily_funds_standard_service.yaml', 'configs/mappings/a_stock_daily_funds_can…` 验证同一合同。
+            # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+            # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
             for rel in (
                 "configs/datasets/a_stock_daily_funds_standard_service.yaml",
                 "configs/mappings/a_stock_daily_funds_canonical_v0.yaml",

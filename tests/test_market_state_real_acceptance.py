@@ -1,3 +1,8 @@
+# 测试模块总览：验证 `test_market_state_real_acceptance` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 from __future__ import annotations
 
 import json
@@ -34,7 +39,17 @@ PLAN_PATH = (
 )
 
 
+# 测试类 `TestMarketStateRealAcceptance`：集中验证 `test_market_state_real_acceptance` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestMarketStateRealAcceptance(unittest.TestCase):
+    # 测试函数 `setUp`：准备本组测试共享的对象、样例和环境状态。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def setUp(self) -> None:
         self.plan = load_real_feature_acceptance_plan(PLAN_PATH)
         self.daily_source = ReadonlySourceDescriptor(
@@ -53,10 +68,20 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
             dataset_filter="dataset_id=`hy",
         )
 
+    # 测试函数 `test_plan_loads`：验证 `plan、loads` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_plan_loads(self):
         self.assertEqual(self.plan.task_id, "TASK_019C")
         self.assertEqual(self.plan.mode, REAL_FEATURE_ACCEPTANCE_MODE)
 
+    # 测试函数 `test_plan_has_two_required_datasets`：验证 `plan、has、two、required、datasets` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_plan_has_two_required_datasets(self):
         self.assertEqual(len(self.plan.required_datasets), 2)
         self.assertEqual(
@@ -64,9 +89,19 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
             {"a_stock_daily_k", "hy"},
         )
 
+    # 测试函数 `test_plan_never_claims_full_market`：验证 `plan、never、claims、full、market` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_plan_never_claims_full_market(self):
         self.assertFalse(self.plan.claim_full_market_coverage)
 
+    # 测试函数 `test_recent_date_query_is_readonly`：验证 `recent、date、query、is、readonly` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_recent_date_query_is_readonly(self):
         script = build_recent_date_rows_query(
             self.hy_source,
@@ -76,6 +111,11 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
         self.assertIn("select top 100", script)
         self.assertIn("dataset_id=`hy", script)
 
+    # 测试函数 `test_presence_query_is_readonly`：验证 `presence、query、is、readonly` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_presence_query_is_readonly(self):
         script = build_date_presence_query(
             self.daily_source,
@@ -84,6 +124,11 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
         assert_readonly_query(script)
         self.assertIn("2025.12.31", script)
 
+    # 测试函数 `test_selector_query_is_deterministic`：验证 `selector、query、is、deterministic` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_selector_query_is_deterministic(self):
         script = build_selector_rows_query(
             self.daily_source,
@@ -93,10 +138,23 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
         assert_readonly_query(script)
         self.assertIn("order by stock_code", script)
 
+    # 测试函数 `test_write_query_is_rejected`：验证 `write、query、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_write_query_is_rejected(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             assert_readonly_query("delete from x")
 
+    # 测试函数 `test_unique_dates_preserve_descending_order`：验证 `unique、dates、preserve、descending、order` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unique_dates_preserve_descending_order(self):
         rows = [
             {"snapshot_date": "2025.12.30"},
@@ -113,6 +171,11 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
             (date(2025, 12, 31), date(2025, 12, 30)),
         )
 
+    # 测试函数 `test_unique_selectors_remove_empty_and_duplicate`：验证 `unique、selectors、remove、empty、and、duplicate` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unique_selectors_remove_empty_and_duplicate(self):
         rows = [
             {"stock_code": "000001"},
@@ -129,6 +192,11 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
             ("000001", "000002"),
         )
 
+    # 测试函数 `test_daily_query_uses_current_research`：验证 `daily、query、uses、current、research` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_daily_query_uses_current_research(self):
         query = build_feature_acceptance_query(
             self.plan.dataset("a_stock_daily_k"),
@@ -143,6 +211,11 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
         self.assertEqual(query.instrument_ids[0], "000001")
         self.assertEqual(query.entity_ids, ())
 
+    # 测试函数 `test_hy_query_uses_entity_ids`：验证 `hy、query、uses、entity、ids` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_hy_query_uses_entity_ids(self):
         query = build_feature_acceptance_query(
             self.plan.dataset("hy"),
@@ -156,7 +229,15 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
             ("industry-a", "industry-b"),
         )
 
+    # 测试函数 `test_empty_selectors_are_rejected`：验证 `empty、selectors、are、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_empty_selectors_are_rejected(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             build_feature_acceptance_query(
                 self.plan.dataset("hy"),
@@ -165,6 +246,11 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
                 self.plan.as_of_date,
             )
 
+    # 测试函数 `test_report_contract_accepts_valid_report`：验证 `report、contract、accepts、valid、report` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_report_contract_accepts_valid_report(self):
         report = {
             "task_id": "TASK_019C",
@@ -213,6 +299,11 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
             (),
         )
 
+    # 测试函数 `test_report_contract_detects_blocked_query`：验证 `report、contract、detects、blocked、query` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_report_contract_detects_blocked_query(self):
         report = {
             "task_id": "TASK_019C",
@@ -259,15 +350,26 @@ class TestMarketStateRealAcceptance(unittest.TestCase):
         )
         self.assertIn("query_blocked:hy", issues)
 
+    # 测试函数 `test_plan_rejects_full_market_claim`：验证 `plan、rejects、full、market、claim` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_plan_rejects_full_market_claim(self):
         raw = json.loads(PLAN_PATH.read_text(encoding="utf-8"))
         raw["universe_policy"]["claim_full_market_coverage"] = True
+        # 测试上下文：通过 `tempfile.TemporaryDirectory()` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with tempfile.TemporaryDirectory() as temp_dir:
             path = Path(temp_dir) / "bad.json"
             path.write_text(
                 json.dumps(raw, ensure_ascii=False),
                 encoding="utf-8",
             )
+            # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+            # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+            # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
             with self.assertRaises(DataContractError):
                 load_real_feature_acceptance_plan(path)
 

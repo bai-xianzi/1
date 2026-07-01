@@ -1,3 +1,8 @@
+# 测试模块总览：验证 `test_readiness_gated_data_service` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 from __future__ import annotations
 
 from datetime import date
@@ -47,7 +52,17 @@ POLICY_PATH = (
 )
 
 
+# 测试类 `FakeProvider`：集中验证 `test_readiness_gated_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class FakeProvider(StandardDatasetProvider):
+    # 测试函数 `__init__`：封装 `__init__` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：status、blocks_downstream、warnings。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def __init__(
         self,
         *,
@@ -59,6 +74,11 @@ class FakeProvider(StandardDatasetProvider):
         self.blocks_downstream = blocks_downstream
         self.warnings = warnings
 
+    # 测试函数 `descriptor`：封装 `descriptor` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     @property
     def descriptor(self) -> ProviderDescriptor:
         return ProviderDescriptor(
@@ -70,6 +90,11 @@ class FakeProvider(StandardDatasetProvider):
             dictionary_revision="0.6.0",
         )
 
+    # 测试函数 `query`：封装 `query` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：request。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def query(
         self,
         request: StandardDataQuery,
@@ -118,7 +143,17 @@ class FakeProvider(StandardDatasetProvider):
         )
 
 
+# 测试类 `FixedEvidenceBuilder`：集中验证 `test_readiness_gated_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class FixedEvidenceBuilder(StandardQueryEvidenceBuilder):
+    # 测试函数 `__init__`：封装 `__init__` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：overrides。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def __init__(
         self,
         overrides: dict[
@@ -136,6 +171,11 @@ class FixedEvidenceBuilder(StandardQueryEvidenceBuilder):
         )
         self.overrides = overrides or {}
 
+    # 测试函数 `build`：封装 `build` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：result、descriptor、context。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def build(
         self,
         result: StandardQueryResult,
@@ -143,6 +183,9 @@ class FixedEvidenceBuilder(StandardQueryEvidenceBuilder):
         context=None,
     ) -> tuple[ReadinessEvidence, ...]:
         evidence: list[ReadinessEvidence] = []
+        # 参数化循环：逐项使用 `ReadinessDimension` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for dimension in ReadinessDimension:
             status = self.overrides.get(
                 dimension,
@@ -166,7 +209,17 @@ class FixedEvidenceBuilder(StandardQueryEvidenceBuilder):
         return tuple(evidence)
 
 
+# 测试类 `ReadinessGatedServiceTests`：集中验证 `test_readiness_gated_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class ReadinessGatedServiceTests(unittest.TestCase):
+    # 测试函数 `request`：封装 `request` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：usage。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def request(
         self,
         usage: StandardDataUsage = (
@@ -183,6 +236,11 @@ class ReadinessGatedServiceTests(unittest.TestCase):
             usage=usage,
         )
 
+    # 测试函数 `service`：封装 `service` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：provider、builder。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def service(
         self,
         *,
@@ -202,6 +260,11 @@ class ReadinessGatedServiceTests(unittest.TestCase):
             readiness,
         )
 
+    # 测试函数 `test_all_passed_is_usable`：验证 `all、passed、is、usable` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_all_passed_is_usable(self) -> None:
         result = self.service().query(self.request())
         self.assertFalse(result.blocks_downstream)
@@ -211,6 +274,11 @@ class ReadinessGatedServiceTests(unittest.TestCase):
         )
         result.assert_usable()
 
+    # 测试函数 `test_current_research_warning_is_usable`：验证 `current、research、warning、is、usable` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_current_research_warning_is_usable(self) -> None:
         service = self.service(
             builder=FixedEvidenceBuilder(
@@ -228,6 +296,11 @@ class ReadinessGatedServiceTests(unittest.TestCase):
         )
         result.assert_usable()
 
+    # 测试函数 `test_strict_historical_warning_is_blocked`：验证 `strict、historical、warning、is、blocked` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_strict_historical_warning_is_blocked(self) -> None:
         service = self.service(
             builder=FixedEvidenceBuilder(
@@ -247,9 +320,17 @@ class ReadinessGatedServiceTests(unittest.TestCase):
             result.readiness_snapshot.decision.status,
             ReadinessStatus.BLOCKED,
         )
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             result.assert_usable()
 
+    # 测试函数 `test_provider_block_cannot_be_bypassed`：验证 `provider、block、cannot、be、bypassed` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_provider_block_cannot_be_bypassed(self) -> None:
         service = self.service(
             provider=FakeProvider(
@@ -260,9 +341,17 @@ class ReadinessGatedServiceTests(unittest.TestCase):
         )
         result = service.query(self.request())
         self.assertTrue(result.blocks_downstream)
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             result.assert_usable()
 
+    # 测试函数 `test_readiness_failure_cannot_be_bypassed`：验证 `readiness、failure、cannot、be、bypassed` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_readiness_failure_cannot_be_bypassed(self) -> None:
         service = self.service(
             builder=FixedEvidenceBuilder(
@@ -274,9 +363,17 @@ class ReadinessGatedServiceTests(unittest.TestCase):
         )
         result = service.query(self.request())
         self.assertTrue(result.blocks_downstream)
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             result.assert_usable()
 
+    # 测试函数 `test_query_id_is_preserved`：验证 `query、id、is、preserved` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_query_id_is_preserved(self) -> None:
         result = self.service().query(self.request())
         self.assertEqual(
@@ -284,6 +381,11 @@ class ReadinessGatedServiceTests(unittest.TestCase):
             result.readiness_snapshot.query_id,
         )
 
+    # 测试函数 `test_provider_id_is_preserved`：验证 `provider、id、is、preserved` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_provider_id_is_preserved(self) -> None:
         result = self.service().query(self.request())
         self.assertEqual(
@@ -291,6 +393,11 @@ class ReadinessGatedServiceTests(unittest.TestCase):
             result.readiness_snapshot.provider_id,
         )
 
+    # 测试函数 `test_to_dict_is_json_serialisable`：验证 `to、dict、is、json、serialisable` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_to_dict_is_json_serialisable(self) -> None:
         result = self.service().query(self.request())
         payload = result.to_dict()
@@ -301,6 +408,11 @@ class ReadinessGatedServiceTests(unittest.TestCase):
         )
         self.assertFalse(payload["blocks_downstream"])
 
+    # 测试函数 `test_wrong_standard_service_type_is_rejected`：验证 `wrong、standard、service、type、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_wrong_standard_service_type_is_rejected(self) -> None:
         readiness = StandardQueryReadinessService(
             DataReadinessEngine(
@@ -308,14 +420,25 @@ class ReadinessGatedServiceTests(unittest.TestCase):
             ),
             FixedEvidenceBuilder(),
         )
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ReadinessGatedStandardDataService(
                 object(),  # type: ignore[arg-type]
                 readiness,
             )
 
+    # 测试函数 `test_wrong_readiness_service_type_is_rejected`：验证 `wrong、readiness、service、type、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_wrong_readiness_service_type_is_rejected(self) -> None:
         standard = StandardDataService()
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ReadinessGatedStandardDataService(
                 standard,

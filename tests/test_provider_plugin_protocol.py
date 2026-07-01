@@ -1,3 +1,8 @@
+# 测试模块总览：验证 `test_provider_plugin_protocol` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 from __future__ import annotations
 
 import json
@@ -65,6 +70,11 @@ REGISTRY_PATH = (
 )
 
 
+# 测试函数 `complete_discovery`：封装 `complete_discovery` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：provider_id、plugin_id、health、capability、usage、subscription_mode。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def complete_discovery(
     provider_id="test_provider",
     plugin_id="test.plugin",
@@ -167,6 +177,11 @@ def complete_discovery(
     )
 
 
+# 测试函数 `route_ready_matrix`：封装 `route_ready_matrix` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：provider_id、execution。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def route_ready_matrix(provider_id="test_provider", execution=False):
     return ProviderCapabilityMatrix(
         task_id="TASK_020A",
@@ -268,6 +283,11 @@ def route_ready_matrix(provider_id="test_provider", execution=False):
     )
 
 
+# 测试函数 `route_ready_registry`：封装 `route_ready_registry` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：provider_id、plugin_id。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def route_ready_registry(provider_id="test_provider", plugin_id="test.plugin"):
     return ProviderPluginRegistry(
         task_id="TASK_020B",
@@ -295,7 +315,17 @@ def route_ready_registry(provider_id="test_provider", plugin_id="test.plugin"):
     )
 
 
+# 测试类 `TestProviderPluginProtocol`：集中验证 `test_provider_plugin_protocol` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestProviderPluginProtocol(unittest.TestCase):
+    # 测试函数 `setUp`：准备本组测试共享的对象、样例和环境状态。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def setUp(self):
         self.matrix = load_provider_capability_matrix(MATRIX_PATH)
         self.protocol = load_provider_plugin_protocol_config(
@@ -303,15 +333,30 @@ class TestProviderPluginProtocol(unittest.TestCase):
         )
         self.registry = load_provider_plugin_registry(REGISTRY_PATH)
 
+    # 测试函数 `test_protocol_is_provider_neutral`：验证 `protocol、is、provider、neutral` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_protocol_is_provider_neutral(self):
         self.assertTrue(self.protocol.provider_neutral)
 
+    # 测试函数 `test_protocol_forbids_secrets_and_activation`：验证 `protocol、forbids、secrets、and、activation` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_protocol_forbids_secrets_and_activation(self):
         self.assertFalse(self.protocol.secret_material_allowed)
         self.assertFalse(
             self.protocol.automatic_plugin_activation_allowed
         )
 
+    # 测试函数 `test_validation_forbids_network_and_database`：验证 `validation、forbids、network、and、database` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_validation_forbids_network_and_database(self):
         self.assertFalse(
             self.protocol.network_probe_during_validation_allowed
@@ -320,9 +365,19 @@ class TestProviderPluginProtocol(unittest.TestCase):
             self.protocol.database_probe_during_validation_allowed
         )
 
+    # 测试函数 `test_protocol_has_nine_required_methods`：验证 `protocol、has、nine、required、methods` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_protocol_has_nine_required_methods(self):
         self.assertEqual(len(self.protocol.required_plugin_methods), 9)
 
+    # 测试函数 `test_seed_registry_covers_matrix`：验证 `seed、registry、covers、matrix` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_seed_registry_covers_matrix(self):
         self.assertEqual(
             {entry.provider_id for entry in self.registry.entries},
@@ -332,6 +387,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
             },
         )
 
+    # 测试函数 `test_seed_registry_has_no_enabled_routes`：验证 `seed、registry、has、no、enabled、routes` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_seed_registry_has_no_enabled_routes(self):
         self.assertTrue(
             all(
@@ -340,7 +400,15 @@ class TestProviderPluginProtocol(unittest.TestCase):
             )
         )
 
+    # 测试函数 `test_commercial_targets_are_pending`：验证 `commercial、targets、are、pending` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_commercial_targets_are_pending(self):
+        # 参数化循环：逐项使用 `('wind', 'ifind', 'galaxy_xingyao', 'qmt', 'ptrade')` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for provider_id in (
             "wind",
             "ifind",
@@ -355,6 +423,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 PluginRegistrationStatus.REGISTERED_TARGET,
             )
 
+    # 测试函数 `test_auth_reference_accepts_environment_reference`：验证 `auth、reference、accepts、environment、reference` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_auth_reference_accepts_environment_reference(self):
         ref = AuthenticationReference(
             reference_id="auth:test",
@@ -363,7 +436,15 @@ class TestProviderPluginProtocol(unittest.TestCase):
         )
         self.assertEqual(ref.locator, "env://TEST_TOKEN")
 
+    # 测试函数 `test_auth_reference_rejects_raw_value`：验证 `auth、reference、rejects、raw、value` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_auth_reference_rejects_raw_value(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             AuthenticationReference(
                 reference_id="auth:test",
@@ -371,7 +452,15 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 locator="abcdef0123456789abcdef0123456789",
             )
 
+    # 测试函数 `test_auth_reference_rejects_prefix_mismatch`：验证 `auth、reference、rejects、prefix、mismatch` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_auth_reference_rejects_prefix_mismatch(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             AuthenticationReference(
                 reference_id="auth:test",
@@ -379,6 +468,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 locator="env://TEST_TOKEN",
             )
 
+    # 测试函数 `test_complete_discovery_requires_installed_runtime`：验证 `complete、discovery、requires、installed、runtime` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_complete_discovery_requires_installed_runtime(self):
         result = complete_discovery()
         raw = {
@@ -386,6 +480,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
         } if hasattr(result, "__dict__") else None
         self.assertTrue(result.runtime.installed)
 
+    # 测试函数 `test_complete_discovery_has_capability`：验证 `complete、discovery、has、capability` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_complete_discovery_has_capability(self):
         result = complete_discovery()
         self.assertEqual(
@@ -393,8 +492,16 @@ class TestProviderPluginProtocol(unittest.TestCase):
             CapabilityImplementationStatus.VERIFIED,
         )
 
+    # 测试函数 `test_failed_discovery_requires_error`：验证 `failed、discovery、requires、error` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_failed_discovery_requires_error(self):
         result = complete_discovery()
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ProviderDiscoveryResult(
                 discovery_id="failed",
@@ -418,7 +525,15 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 errors=(),
             )
 
+    # 测试函数 `test_license_allowed_requires_evidence`：验证 `license、allowed、requires、evidence` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_license_allowed_requires_evidence(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             LicenseBoundary(
                 decision=LicenseDecision.ALLOWED,
@@ -430,7 +545,15 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 evidence_refs=(),
             )
 
+    # 测试函数 `test_cursor_pagination_requires_field`：验证 `cursor、pagination、requires、field` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_cursor_pagination_requires_field(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             PaginationPolicy(
                 mode=PaginationMode.CURSOR,
@@ -440,7 +563,15 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 cursor_field=None,
             )
 
+    # 测试函数 `test_retry_backoff_count_is_enforced`：验证 `retry、backoff、count、is、enforced` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_retry_backoff_count_is_enforced(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             RetryPolicy(
                 maximum_attempts=3,
@@ -448,7 +579,15 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 retryable_error_codes=(),
             )
 
+    # 测试函数 `test_enabled_entry_requires_entrypoint`：验证 `enabled、entry、requires、entrypoint` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_enabled_entry_requires_entrypoint(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ProviderRegistryEntry(
                 provider_id="x",
@@ -464,6 +603,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
                 notes="x",
             )
 
+    # 测试函数 `test_route_candidate_is_eligible`：验证 `route、candidate、is、eligible` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_route_candidate_is_eligible(self):
         matrix = route_ready_matrix()
         registry = route_ready_registry()
@@ -482,6 +626,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
         self.assertIs(candidates[0].decision, RouteDecision.ELIGIBLE)
         self.assertGreater(candidates[0].score, 90)
 
+    # 测试函数 `test_route_rejects_missing_discovery`：验证 `route、rejects、missing、discovery` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_route_rejects_missing_discovery(self):
         candidates = build_provider_route_candidates(
             matrix=route_ready_matrix(),
@@ -502,6 +651,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
             candidates[0].reasons,
         )
 
+    # 测试函数 `test_route_rejects_unlicensed_usage`：验证 `route、rejects、unlicensed、usage` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_route_rejects_unlicensed_usage(self):
         discovery = complete_discovery(usage="OTHER_USAGE")
         candidates = build_provider_route_candidates(
@@ -516,6 +670,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
         )
         self.assertIn("USAGE_NOT_LICENSED", candidates[0].reasons)
 
+    # 测试函数 `test_route_rejects_realtime_without_subscription`：验证 `route、rejects、realtime、without、subscription` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_route_rejects_realtime_without_subscription(self):
         discovery = complete_discovery(
             capability="REALTIME_SUBSCRIPTION",
@@ -572,6 +731,11 @@ class TestProviderPluginProtocol(unittest.TestCase):
             candidates[0].reasons,
         )
 
+    # 测试函数 `test_degraded_health_is_eligible_with_warning`：验证 `degraded、health、is、eligible、with、warning` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_degraded_health_is_eligible_with_warning(self):
         discovery = complete_discovery(
             health=ProviderHealthStatus.DEGRADED,
@@ -592,27 +756,54 @@ class TestProviderPluginProtocol(unittest.TestCase):
             candidates[0].warnings,
         )
 
+    # 测试函数 `test_seed_registry_rejects_manual_enable_without_discovery`：验证 `seed、registry、rejects、manual、enable、without、discovery` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_seed_registry_rejects_manual_enable_without_discovery(self):
         raw = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
         raw["entries"][1]["enabled_for_routing"] = True
+        # 测试上下文：通过 `tempfile.TemporaryDirectory()` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with tempfile.TemporaryDirectory() as temp_dir:
             path = Path(temp_dir) / "bad.json"
             path.write_text(
                 json.dumps(raw, ensure_ascii=False),
                 encoding="utf-8",
             )
+            # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+            # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+            # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
             with self.assertRaises(DataContractError):
                 load_provider_plugin_registry(path)
 
+    # 测试函数 `test_protocol_weights_sum_to_one_hundred`：验证 `protocol、weights、sum、to、one、hundred` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_protocol_weights_sum_to_one_hundred(self):
         self.assertAlmostEqual(
             sum(self.protocol.route_score_weights.values()),
             100.0,
         )
 
+    # 测试函数 `test_registry_auth_references_contain_no_secret_material`：验证 `registry、auth、references、contain、no、secret、material` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_registry_auth_references_contain_no_secret_material(self):
+        # 参数化循环：逐项使用 `self.registry.entries` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for entry in self.registry.entries:
             value = entry.authentication_reference_ref
+            # 测试分支：根据 `value is not None` 选择对应断言或样例路径。
+            # - 处理：保持原条件和分支顺序，仅解释不同测试场景的进入条件。
+            # - 为什么这样写：显式覆盖条件差异，防止只验证单一路径造成回归盲区。
             if value is not None:
                 self.assertTrue(
                     value.startswith(

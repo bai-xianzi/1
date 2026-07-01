@@ -1,4 +1,9 @@
 """测试统一标准数据服务与标准查询结果合同。"""
+# 测试模块总览：验证 `test_standard_data_service` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 
 from __future__ import annotations
 
@@ -40,6 +45,11 @@ from a_stock_quant.standard_data_service import (
 )
 
 
+# 测试类 `FakeSourceRecord`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 @dataclass
 class FakeSourceRecord:
     source_record_id: str
@@ -50,6 +60,11 @@ class FakeSourceRecord:
     lineage: list[dict[str, Any]]
 
 
+# 测试类 `FakeSourceBatch`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 @dataclass
 class FakeSourceBatch:
     dataset_id: str
@@ -63,7 +78,17 @@ class FakeSourceBatch:
     warnings: list[str]
 
 
+# 测试类 `FakeDailyKService`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class FakeDailyKService:
+    # 测试函数 `__init__`：封装 `__init__` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：quality_flags、warnings。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def __init__(
         self,
         *,
@@ -77,6 +102,11 @@ class FakeDailyKService:
         self.warnings = warnings or []
         self.requests: list[Any] = []
 
+    # 测试函数 `read`：封装 `read` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：request。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def read(self, request: Any) -> FakeSourceBatch:
         self.requests.append(request)
 
@@ -152,10 +182,25 @@ class FakeDailyKService:
         )
 
 
+# 测试类 `FakeProvider`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class FakeProvider(StandardDatasetProvider):
+    # 测试函数 `__init__`：封装 `__init__` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def __init__(self) -> None:
         self.requests: list[StandardDataQuery] = []
 
+    # 测试函数 `descriptor`：封装 `descriptor` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     @property
     def descriptor(self) -> ProviderDescriptor:
         return ProviderDescriptor(
@@ -167,6 +212,11 @@ class FakeProvider(StandardDatasetProvider):
             dictionary_revision="0.5",
         )
 
+    # 测试函数 `query`：封装 `query` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：request。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def query(
         self,
         request: StandardDataQuery,
@@ -199,6 +249,11 @@ class FakeProvider(StandardDatasetProvider):
         )
 
 
+# 测试函数 `make_registration`：封装 `make_registration` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def make_registration() -> DatasetRegistration:
     return DatasetRegistration(
         dataset_id="a_stock_daily_k",
@@ -280,6 +335,11 @@ def make_registration() -> DatasetRegistration:
     )
 
 
+# 测试函数 `make_query`：封装 `make_query` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：**overrides。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def make_query(**overrides: Any) -> StandardDataQuery:
     values = {
         "dataset_id": "a_stock_daily_k",
@@ -292,7 +352,17 @@ def make_query(**overrides: Any) -> StandardDataQuery:
     return StandardDataQuery(**values)
 
 
+# 测试类 `TestStandardDataQuery`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestStandardDataQuery(unittest.TestCase):
+    # 测试函数 `test_as_of_date_defaults_to_end_date`：验证 `as、of、date、defaults、to、end、date` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_as_of_date_defaults_to_end_date(self) -> None:
         query = make_query()
         self.assertEqual(
@@ -300,20 +370,44 @@ class TestStandardDataQuery(unittest.TestCase):
             date(2026, 5, 29),
         )
 
+    # 测试函数 `test_end_date_after_as_of_is_rejected`：验证 `end、date、after、as、of、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_end_date_after_as_of_is_rejected(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(
                 end_date=date(2026, 5, 29),
                 as_of_date=date(2026, 5, 28),
             )
 
+    # 测试函数 `test_duplicate_instruments_are_rejected`：验证 `duplicate、instruments、are、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_duplicate_instruments_are_rejected(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(
                 instrument_ids=("000001", "000001")
             )
 
+    # 测试函数 `test_duplicate_fields_are_rejected`：验证 `duplicate、fields、are、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_duplicate_fields_are_rejected(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(
                 fields=(
@@ -322,6 +416,11 @@ class TestStandardDataQuery(unittest.TestCase):
                 )
             )
 
+    # 测试函数 `test_usage_string_is_normalized`：验证 `usage、string、is、normalized` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_usage_string_is_normalized(self) -> None:
         query = make_query(
             usage="MANUAL_DECISION_SUPPORT",
@@ -334,15 +433,39 @@ class TestStandardDataQuery(unittest.TestCase):
             StandardDataUsage.MANUAL_DECISION_SUPPORT,
         )
 
+    # 测试函数 `test_unknown_usage_is_rejected`：验证 `unknown、usage、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_usage_is_rejected(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(usage="UNKNOWN")
 
+    # 测试函数 `test_manual_usage_requires_decision_time`：验证 `manual、usage、requires、decision、time` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_manual_usage_requires_decision_time(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(usage="MANUAL_DECISION_SUPPORT")
 
+    # 测试函数 `test_decision_time_requires_timezone`：验证 `decision、time、requires、timezone` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_decision_time_requires_timezone(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             make_query(
                 decision_time=datetime(
@@ -350,6 +473,11 @@ class TestStandardDataQuery(unittest.TestCase):
                 )
             )
 
+    # 测试函数 `test_decision_time_is_serialized`：验证 `decision、time、is、serialized` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_decision_time_is_serialized(self) -> None:
         query = make_query(
             decision_time=datetime(
@@ -372,7 +500,17 @@ class TestStandardDataQuery(unittest.TestCase):
         )
 
 
+# 测试类 `TestStandardDataService`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestStandardDataService(unittest.TestCase):
+    # 测试函数 `test_register_and_query_provider`：验证 `register、and、query、provider` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_register_and_query_provider(self) -> None:
         service = StandardDataService()
         provider = FakeProvider()
@@ -393,17 +531,33 @@ class TestStandardDataService(unittest.TestCase):
         )
         self.assertEqual(provider.requests, [query])
 
+    # 测试函数 `test_duplicate_provider_is_rejected`：验证 `duplicate、provider、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_duplicate_provider_is_rejected(self) -> None:
         service = StandardDataService()
         provider = FakeProvider()
         service.register_provider(provider)
 
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             service.register_provider(provider)
 
+    # 测试函数 `test_unknown_dataset_is_rejected`：验证 `unknown、dataset、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_dataset_is_rejected(self) -> None:
         service = StandardDataService()
 
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             service.query(
                 StandardDataQuery(
@@ -415,6 +569,11 @@ class TestStandardDataService(unittest.TestCase):
                 )
             )
 
+    # 测试函数 `test_dataset_descriptors_are_listed`：验证 `dataset、descriptors、are、listed` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_dataset_descriptors_are_listed(self) -> None:
         service = StandardDataService()
         service.register_provider(FakeProvider())
@@ -428,7 +587,17 @@ class TestStandardDataService(unittest.TestCase):
         )
 
 
+# 测试类 `TestDailyKStandardDataProvider`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestDailyKStandardDataProvider(unittest.TestCase):
+    # 测试函数 `test_daily_bar_is_returned`：验证 `daily、bar、is、returned` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_daily_bar_is_returned(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()
@@ -450,6 +619,11 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
             QualityStatus.PASSED,
         )
 
+    # 测试函数 `test_field_projection_is_applied`：验证 `field、projection、is、applied` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_field_projection_is_applied(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()
@@ -463,16 +637,29 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
             {"close_raw_cny": 11.0},
         )
 
+    # 测试函数 `test_unknown_field_is_rejected`：验证 `unknown、field、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_field_is_rejected(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()
         )
 
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             provider.query(
                 make_query(fields=("not_a_field",))
             )
 
+    # 测试函数 `test_source_extensions_are_opt_in`：验证 `source、extensions、are、opt、in` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_source_extensions_are_opt_in(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()
@@ -496,6 +683,11 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
             -10.0,
         )
 
+    # 测试函数 `test_lineage_is_filtered_by_projection`：验证 `lineage、is、filtered、by、projection` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_lineage_is_filtered_by_projection(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()
@@ -515,6 +707,11 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
             "close_raw_cny",
         )
 
+    # 测试函数 `test_versions_are_preserved`：验证 `versions、are、preserved` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_versions_are_preserved(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()
@@ -536,6 +733,11 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
             "0.5",
         )
 
+    # 测试函数 `test_blocking_quality_flag_blocks_result`：验证 `blocking、quality、flag、blocks、result` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_blocking_quality_flag_blocks_result(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService(
@@ -554,9 +756,17 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
             result.metadata.blocks_downstream
         )
 
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             result.assert_usable()
 
+    # 测试函数 `test_ownership_snapshot_is_supported`：验证 `ownership、snapshot、is、supported` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_ownership_snapshot_is_supported(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()
@@ -582,6 +792,11 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
             1_000_000.0,
         )
 
+    # 测试函数 `test_batch_warning_produces_warning_status`：验证 `batch、warning、produces、warning、status` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_batch_warning_produces_warning_status(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService(
@@ -599,7 +814,17 @@ class TestDailyKStandardDataProvider(unittest.TestCase):
         )
 
 
+# 测试类 `TestStandardQueryResult`：集中验证 `test_standard_data_service` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestStandardQueryResult(unittest.TestCase):
+    # 测试函数 `test_to_dict_serializes_dates_and_enums`：验证 `to、dict、serializes、dates、and、enums` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_to_dict_serializes_dates_and_enums(self) -> None:
         provider = DailyKStandardDataProvider(
             FakeDailyKService()

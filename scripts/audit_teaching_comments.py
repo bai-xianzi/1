@@ -8,8 +8,10 @@ from __future__ import annotations
 
 import argparse
 import ast
+import io
 import json
 import re
+import tokenize
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
@@ -118,6 +120,16 @@ def _window_violations(
     return violations
 
 
+# Python源码读取：按PEP 263检测编码并自动剥离UTF-8 BOM。
+# - 输入：待审计Python文件路径。
+# - 处理：使用tokenize.detect_encoding识别UTF-8 BOM或编码声明，再以检测结果解码。
+# - 输出：返回不含BOM字符的Unicode源码文本，不修改磁盘文件。
+# - 为什么这样写：普通encoding=\"utf-8\"会保留BOM字符并导致ast.parse误报语法错误。
+def _read_python_source(path: Path) -> str:
+    raw = path.read_bytes()
+    encoding, _ = tokenize.detect_encoding(io.BytesIO(raw).readline)
+    return raw.decode(encoding)
+
 # Python文件审计：解析语法树并检查模块代码量、类和函数前置说明。
 # - ast.parse保证只对语法有效的Python进行结构检查。
 # - ClassDef、FunctionDef和AsyncFunctionDef代表最重要的可复用逻辑边界。
@@ -127,7 +139,7 @@ def audit_python_file(
     project_root: Path,
     path: Path,
 ) -> FileCommentAudit:
-    text = path.read_text(encoding="utf-8")
+    text = _read_python_source(path)
     lines = text.splitlines()
     comment_lines = [
         line for line in lines if line.lstrip().startswith("#")
@@ -230,7 +242,7 @@ def audit_powershell_file(
     project_root: Path,
     path: Path,
 ) -> FileCommentAudit:
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8-sig")
     lines = text.splitlines()
     comment_lines = [
         line for line in lines if line.lstrip().startswith("#")

@@ -1,4 +1,9 @@
 """测试通用数据集注册表与标准字段映射引擎。"""
+# 测试模块总览：验证 `test_dataset_registry` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 
 from __future__ import annotations
 
@@ -28,6 +33,11 @@ from a_stock_quant.dataset_registry import (
 )
 
 
+# 测试函数 `make_registration`：封装 `make_registration` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def make_registration() -> DatasetRegistration:
     return DatasetRegistration(
         dataset_id="demo_daily",
@@ -96,7 +106,17 @@ def make_registration() -> DatasetRegistration:
     )
 
 
+# 测试类 `TestDatasetRegistration`：集中验证 `test_dataset_registry` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestDatasetRegistration(unittest.TestCase):
+    # 测试函数 `test_all_source_fields_are_accounted`：验证 `all、source、fields、are、accounted` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_all_source_fields_are_accounted(self) -> None:
         coverage = make_registration().mapping_coverage()
 
@@ -108,7 +128,15 @@ class TestDatasetRegistration(unittest.TestCase):
             ["source_signal"],
         )
 
+    # 测试函数 `test_unknown_mapping_source_is_rejected`：验证 `unknown、mapping、source、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_mapping_source_is_rejected(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             DatasetRegistration(
                 dataset_id="bad",
@@ -134,13 +162,26 @@ class TestDatasetRegistration(unittest.TestCase):
                 ),
             )
 
+    # 测试函数 `test_primary_key_must_be_source_field`：验证 `primary、key、must、be、source、field` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_primary_key_must_be_source_field(self) -> None:
         value = make_registration().to_dict()
         value["primary_key_fields"] = ["missing"]
 
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             DatasetRegistration.from_dict(value)
 
+    # 测试函数 `test_round_trip_dict`：验证 `round、trip、dict` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_round_trip_dict(self) -> None:
         original = make_registration()
         restored = DatasetRegistration.from_dict(
@@ -150,7 +191,17 @@ class TestDatasetRegistration(unittest.TestCase):
         self.assertEqual(restored, original)
 
 
+# 测试类 `TestCanonicalFieldCatalog`：集中验证 `test_dataset_registry` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestCanonicalFieldCatalog(unittest.TestCase):
+    # 测试函数 `test_valid_registration_passes`：验证 `valid、registration、passes` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_valid_registration_passes(self) -> None:
         catalog = CanonicalFieldCatalog({
             "DailyBar": {
@@ -165,6 +216,11 @@ class TestCanonicalFieldCatalog(unittest.TestCase):
 
         catalog.assert_valid(make_registration())
 
+    # 测试函数 `test_unknown_canonical_field_fails`：验证 `unknown、canonical、field、fails` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_canonical_field_fails(self) -> None:
         catalog = CanonicalFieldCatalog({
             "DailyBar": {
@@ -176,11 +232,24 @@ class TestCanonicalFieldCatalog(unittest.TestCase):
             },
         })
 
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             catalog.assert_valid(make_registration())
 
 
+# 测试类 `TestDatasetRegistry`：集中验证 `test_dataset_registry` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestDatasetRegistry(unittest.TestCase):
+    # 测试函数 `test_register_and_filter`：验证 `register、and、filter` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_register_and_filter(self) -> None:
         registry = DatasetRegistry()
         registration = make_registration()
@@ -199,15 +268,31 @@ class TestDatasetRegistry(unittest.TestCase):
             1,
         )
 
+    # 测试函数 `test_duplicate_registration_rejected`：验证 `duplicate、registration、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_duplicate_registration_rejected(self) -> None:
         registry = DatasetRegistry()
         registration = make_registration()
         registry.register(registration)
 
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             registry.register(registration)
 
+    # 测试函数 `test_load_json`：验证 `load、json` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_load_json(self) -> None:
+        # 测试上下文：通过 `tempfile.TemporaryDirectory()` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "demo.json"
             path.write_text(
@@ -223,7 +308,17 @@ class TestDatasetRegistry(unittest.TestCase):
         self.assertEqual(loaded.dataset_id, "demo_daily")
 
 
+# 测试类 `TestCanonicalMappingEngine`：集中验证 `test_dataset_registry` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestCanonicalMappingEngine(unittest.TestCase):
+    # 测试函数 `test_maps_multiple_standard_objects`：验证 `maps、multiple、standard、objects` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_maps_multiple_standard_objects(self) -> None:
         result = CanonicalMappingEngine().map_record(
             make_registration(),
@@ -253,7 +348,15 @@ class TestCanonicalMappingEngine(unittest.TestCase):
             "X",
         )
 
+    # 测试函数 `test_required_missing_field_fails`：验证 `required、missing、field、fails` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_required_missing_field_fails(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             CanonicalMappingEngine().map_record(
                 make_registration(),
@@ -264,6 +367,11 @@ class TestCanonicalMappingEngine(unittest.TestCase):
                 },
             )
 
+    # 测试函数 `test_pct_change_transform_uses_context`：验证 `pct、change、transform、uses、context` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_pct_change_transform_uses_context(self) -> None:
         rule = FieldMappingRule(
             source_fields=("close",),

@@ -1,0 +1,1528 @@
+{
+  "task_id": "TASK_021A",
+  "policy_version": "0.1.0",
+  "mode": "inventory",
+  "migration_status": "IN_PROGRESS",
+  "file_count": 131,
+  "compliant_file_count": 107,
+  "non_compliant_file_count": 24,
+  "violation_count": 49,
+  "github_commit_blocked": true,
+  "github_push_blocked_until_user_confirmation": true,
+  "files": [
+    {
+      "path": "scripts/audit_git_encoding.py",
+      "language": "python",
+      "line_count": 268,
+      "code_line_count": 120,
+      "comment_line_count": 116,
+      "teaching_detail_line_count": 74,
+      "reason_line_count": 36,
+      "definition_count": 4,
+      "violations": []
+    },
+    {
+      "path": "scripts/audit_teaching_comments.py",
+      "language": "python",
+      "line_count": 432,
+      "code_line_count": 348,
+      "comment_line_count": 54,
+      "teaching_detail_line_count": 42,
+      "reason_line_count": 13,
+      "definition_count": 9,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_014_fundamental_acceptance.py",
+      "language": "python",
+      "line_count": 525,
+      "code_line_count": 386,
+      "comment_line_count": 96,
+      "teaching_detail_line_count": 68,
+      "reason_line_count": 28,
+      "definition_count": 9,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_016a_daily_funds_preflight.py",
+      "language": "python",
+      "line_count": 136,
+      "code_line_count": 91,
+      "comment_line_count": 34,
+      "teaching_detail_line_count": 23,
+      "reason_line_count": 11,
+      "definition_count": 1,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_016b_daily_funds_import.py",
+      "language": "python",
+      "line_count": 244,
+      "code_line_count": 183,
+      "comment_line_count": 48,
+      "teaching_detail_line_count": 34,
+      "reason_line_count": 14,
+      "definition_count": 4,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_017c_daily_funds_acceptance.py",
+      "language": "python",
+      "line_count": 364,
+      "code_line_count": 200,
+      "comment_line_count": 143,
+      "teaching_detail_line_count": 93,
+      "reason_line_count": 50,
+      "definition_count": 6,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_017d_standard_data_service_acceptance.py",
+      "language": "python",
+      "line_count": 350,
+      "code_line_count": 210,
+      "comment_line_count": 118,
+      "teaching_detail_line_count": 77,
+      "reason_line_count": 41,
+      "definition_count": 6,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_018c_external_evidence_acceptance.py",
+      "language": "python",
+      "line_count": 309,
+      "code_line_count": 231,
+      "comment_line_count": 63,
+      "teaching_detail_line_count": 42,
+      "reason_line_count": 21,
+      "definition_count": 3,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_018d_real_readiness_gate_acceptance.py",
+      "language": "python",
+      "line_count": 980,
+      "code_line_count": 671,
+      "comment_line_count": 258,
+      "teaching_detail_line_count": 170,
+      "reason_line_count": 88,
+      "definition_count": 14,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_019c_real_market_state_feature_acceptance.py",
+      "language": "python",
+      "line_count": 736,
+      "code_line_count": 534,
+      "comment_line_count": 162,
+      "teaching_detail_line_count": 108,
+      "reason_line_count": 54,
+      "definition_count": 10,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_019d_research_market_state_scoring_acceptance.py",
+      "language": "python",
+      "line_count": 238,
+      "code_line_count": 167,
+      "comment_line_count": 55,
+      "teaching_detail_line_count": 38,
+      "reason_line_count": 17,
+      "definition_count": 3,
+      "violations": []
+    },
+    {
+      "path": "scripts/run_task_020c_real_dolphindb_plugin_acceptance.py",
+      "language": "python",
+      "line_count": 453,
+      "code_line_count": 375,
+      "comment_line_count": 57,
+      "teaching_detail_line_count": 39,
+      "reason_line_count": 18,
+      "definition_count": 3,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_015_source_templates.py",
+      "language": "python",
+      "line_count": 156,
+      "code_line_count": 98,
+      "comment_line_count": 42,
+      "teaching_detail_line_count": 29,
+      "reason_line_count": 13,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_015c1_dictionary_governance.py",
+      "language": "python",
+      "line_count": 58,
+      "code_line_count": 20,
+      "comment_line_count": 31,
+      "teaching_detail_line_count": 21,
+      "reason_line_count": 10,
+      "definition_count": 1,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_017a_daily_funds_canonical_contract.py",
+      "language": "python",
+      "line_count": 76,
+      "code_line_count": 43,
+      "comment_line_count": 24,
+      "teaching_detail_line_count": 17,
+      "reason_line_count": 7,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_017b_dictionary_upgrade.py",
+      "language": "python",
+      "line_count": 108,
+      "code_line_count": 65,
+      "comment_line_count": 33,
+      "teaching_detail_line_count": 23,
+      "reason_line_count": 10,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_017c_daily_funds_service.py",
+      "language": "python",
+      "line_count": 55,
+      "code_line_count": 22,
+      "comment_line_count": 24,
+      "teaching_detail_line_count": 17,
+      "reason_line_count": 7,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_017d_standard_provider_registry.py",
+      "language": "python",
+      "line_count": 155,
+      "code_line_count": 79,
+      "comment_line_count": 60,
+      "teaching_detail_line_count": 41,
+      "reason_line_count": 19,
+      "definition_count": 3,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_018_closure.py",
+      "language": "python",
+      "line_count": 176,
+      "code_line_count": 104,
+      "comment_line_count": 52,
+      "teaching_detail_line_count": 36,
+      "reason_line_count": 16,
+      "definition_count": 3,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_018a_data_readiness_contract.py",
+      "language": "python",
+      "line_count": 277,
+      "code_line_count": 210,
+      "comment_line_count": 51,
+      "teaching_detail_line_count": 35,
+      "reason_line_count": 16,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_018b_data_readiness_evidence.py",
+      "language": "python",
+      "line_count": 84,
+      "code_line_count": 45,
+      "comment_line_count": 33,
+      "teaching_detail_line_count": 23,
+      "reason_line_count": 10,
+      "definition_count": 1,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_018c_external_evidence.py",
+      "language": "python",
+      "line_count": 255,
+      "code_line_count": 200,
+      "comment_line_count": 42,
+      "teaching_detail_line_count": 29,
+      "reason_line_count": 13,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_018d_readiness_gate.py",
+      "language": "python",
+      "line_count": 281,
+      "code_line_count": 208,
+      "comment_line_count": 54,
+      "teaching_detail_line_count": 37,
+      "reason_line_count": 17,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_019_closure.py",
+      "language": "python",
+      "line_count": 231,
+      "code_line_count": 172,
+      "comment_line_count": 40,
+      "teaching_detail_line_count": 28,
+      "reason_line_count": 12,
+      "definition_count": 3,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_019a_market_state_input_contract.py",
+      "language": "python",
+      "line_count": 139,
+      "code_line_count": 100,
+      "comment_line_count": 27,
+      "teaching_detail_line_count": 19,
+      "reason_line_count": 8,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_019b_market_state_features.py",
+      "language": "python",
+      "line_count": 268,
+      "code_line_count": 191,
+      "comment_line_count": 58,
+      "teaching_detail_line_count": 42,
+      "reason_line_count": 16,
+      "definition_count": 7,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_019c_real_feature_acceptance.py",
+      "language": "python",
+      "line_count": 181,
+      "code_line_count": 138,
+      "comment_line_count": 30,
+      "teaching_detail_line_count": 21,
+      "reason_line_count": 9,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_019d_market_state_scoring.py",
+      "language": "python",
+      "line_count": 172,
+      "code_line_count": 129,
+      "comment_line_count": 30,
+      "teaching_detail_line_count": 21,
+      "reason_line_count": 9,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_020a_universal_adapter_contract.py",
+      "language": "python",
+      "line_count": 179,
+      "code_line_count": 132,
+      "comment_line_count": 33,
+      "teaching_detail_line_count": 23,
+      "reason_line_count": 10,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_020b_provider_plugin_protocol.py",
+      "language": "python",
+      "line_count": 185,
+      "code_line_count": 147,
+      "comment_line_count": 26,
+      "teaching_detail_line_count": 19,
+      "reason_line_count": 8,
+      "definition_count": 0,
+      "violations": [
+        "line 1: Python语法错误：invalid non-printable character U+FEFF"
+      ]
+    },
+    {
+      "path": "scripts/validate_task_020b_reuse_first_addendum.py",
+      "language": "python",
+      "line_count": 163,
+      "code_line_count": 116,
+      "comment_line_count": 33,
+      "teaching_detail_line_count": 23,
+      "reason_line_count": 10,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_020c_dolphindb_plugin_bridge.py",
+      "language": "python",
+      "line_count": 265,
+      "code_line_count": 225,
+      "comment_line_count": 27,
+      "teaching_detail_line_count": 19,
+      "reason_line_count": 8,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_021a_comment_governance.py",
+      "language": "python",
+      "line_count": 162,
+      "code_line_count": 128,
+      "comment_line_count": 19,
+      "teaching_detail_line_count": 14,
+      "reason_line_count": 5,
+      "definition_count": 2,
+      "violations": []
+    },
+    {
+      "path": "scripts/validate_task_021b_core_comments.py",
+      "language": "python",
+      "line_count": 85,
+      "code_line_count": 66,
+      "comment_line_count": 5,
+      "teaching_detail_line_count": 4,
+      "reason_line_count": 1,
+      "definition_count": 4,
+      "violations": [
+        "line 16: 函数normalized_source_sha256前缺少多行教学式注释",
+        "line 16: 函数normalized_source_sha256前缺少# -分点说明",
+        "line 16: 函数normalized_source_sha256前缺少为什么这样写",
+        "line 21: 函数load_audit_module前缺少多行教学式注释",
+        "line 21: 函数load_audit_module前缺少# -分点说明",
+        "line 21: 函数load_audit_module前缺少为什么这样写",
+        "line 31: 函数require前缺少多行教学式注释",
+        "line 31: 函数require前缺少# -分点说明",
+        "line 31: 函数require前缺少为什么这样写",
+        "line 36: 函数main前缺少多行教学式注释",
+        "line 36: 函数main前缺少# -分点说明",
+        "line 36: 函数main前缺少为什么这样写"
+      ]
+    },
+    {
+      "path": "scripts/validate_task_021c_readiness_market_state_comments.py",
+      "language": "python",
+      "line_count": 87,
+      "code_line_count": 68,
+      "comment_line_count": 5,
+      "teaching_detail_line_count": 4,
+      "reason_line_count": 1,
+      "definition_count": 4,
+      "violations": [
+        "line 16: 函数normalized_source_sha256前缺少多行教学式注释",
+        "line 16: 函数normalized_source_sha256前缺少# -分点说明",
+        "line 16: 函数normalized_source_sha256前缺少为什么这样写",
+        "line 21: 函数load_audit_module前缺少多行教学式注释",
+        "line 21: 函数load_audit_module前缺少# -分点说明",
+        "line 21: 函数load_audit_module前缺少为什么这样写",
+        "line 31: 函数require前缺少多行教学式注释",
+        "line 31: 函数require前缺少# -分点说明",
+        "line 31: 函数require前缺少为什么这样写",
+        "line 36: 函数main前缺少多行教学式注释",
+        "line 36: 函数main前缺少# -分点说明",
+        "line 36: 函数main前缺少为什么这样写"
+      ]
+    },
+    {
+      "path": "scripts/verify_delivery.ps1",
+      "language": "powershell",
+      "line_count": 115,
+      "code_line_count": 92,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 1,
+      "violations": [
+        "line 9: PowerShell函数Invoke-Git前缺少多行教学式注释",
+        "line 9: PowerShell函数Invoke-Git前缺少# -分点说明",
+        "line 9: PowerShell函数Invoke-Git前缺少为什么这样写",
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_014_patch.ps1",
+      "language": "powershell",
+      "line_count": 90,
+      "code_line_count": 80,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_016a_patch.ps1",
+      "language": "powershell",
+      "line_count": 26,
+      "code_line_count": 19,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_016b_patch.ps1",
+      "language": "powershell",
+      "line_count": 33,
+      "code_line_count": 25,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_017a_patch.ps1",
+      "language": "powershell",
+      "line_count": 30,
+      "code_line_count": 22,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_017b_patch.ps1",
+      "language": "powershell",
+      "line_count": 32,
+      "code_line_count": 24,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_017c_patch.ps1",
+      "language": "powershell",
+      "line_count": 30,
+      "code_line_count": 22,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_017d_patch.ps1",
+      "language": "powershell",
+      "line_count": 31,
+      "code_line_count": 23,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_018_closure.ps1",
+      "language": "powershell",
+      "line_count": 39,
+      "code_line_count": 31,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_018a_patch.ps1",
+      "language": "powershell",
+      "line_count": 29,
+      "code_line_count": 21,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_018b_patch.ps1",
+      "language": "powershell",
+      "line_count": 11,
+      "code_line_count": 10,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_018c_patch.ps1",
+      "language": "powershell",
+      "line_count": 33,
+      "code_line_count": 27,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_018d_patch.ps1",
+      "language": "powershell",
+      "line_count": 29,
+      "code_line_count": 21,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_019_closure.ps1",
+      "language": "powershell",
+      "line_count": 41,
+      "code_line_count": 33,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_019a_patch.ps1",
+      "language": "powershell",
+      "line_count": 49,
+      "code_line_count": 37,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_019b_patch.ps1",
+      "language": "powershell",
+      "line_count": 46,
+      "code_line_count": 37,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_019c_patch.ps1",
+      "language": "powershell",
+      "line_count": 53,
+      "code_line_count": 44,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_019d_patch.ps1",
+      "language": "powershell",
+      "line_count": 46,
+      "code_line_count": 37,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_020a_patch.ps1",
+      "language": "powershell",
+      "line_count": 46,
+      "code_line_count": 37,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_020b_patch.ps1",
+      "language": "powershell",
+      "line_count": 46,
+      "code_line_count": 37,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "scripts/verify_task_020c_patch.ps1",
+      "language": "powershell",
+      "line_count": 49,
+      "code_line_count": 40,
+      "comment_line_count": 0,
+      "teaching_detail_line_count": 0,
+      "reason_line_count": 0,
+      "definition_count": 0,
+      "violations": [
+        "line 1: 脚本包含可执行代码但没有任何教学式单行注释"
+      ]
+    },
+    {
+      "path": "src/a_stock_quant/__init__.py",
+      "language": "python",
+      "line_count": 4,
+      "code_line_count": 0,
+      "comment_line_count": 4,
+      "teaching_detail_line_count": 3,
+      "reason_line_count": 1,
+      "definition_count": 0,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/code_comment_policy.py",
+      "language": "python",
+      "line_count": 324,
+      "code_line_count": 247,
+      "comment_line_count": 54,
+      "teaching_detail_line_count": 43,
+      "reason_line_count": 11,
+      "definition_count": 10,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/daily_funds_canonical_contract.py",
+      "language": "python",
+      "line_count": 638,
+      "code_line_count": 287,
+      "comment_line_count": 320,
+      "teaching_detail_line_count": 221,
+      "reason_line_count": 99,
+      "definition_count": 9,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/daily_funds_dolphindb_writer.py",
+      "language": "python",
+      "line_count": 3121,
+      "code_line_count": 1609,
+      "comment_line_count": 1367,
+      "teaching_detail_line_count": 944,
+      "reason_line_count": 421,
+      "definition_count": 42,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/daily_funds_ingest.py",
+      "language": "python",
+      "line_count": 3188,
+      "code_line_count": 1521,
+      "comment_line_count": 1512,
+      "teaching_detail_line_count": 1031,
+      "reason_line_count": 475,
+      "definition_count": 37,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/daily_funds_standard_provider.py",
+      "language": "python",
+      "line_count": 644,
+      "code_line_count": 270,
+      "comment_line_count": 346,
+      "teaching_detail_line_count": 240,
+      "reason_line_count": 106,
+      "definition_count": 12,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/daily_k_standard_provider.py",
+      "language": "python",
+      "line_count": 561,
+      "code_line_count": 266,
+      "comment_line_count": 253,
+      "teaching_detail_line_count": 175,
+      "reason_line_count": 78,
+      "definition_count": 8,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/data_contracts.py",
+      "language": "python",
+      "line_count": 1156,
+      "code_line_count": 315,
+      "comment_line_count": 748,
+      "teaching_detail_line_count": 531,
+      "reason_line_count": 217,
+      "definition_count": 29,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/data_readiness.py",
+      "language": "python",
+      "line_count": 1911,
+      "code_line_count": 693,
+      "comment_line_count": 1135,
+      "teaching_detail_line_count": 814,
+      "reason_line_count": 321,
+      "definition_count": 31,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/data_readiness_evidence.py",
+      "language": "python",
+      "line_count": 1447,
+      "code_line_count": 374,
+      "comment_line_count": 1026,
+      "teaching_detail_line_count": 735,
+      "reason_line_count": 291,
+      "definition_count": 31,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/data_readiness_external_evidence.py",
+      "language": "python",
+      "line_count": 2035,
+      "code_line_count": 892,
+      "comment_line_count": 1079,
+      "teaching_detail_line_count": 768,
+      "reason_line_count": 308,
+      "definition_count": 34,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dataset_registry.py",
+      "language": "python",
+      "line_count": 1850,
+      "code_line_count": 817,
+      "comment_line_count": 914,
+      "teaching_detail_line_count": 652,
+      "reason_line_count": 262,
+      "definition_count": 41,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_adapter.py",
+      "language": "python",
+      "line_count": 649,
+      "code_line_count": 238,
+      "comment_line_count": 347,
+      "teaching_detail_line_count": 242,
+      "reason_line_count": 105,
+      "definition_count": 15,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_adjustment_layers.py",
+      "language": "python",
+      "line_count": 2087,
+      "code_line_count": 940,
+      "comment_line_count": 1015,
+      "teaching_detail_line_count": 700,
+      "reason_line_count": 315,
+      "definition_count": 32,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_daily_funds_service.py",
+      "language": "python",
+      "line_count": 3103,
+      "code_line_count": 1187,
+      "comment_line_count": 1817,
+      "teaching_detail_line_count": 1251,
+      "reason_line_count": 566,
+      "definition_count": 50,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_daily_k_acceptance.py",
+      "language": "python",
+      "line_count": 1688,
+      "code_line_count": 758,
+      "comment_line_count": 836,
+      "teaching_detail_line_count": 575,
+      "reason_line_count": 261,
+      "definition_count": 22,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_daily_k_service.py",
+      "language": "python",
+      "line_count": 1424,
+      "code_line_count": 538,
+      "comment_line_count": 780,
+      "teaching_detail_line_count": 541,
+      "reason_line_count": 239,
+      "definition_count": 28,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_daily_profile.py",
+      "language": "python",
+      "line_count": 1528,
+      "code_line_count": 761,
+      "comment_line_count": 686,
+      "teaching_detail_line_count": 470,
+      "reason_line_count": 216,
+      "definition_count": 17,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_daily_semantics.py",
+      "language": "python",
+      "line_count": 1932,
+      "code_line_count": 1082,
+      "comment_line_count": 745,
+      "teaching_detail_line_count": 513,
+      "reason_line_count": 232,
+      "definition_count": 23,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_dataset_coverage.py",
+      "language": "python",
+      "line_count": 1410,
+      "code_line_count": 564,
+      "comment_line_count": 752,
+      "teaching_detail_line_count": 513,
+      "reason_line_count": 239,
+      "definition_count": 16,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_fundamental_profile.py",
+      "language": "python",
+      "line_count": 1868,
+      "code_line_count": 1072,
+      "comment_line_count": 696,
+      "teaching_detail_line_count": 480,
+      "reason_line_count": 216,
+      "definition_count": 21,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_fundamental_service.py",
+      "language": "python",
+      "line_count": 2152,
+      "code_line_count": 988,
+      "comment_line_count": 1074,
+      "teaching_detail_line_count": 743,
+      "reason_line_count": 329,
+      "definition_count": 34,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_probe.py",
+      "language": "python",
+      "line_count": 470,
+      "code_line_count": 170,
+      "comment_line_count": 260,
+      "teaching_detail_line_count": 178,
+      "reason_line_count": 82,
+      "definition_count": 6,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/dolphindb_provider_plugin.py",
+      "language": "python",
+      "line_count": 1362,
+      "code_line_count": 644,
+      "comment_line_count": 684,
+      "teaching_detail_line_count": 472,
+      "reason_line_count": 212,
+      "definition_count": 20,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/field_dictionary_governance.py",
+      "language": "python",
+      "line_count": 691,
+      "code_line_count": 331,
+      "comment_line_count": 329,
+      "teaching_detail_line_count": 224,
+      "reason_line_count": 105,
+      "definition_count": 6,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/fundamental_standard_provider.py",
+      "language": "python",
+      "line_count": 680,
+      "code_line_count": 318,
+      "comment_line_count": 319,
+      "teaching_detail_line_count": 216,
+      "reason_line_count": 98,
+      "definition_count": 8,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/market_state_features.py",
+      "language": "python",
+      "line_count": 2000,
+      "code_line_count": 792,
+      "comment_line_count": 1146,
+      "teaching_detail_line_count": 820,
+      "reason_line_count": 326,
+      "definition_count": 30,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/market_state_inputs.py",
+      "language": "python",
+      "line_count": 1213,
+      "code_line_count": 344,
+      "comment_line_count": 817,
+      "teaching_detail_line_count": 591,
+      "reason_line_count": 226,
+      "definition_count": 23,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/market_state_real_acceptance.py",
+      "language": "python",
+      "line_count": 1640,
+      "code_line_count": 635,
+      "comment_line_count": 952,
+      "teaching_detail_line_count": 686,
+      "reason_line_count": 266,
+      "definition_count": 25,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/market_state_scoring.py",
+      "language": "python",
+      "line_count": 2126,
+      "code_line_count": 778,
+      "comment_line_count": 1285,
+      "teaching_detail_line_count": 922,
+      "reason_line_count": 363,
+      "definition_count": 27,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/provider_capabilities.py",
+      "language": "python",
+      "line_count": 1149,
+      "code_line_count": 457,
+      "comment_line_count": 661,
+      "teaching_detail_line_count": 460,
+      "reason_line_count": 201,
+      "definition_count": 18,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/provider_plugin_protocol.py",
+      "language": "python",
+      "line_count": 3357,
+      "code_line_count": 1192,
+      "comment_line_count": 2037,
+      "teaching_detail_line_count": 1429,
+      "reason_line_count": 608,
+      "definition_count": 69,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/readiness_gated_data_service.py",
+      "language": "python",
+      "line_count": 308,
+      "code_line_count": 111,
+      "comment_line_count": 176,
+      "teaching_detail_line_count": 128,
+      "reason_line_count": 48,
+      "definition_count": 8,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/reuse_first_policy.py",
+      "language": "python",
+      "line_count": 1027,
+      "code_line_count": 398,
+      "comment_line_count": 597,
+      "teaching_detail_line_count": 417,
+      "reason_line_count": 180,
+      "definition_count": 17,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/source_governance.py",
+      "language": "python",
+      "line_count": 1547,
+      "code_line_count": 580,
+      "comment_line_count": 890,
+      "teaching_detail_line_count": 626,
+      "reason_line_count": 264,
+      "definition_count": 36,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/standard_data_service.py",
+      "language": "python",
+      "line_count": 1426,
+      "code_line_count": 529,
+      "comment_line_count": 792,
+      "teaching_detail_line_count": 573,
+      "reason_line_count": 219,
+      "definition_count": 31,
+      "violations": []
+    },
+    {
+      "path": "src/a_stock_quant/vendor_query_manifest.py",
+      "language": "python",
+      "line_count": 629,
+      "code_line_count": 252,
+      "comment_line_count": 346,
+      "teaching_detail_line_count": 243,
+      "reason_line_count": 103,
+      "definition_count": 14,
+      "violations": []
+    },
+    {
+      "path": "tests/test_code_comment_policy.py",
+      "language": "python",
+      "line_count": 228,
+      "code_line_count": 130,
+      "comment_line_count": 72,
+      "teaching_detail_line_count": 49,
+      "reason_line_count": 24,
+      "definition_count": 20,
+      "violations": []
+    },
+    {
+      "path": "tests/test_daily_funds_canonical_contract.py",
+      "language": "python",
+      "line_count": 154,
+      "code_line_count": 85,
+      "comment_line_count": 54,
+      "teaching_detail_line_count": 42,
+      "reason_line_count": 12,
+      "definition_count": 8,
+      "violations": []
+    },
+    {
+      "path": "tests/test_daily_funds_dolphindb_writer.py",
+      "language": "python",
+      "line_count": 355,
+      "code_line_count": 243,
+      "comment_line_count": 90,
+      "teaching_detail_line_count": 68,
+      "reason_line_count": 22,
+      "definition_count": 11,
+      "violations": []
+    },
+    {
+      "path": "tests/test_daily_funds_ingest.py",
+      "language": "python",
+      "line_count": 444,
+      "code_line_count": 286,
+      "comment_line_count": 134,
+      "teaching_detail_line_count": 98,
+      "reason_line_count": 36,
+      "definition_count": 12,
+      "violations": []
+    },
+    {
+      "path": "tests/test_daily_funds_standard_provider.py",
+      "language": "python",
+      "line_count": 420,
+      "code_line_count": 267,
+      "comment_line_count": 128,
+      "teaching_detail_line_count": 98,
+      "reason_line_count": 30,
+      "definition_count": 18,
+      "violations": []
+    },
+    {
+      "path": "tests/test_data_contracts.py",
+      "language": "python",
+      "line_count": 456,
+      "code_line_count": 240,
+      "comment_line_count": 180,
+      "teaching_detail_line_count": 140,
+      "reason_line_count": 40,
+      "definition_count": 29,
+      "violations": []
+    },
+    {
+      "path": "tests/test_data_readiness.py",
+      "language": "python",
+      "line_count": 499,
+      "code_line_count": 337,
+      "comment_line_count": 134,
+      "teaching_detail_line_count": 104,
+      "reason_line_count": 30,
+      "definition_count": 21,
+      "violations": []
+    },
+    {
+      "path": "tests/test_data_readiness_evidence.py",
+      "language": "python",
+      "line_count": 314,
+      "code_line_count": 122,
+      "comment_line_count": 156,
+      "teaching_detail_line_count": 124,
+      "reason_line_count": 32,
+      "definition_count": 29,
+      "violations": []
+    },
+    {
+      "path": "tests/test_data_readiness_external_evidence.py",
+      "language": "python",
+      "line_count": 692,
+      "code_line_count": 490,
+      "comment_line_count": 164,
+      "teaching_detail_line_count": 128,
+      "reason_line_count": 36,
+      "definition_count": 27,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dataset_registry.py",
+      "language": "python",
+      "line_count": 411,
+      "code_line_count": 267,
+      "comment_line_count": 108,
+      "teaching_detail_line_count": 84,
+      "reason_line_count": 24,
+      "definition_count": 17,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_adapter.py",
+      "language": "python",
+      "line_count": 253,
+      "code_line_count": 138,
+      "comment_line_count": 82,
+      "teaching_detail_line_count": 64,
+      "reason_line_count": 18,
+      "definition_count": 13,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_adjustment_layers.py",
+      "language": "python",
+      "line_count": 375,
+      "code_line_count": 211,
+      "comment_line_count": 125,
+      "teaching_detail_line_count": 96,
+      "reason_line_count": 29,
+      "definition_count": 18,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_daily_funds_service.py",
+      "language": "python",
+      "line_count": 488,
+      "code_line_count": 352,
+      "comment_line_count": 110,
+      "teaching_detail_line_count": 86,
+      "reason_line_count": 24,
+      "definition_count": 18,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_daily_k_acceptance.py",
+      "language": "python",
+      "line_count": 462,
+      "code_line_count": 305,
+      "comment_line_count": 112,
+      "teaching_detail_line_count": 88,
+      "reason_line_count": 24,
+      "definition_count": 19,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_daily_k_service.py",
+      "language": "python",
+      "line_count": 512,
+      "code_line_count": 328,
+      "comment_line_count": 140,
+      "teaching_detail_line_count": 108,
+      "reason_line_count": 32,
+      "definition_count": 21,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_daily_profile.py",
+      "language": "python",
+      "line_count": 451,
+      "code_line_count": 253,
+      "comment_line_count": 154,
+      "teaching_detail_line_count": 118,
+      "reason_line_count": 36,
+      "definition_count": 22,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_daily_semantics.py",
+      "language": "python",
+      "line_count": 361,
+      "code_line_count": 204,
+      "comment_line_count": 118,
+      "teaching_detail_line_count": 90,
+      "reason_line_count": 28,
+      "definition_count": 16,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_dataset_coverage.py",
+      "language": "python",
+      "line_count": 330,
+      "code_line_count": 189,
+      "comment_line_count": 106,
+      "teaching_detail_line_count": 82,
+      "reason_line_count": 24,
+      "definition_count": 16,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_fundamental_profile.py",
+      "language": "python",
+      "line_count": 554,
+      "code_line_count": 356,
+      "comment_line_count": 147,
+      "teaching_detail_line_count": 110,
+      "reason_line_count": 37,
+      "definition_count": 17,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_fundamental_service.py",
+      "language": "python",
+      "line_count": 536,
+      "code_line_count": 331,
+      "comment_line_count": 167,
+      "teaching_detail_line_count": 130,
+      "reason_line_count": 37,
+      "definition_count": 27,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_probe.py",
+      "language": "python",
+      "line_count": 346,
+      "code_line_count": 181,
+      "comment_line_count": 120,
+      "teaching_detail_line_count": 92,
+      "reason_line_count": 28,
+      "definition_count": 17,
+      "violations": []
+    },
+    {
+      "path": "tests/test_dolphindb_provider_plugin.py",
+      "language": "python",
+      "line_count": 655,
+      "code_line_count": 378,
+      "comment_line_count": 231,
+      "teaching_detail_line_count": 180,
+      "reason_line_count": 51,
+      "definition_count": 38,
+      "violations": []
+    },
+    {
+      "path": "tests/test_field_dictionary_governance.py",
+      "language": "python",
+      "line_count": 113,
+      "code_line_count": 58,
+      "comment_line_count": 43,
+      "teaching_detail_line_count": 34,
+      "reason_line_count": 9,
+      "definition_count": 7,
+      "violations": []
+    },
+    {
+      "path": "tests/test_fundamental_standard_provider.py",
+      "language": "python",
+      "line_count": 448,
+      "code_line_count": 275,
+      "comment_line_count": 137,
+      "teaching_detail_line_count": 108,
+      "reason_line_count": 29,
+      "definition_count": 24,
+      "violations": []
+    },
+    {
+      "path": "tests/test_market_state_features.py",
+      "language": "python",
+      "line_count": 701,
+      "code_line_count": 497,
+      "comment_line_count": 165,
+      "teaching_detail_line_count": 130,
+      "reason_line_count": 35,
+      "definition_count": 29,
+      "violations": []
+    },
+    {
+      "path": "tests/test_market_state_inputs.py",
+      "language": "python",
+      "line_count": 324,
+      "code_line_count": 174,
+      "comment_line_count": 122,
+      "teaching_detail_line_count": 96,
+      "reason_line_count": 26,
+      "definition_count": 21,
+      "violations": []
+    },
+    {
+      "path": "tests/test_market_state_real_acceptance.py",
+      "language": "python",
+      "line_count": 378,
+      "code_line_count": 253,
+      "comment_line_count": 102,
+      "teaching_detail_line_count": 80,
+      "reason_line_count": 22,
+      "definition_count": 17,
+      "violations": []
+    },
+    {
+      "path": "tests/test_market_state_scoring.py",
+      "language": "python",
+      "line_count": 434,
+      "code_line_count": 273,
+      "comment_line_count": 130,
+      "teaching_detail_line_count": 102,
+      "reason_line_count": 28,
+      "definition_count": 22,
+      "violations": []
+    },
+    {
+      "path": "tests/test_provider_capabilities.py",
+      "language": "python",
+      "line_count": 333,
+      "code_line_count": 154,
+      "comment_line_count": 151,
+      "teaching_detail_line_count": 116,
+      "reason_line_count": 35,
+      "definition_count": 22,
+      "violations": []
+    },
+    {
+      "path": "tests/test_provider_plugin_protocol.py",
+      "language": "python",
+      "line_count": 822,
+      "code_line_count": 592,
+      "comment_line_count": 191,
+      "teaching_detail_line_count": 148,
+      "reason_line_count": 43,
+      "definition_count": 30,
+      "violations": []
+    },
+    {
+      "path": "tests/test_readiness_gated_data_service.py",
+      "language": "python",
+      "line_count": 450,
+      "code_line_count": 301,
+      "comment_line_count": 123,
+      "teaching_detail_line_count": 96,
+      "reason_line_count": 27,
+      "definition_count": 20,
+      "violations": []
+    },
+    {
+      "path": "tests/test_reuse_first_policy.py",
+      "language": "python",
+      "line_count": 426,
+      "code_line_count": 279,
+      "comment_line_count": 121,
+      "teaching_detail_line_count": 94,
+      "reason_line_count": 27,
+      "definition_count": 19,
+      "violations": []
+    },
+    {
+      "path": "tests/test_source_governance.py",
+      "language": "python",
+      "line_count": 279,
+      "code_line_count": 206,
+      "comment_line_count": 60,
+      "teaching_detail_line_count": 46,
+      "reason_line_count": 14,
+      "definition_count": 8,
+      "violations": []
+    },
+    {
+      "path": "tests/test_standard_data_service.py",
+      "language": "python",
+      "line_count": 851,
+      "code_line_count": 557,
+      "comment_line_count": 225,
+      "teaching_detail_line_count": 176,
+      "reason_line_count": 49,
+      "definition_count": 38,
+      "violations": []
+    },
+    {
+      "path": "tests/test_task_017b_dictionary_upgrade.py",
+      "language": "python",
+      "line_count": 128,
+      "code_line_count": 68,
+      "comment_line_count": 45,
+      "teaching_detail_line_count": 36,
+      "reason_line_count": 9,
+      "definition_count": 8,
+      "violations": []
+    },
+    {
+      "path": "tests/test_task_021b_comment_migration.py",
+      "language": "python",
+      "line_count": 193,
+      "code_line_count": 79,
+      "comment_line_count": 95,
+      "teaching_detail_line_count": 72,
+      "reason_line_count": 23,
+      "definition_count": 11,
+      "violations": []
+    },
+    {
+      "path": "tests/test_task_021c_comment_migration.py",
+      "language": "python",
+      "line_count": 166,
+      "code_line_count": 68,
+      "comment_line_count": 81,
+      "teaching_detail_line_count": 62,
+      "reason_line_count": 19,
+      "definition_count": 10,
+      "violations": []
+    },
+    {
+      "path": "tests/test_vendor_query_manifest.py",
+      "language": "python",
+      "line_count": 150,
+      "code_line_count": 100,
+      "comment_line_count": 41,
+      "teaching_detail_line_count": 32,
+      "reason_line_count": 9,
+      "definition_count": 6,
+      "violations": []
+    }
+  ]
+}

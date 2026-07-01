@@ -1,0 +1,13 @@
+{
+  "task_id": "TASK_021H3",
+  "completed_at": "2026-07-01 21:26:39",
+  "project_root": "D:\\QuantProjects\\a_stock_quant_os",
+  "json_file_count": 56,
+  "bom_removed_file_count": 1,
+  "json_content_identity": true,
+  "database_write_operation_count": 0,
+  "backup_zip": "D:\\Users\\Administrator\\task_021h3_json_before_bom_removal_20260701_212639.zip",
+  "changed_files": [
+    "reports/task_021h2_powershell_utf8_bom_repair.json"
+  ]
+}

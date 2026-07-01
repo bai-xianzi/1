@@ -1,3 +1,8 @@
+# 测试模块总览：验证 `test_reuse_first_policy` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 from __future__ import annotations
 
 import json
@@ -25,6 +30,11 @@ POLICY_PATH = (
 )
 
 
+# 测试函数 `reusable_candidate`：封装 `reusable_candidate` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def reusable_candidate():
     return ReuseCandidateAssessment(
         candidate_id="existing-adapter",
@@ -47,42 +57,95 @@ def reusable_candidate():
     )
 
 
+# 测试类 `TestReuseFirstPolicy`：集中验证 `test_reuse_first_policy` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class TestReuseFirstPolicy(unittest.TestCase):
+    # 测试函数 `setUp`：准备本组测试共享的对象、样例和环境状态。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def setUp(self):
         self.policy = load_reuse_first_policy(POLICY_PATH)
 
+    # 测试函数 `test_policy_is_reuse_first`：验证 `policy、is、reuse、first` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_policy_is_reuse_first(self):
         self.assertEqual(
             self.policy.principle,
             "REUSE_FIRST_CUSTOM_BUILD_LAST",
         )
 
+    # 测试函数 `test_custom_build_is_not_default`：验证 `custom、build、is、not、default` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_custom_build_is_not_default(self):
         self.assertFalse(
             self.policy.custom_implementation_default_allowed
         )
 
+    # 测试函数 `test_unknown_license_is_forbidden`：验证 `unknown、license、is、forbidden` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_license_is_forbidden(self):
         self.assertFalse(self.policy.unknown_license_reuse_allowed)
 
+    # 测试函数 `test_copy_without_provenance_is_forbidden`：验证 `copy、without、provenance、is、forbidden` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_copy_without_provenance_is_forbidden(self):
         self.assertFalse(self.policy.copy_without_provenance_allowed)
 
+    # 测试函数 `test_vendor_sdk_reimplementation_is_forbidden`：验证 `vendor、sdk、reimplementation、is、forbidden` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_vendor_sdk_reimplementation_is_forbidden(self):
         self.assertFalse(
             self.policy.vendor_sdk_reimplementation_allowed
         )
 
+    # 测试函数 `test_custom_implementation_is_last`：验证 `custom、implementation、is、last` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_custom_implementation_is_last(self):
         self.assertEqual(
             self.policy.reuse_order[-1],
             "CUSTOM_IMPLEMENTATION_LAST_RESORT",
         )
 
+    # 测试函数 `test_reusable_candidate_is_reusable`：验证 `reusable、candidate、is、reusable` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_reusable_candidate_is_reusable(self):
         self.assertTrue(reusable_candidate().reusable)
 
+    # 测试函数 `test_passed_license_requires_license_id`：验证 `passed、license、requires、license、id` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_passed_license_requires_license_id(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ReuseCandidateAssessment(
                 candidate_id="x",
@@ -104,7 +167,15 @@ class TestReuseFirstPolicy(unittest.TestCase):
                 evidence_refs=("repo:x",),
             )
 
+    # 测试函数 `test_reuse_candidate_requires_evidence`：验证 `reuse、candidate、requires、evidence` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_reuse_candidate_requires_evidence(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ReuseCandidateAssessment(
                 candidate_id="x",
@@ -126,6 +197,11 @@ class TestReuseFirstPolicy(unittest.TestCase):
                 evidence_refs=(),
             )
 
+    # 测试函数 `test_thin_adapter_decision_accepts_existing_component`：验证 `thin、adapter、decision、accepts、existing、component` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_thin_adapter_decision_accepts_existing_component(self):
         record = ReuseDecisionRecord(
             decision_id="reuse:dolphindb",
@@ -146,6 +222,11 @@ class TestReuseFirstPolicy(unittest.TestCase):
             ReuseDecisionType.WRAP_WITH_THIN_ADAPTER,
         )
 
+    # 测试函数 `test_reuse_decision_rejects_blocked_candidate`：验证 `reuse、decision、rejects、blocked、candidate` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_reuse_decision_rejects_blocked_candidate(self):
         blocked = ReuseCandidateAssessment(
             candidate_id="blocked",
@@ -164,6 +245,9 @@ class TestReuseFirstPolicy(unittest.TestCase):
             warnings=(),
             evidence_refs=("vendor:blocked",),
         )
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ReuseDecisionRecord(
                 decision_id="x",
@@ -180,6 +264,11 @@ class TestReuseFirstPolicy(unittest.TestCase):
                 evidence_refs=("x",),
             )
 
+    # 测试函数 `test_custom_build_requires_complete_evidence`：验证 `custom、build、requires、complete、evidence` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_custom_build_requires_complete_evidence(self):
         custom = ReuseCandidateAssessment(
             candidate_id="custom",
@@ -198,6 +287,9 @@ class TestReuseFirstPolicy(unittest.TestCase):
             warnings=(),
             evidence_refs=(),
         )
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ReuseDecisionRecord(
                 decision_id="custom:x",
@@ -214,6 +306,11 @@ class TestReuseFirstPolicy(unittest.TestCase):
                 evidence_refs=("x",),
             )
 
+    # 测试函数 `test_custom_build_accepts_complete_evidence`：验证 `custom、build、accepts、complete、evidence` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_custom_build_accepts_complete_evidence(self):
         custom = ReuseCandidateAssessment(
             candidate_id="custom",
@@ -253,7 +350,15 @@ class TestReuseFirstPolicy(unittest.TestCase):
             ReuseDecisionType.CUSTOM_BUILD_APPROVED,
         )
 
+    # 测试函数 `test_selected_candidate_must_exist`：验证 `selected、candidate、must、exist` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_selected_candidate_must_exist(self):
+        # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(DataContractError):
             ReuseDecisionRecord(
                 decision_id="x",
@@ -270,6 +375,11 @@ class TestReuseFirstPolicy(unittest.TestCase):
                 evidence_refs=("x",),
             )
 
+    # 测试函数 `test_to_dict_is_json_safe`：验证 `to、dict、is、json、safe` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_to_dict_is_json_safe(self):
         record = ReuseDecisionRecord(
             decision_id="reuse:dolphindb",
@@ -288,15 +398,26 @@ class TestReuseFirstPolicy(unittest.TestCase):
         encoded = json.dumps(record.to_dict(), ensure_ascii=False)
         self.assertIn("WRAP_WITH_THIN_ADAPTER", encoded)
 
+    # 测试函数 `test_policy_rejects_custom_build_default`：验证 `policy、rejects、custom、build、default` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_policy_rejects_custom_build_default(self):
         raw = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
         raw["custom_implementation_default_allowed"] = True
+        # 测试上下文：通过 `tempfile.TemporaryDirectory()` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with tempfile.TemporaryDirectory() as temp_dir:
             path = Path(temp_dir) / "bad.json"
             path.write_text(
                 json.dumps(raw, ensure_ascii=False),
                 encoding="utf-8",
             )
+            # 测试上下文：通过 `self.assertRaises(DataContractError)` 管理异常断言、临时资源或子测试范围。
+            # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+            # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
             with self.assertRaises(DataContractError):
                 load_reuse_first_policy(path)
 

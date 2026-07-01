@@ -1,3 +1,8 @@
+# 测试模块总览：验证 `test_data_readiness_external_evidence` 对应功能的合同、边界和历史回归行为。
+# - 输入：构造样例、测试夹具、临时文件以及被测模块公开接口。
+# - 处理：只执行测试和断言，不修改生产算法、金融语义或正式数据库。
+# - 输出：可重复的通过/失败证据，供全量回归和任务验收使用。
+# - 为什么这样写：把业务要求固化为自动测试，使后续注释迁移和重构能够证明行为未变化。
 from __future__ import annotations
 
 from datetime import date
@@ -37,6 +42,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 QUALITY_DIR = PROJECT_ROOT / "configs" / "quality"
 
 
+# 测试函数 `_write_json`：封装 `_write_json` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：path、payload。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def _write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
@@ -45,6 +55,11 @@ def _write_json(path: Path, payload: dict) -> None:
     )
 
 
+# 测试函数 `_daily_k_report`：封装 `_daily_k_report` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def _daily_k_report() -> dict:
     return {
         "dataset_id": "a_stock_daily_k",
@@ -64,6 +79,11 @@ def _daily_k_report() -> dict:
     }
 
 
+# 测试函数 `_fundamental_report`：封装 `_fundamental_report` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def _fundamental_report() -> dict:
     return {
         "overall_status": "PENDING_CONFIRMATION",
@@ -83,6 +103,11 @@ def _fundamental_report() -> dict:
     }
 
 
+# 测试函数 `_funds_canonical_report`：封装 `_funds_canonical_report` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def _funds_canonical_report() -> dict:
     return {
         "task_id": "TASK_017C",
@@ -108,6 +133,11 @@ def _funds_canonical_report() -> dict:
     }
 
 
+# 测试函数 `_funds_service_report`：封装 `_funds_service_report` 测试辅助步骤，减少重复样例和断言准备。
+# - 输入：测试对象状态、固定样例或当前测试夹具。
+# - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+# - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+# - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
 def _funds_service_report() -> dict:
     selector_modes = {
         "hq": "INSTRUMENT_ID",
@@ -132,7 +162,17 @@ def _funds_service_report() -> dict:
     }
 
 
+# 测试类 `ExternalEvidenceTests`：集中验证 `test_data_readiness_external_evidence` 相关合同、边界条件和回归行为。
+# - 输入：测试夹具、构造样例以及被测模块公开接口。
+# - 处理：按独立场景组织断言，覆盖正常路径、失败门禁和关键边界。
+# - 输出：通过或失败的单元测试结果，不产生正式业务数据。
+# - 为什么这样写：把同一职责的回归场景集中管理，便于定位失败并防止后续修改破坏既有合同。
 class ExternalEvidenceTests(unittest.TestCase):
+    # 测试函数 `setUp`：准备本组测试共享的对象、样例和环境状态。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
@@ -172,9 +212,19 @@ class ExternalEvidenceTests(unittest.TestCase):
             ),
         )
 
+    # 测试函数 `tearDown`：清理本组测试创建的临时状态和外部资源。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def tearDown(self) -> None:
         self.tmp.cleanup()
 
+    # 测试函数 `test_calendar_latest_trading_day`：验证 `calendar、latest、trading、day` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_calendar_latest_trading_day(self) -> None:
         calendar = load_trading_calendar(
             QUALITY_DIR / "a_share_trading_calendar_2026.json"
@@ -190,6 +240,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             calendar.is_trading_day(date(2026, 6, 22))
         )
 
+    # 测试函数 `test_daily_k_trading_session_lag_is_19`：验证 `daily、k、trading、session、lag、is、19` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_daily_k_trading_session_lag_is_19(self) -> None:
         evidence = self.resolver.freshness_evidence(
             "a_stock_daily_k",
@@ -205,6 +260,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             EvidenceStatus.WARNING,
         )
 
+    # 测试函数 `test_fundamental_lag_within_research_sla`：验证 `fundamental、lag、within、research、sla` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_fundamental_lag_within_research_sla(self) -> None:
         evidence = self.resolver.freshness_evidence(
             "a_stock_fundamental_snapshot",
@@ -220,6 +280,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             EvidenceStatus.PASSED,
         )
 
+    # 测试函数 `test_daily_funds_are_stale_for_current_research`：验证 `daily、funds、are、stale、for、current、research` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_daily_funds_are_stale_for_current_research(self) -> None:
         evidence = self.resolver.freshness_evidence(
             "hq",
@@ -239,6 +304,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             1,
         )
 
+    # 测试函数 `test_historical_freshness_is_not_currentness_gate`：验证 `historical、freshness、is、not、currentness、gate` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_historical_freshness_is_not_currentness_gate(self) -> None:
         evidence = self.resolver.freshness_evidence(
             "hq",
@@ -254,6 +324,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             evidence.code,
         )
 
+    # 测试函数 `test_daily_k_coverage_is_passed`：验证 `daily、k、coverage、is、passed` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_daily_k_coverage_is_passed(self) -> None:
         evidence = self.resolver.coverage_evidence(
             "a_stock_daily_k"
@@ -267,6 +342,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             5523,
         )
 
+    # 测试函数 `test_fundamental_current_snapshot_coverage_passes`：验证 `fundamental、current、snapshot、coverage、passes` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_fundamental_current_snapshot_coverage_passes(self) -> None:
         evidence = self.resolver.coverage_evidence(
             "a_stock_fundamental_snapshot"
@@ -280,6 +360,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             5541,
         )
 
+    # 测试函数 `test_daily_funds_coverage_remains_warning`：验证 `daily、funds、coverage、remains、warning` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_daily_funds_coverage_remains_warning(self) -> None:
         evidence = self.resolver.coverage_evidence("hy")
         self.assertEqual(
@@ -292,8 +377,19 @@ class ExternalEvidenceTests(unittest.TestCase):
             ]
         )
 
+    # 测试函数 `test_all_nine_current_research_activations_pass`：验证 `all、nine、current、research、activations、pass` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_all_nine_current_research_activations_pass(self) -> None:
+        # 参数化循环：逐项使用 `self.resolver.config.datasets` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for dataset in self.resolver.config.datasets:
+            # 测试上下文：通过 `self.subTest(dataset=dataset.dataset_id)` 管理异常断言、临时资源或子测试范围。
+            # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+            # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
             with self.subTest(dataset=dataset.dataset_id):
                 evidence = self.resolver.activation_evidence(
                     dataset.dataset_id,
@@ -305,15 +401,26 @@ class ExternalEvidenceTests(unittest.TestCase):
                     EvidenceStatus.PASSED,
                 )
 
+    # 测试函数 `test_only_daily_k_historical_activation_passes`：验证 `only、daily、k、historical、activation、passes` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_only_daily_k_historical_activation_passes(self) -> None:
         passed = []
         failed = []
+        # 参数化循环：逐项使用 `self.resolver.config.datasets` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for dataset in self.resolver.config.datasets:
             evidence = self.resolver.activation_evidence(
                 dataset.dataset_id,
                 StandardDataUsage.STRICT_HISTORICAL_BACKTEST,
                 date(2026, 6, 27),
             )
+            # 测试分支：根据 `evidence.status is EvidenceStatus.PASSED` 选择对应断言或样例路径。
+            # - 处理：保持原条件和分支顺序，仅解释不同测试场景的进入条件。
+            # - 为什么这样写：显式覆盖条件差异，防止只验证单一路径造成回归盲区。
             if evidence.status is EvidenceStatus.PASSED:
                 passed.append(dataset.dataset_id)
             else:
@@ -321,8 +428,19 @@ class ExternalEvidenceTests(unittest.TestCase):
         self.assertEqual(passed, ["a_stock_daily_k"])
         self.assertEqual(len(failed), 8)
 
+    # 测试函数 `test_manual_decision_activation_is_denied`：验证 `manual、decision、activation、is、denied` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_manual_decision_activation_is_denied(self) -> None:
+        # 参数化循环：逐项使用 `self.resolver.config.datasets` 验证同一合同。
+        # - 处理：每轮保留原样例、顺序和断言，便于定位具体失败项。
+        # - 为什么这样写：用一致规则覆盖多组输入，减少复制测试并提高边界覆盖率。
         for dataset in self.resolver.config.datasets:
+            # 测试上下文：通过 `self.subTest(dataset=dataset.dataset_id)` 管理异常断言、临时资源或子测试范围。
+            # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+            # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
             with self.subTest(dataset=dataset.dataset_id):
                 evidence = self.resolver.activation_evidence(
                     dataset.dataset_id,
@@ -334,6 +452,11 @@ class ExternalEvidenceTests(unittest.TestCase):
                     EvidenceStatus.FAILED,
                 )
 
+    # 测试函数 `test_resolve_returns_three_external_dimensions`：验证 `resolve、returns、three、external、dimensions` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_resolve_returns_three_external_dimensions(self) -> None:
         evidence = self.resolver.resolve(
             dataset_id="hq",
@@ -351,6 +474,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             },
         )
 
+    # 测试函数 `test_config_and_activation_have_same_nine_datasets`：验证 `config、and、activation、have、same、nine、datasets` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_config_and_activation_have_same_nine_datasets(self) -> None:
         config = load_external_evidence_config(
             QUALITY_DIR
@@ -366,6 +494,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             set(activations),
         )
 
+    # 测试函数 `_query_result`：封装 `_query_result` 测试辅助步骤，减少重复样例和断言准备。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def _query_result(self) -> tuple[
         StandardQueryResult,
         ProviderDescriptor,
@@ -431,6 +564,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             descriptor,
         )
 
+    # 测试函数 `test_overlay_replaces_three_generic_dimensions`：验证 `overlay、replaces、three、generic、dimensions` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_overlay_replaces_three_generic_dimensions(self) -> None:
         rules = load_evidence_rule_config(
             QUALITY_DIR
@@ -464,6 +602,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             "DATASET_USAGE_ACTIVATION_VERIFIED",
         )
 
+    # 测试函数 `test_external_evidence_references_reports_and_calendar`：验证 `external、evidence、references、reports、and、calendar` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_external_evidence_references_reports_and_calendar(self) -> None:
         evidence = self.resolver.coverage_evidence("hq")
         self.assertTrue(
@@ -479,6 +622,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             )
         )
 
+    # 测试函数 `test_bad_daily_k_report_fails_coverage`：验证 `bad、daily、k、report、fails、coverage` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_bad_daily_k_report_fails_coverage(self) -> None:
         report_path = (
             self.root
@@ -503,6 +651,11 @@ class ExternalEvidenceTests(unittest.TestCase):
             EvidenceStatus.FAILED,
         )
 
+    # 测试函数 `test_missing_report_is_rejected`：验证 `missing、report、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_missing_report_is_rejected(self) -> None:
         (
             self.root
@@ -516,10 +669,21 @@ class ExternalEvidenceTests(unittest.TestCase):
                 "data_readiness_external_evidence_v0.json"
             ),
         )
+        # 测试上下文：通过 `self.assertRaises(Exception)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(Exception):
             resolver.coverage_evidence("a_stock_daily_k")
 
+    # 测试函数 `test_unknown_dataset_is_rejected`：验证 `unknown、dataset、is、rejected` 场景是否满足既定预期。
+    # - 输入：测试对象状态、固定样例或当前测试夹具。
+    # - 处理：调用被测接口并比较实际结果、异常或状态与预期合同。
+    # - 输出：通过断言表达成功；不符合预期时由测试框架记录失败证据。
+    # - 为什么这样写：把一个行为要求固定为可重复执行的回归测试，避免注释迁移或后续重构静默改变业务语义。
     def test_unknown_dataset_is_rejected(self) -> None:
+        # 测试上下文：通过 `self.assertRaises(Exception)` 管理异常断言、临时资源或子测试范围。
+        # - 处理：上下文结束时自动完成异常匹配、资源释放或子场景归档。
+        # - 为什么这样写：确保失败也能执行清理，并让异常类型和发生边界可被精确验证。
         with self.assertRaises(Exception):
             self.resolver.coverage_evidence("unknown")
 

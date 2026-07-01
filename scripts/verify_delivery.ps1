@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$Remote = "origin",
     [string]$Branch = "main",
     [switch]$Fetch
@@ -6,6 +6,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# PowerShell函数 `Invoke-Git`：封装 `scripts/verify_delivery.ps1` 中对应的可复用操作。
+# - 输入：参数块、调用参数、环境变量、项目路径或上游管道对象。
+# - 处理：保持原命令、参数、异常和文件操作顺序，仅补充说明。
+# - 输出：返回管道对象、文件、状态、退出码或显式异常。
+# - 为什么这样写：明确函数边界和破坏性操作，便于复核、测试和安全回滚。
 function Invoke-Git {
     param(
         [Parameter(ValueFromRemainingArguments = $true)]
