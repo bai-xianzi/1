@@ -1,0 +1,253 @@
+{
+  "task_id": "TASK_019D",
+  "mode": "REAL_FEATURE_REPORT_RESEARCH_SCORING_ACCEPTANCE",
+  "generated_at": "2026-07-01T02:31:28.830586+00:00",
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "source_report": "D:\\QuantProjects\\a_stock_quant_os\\reports\\task_019c_real_market_state_feature_acceptance.json",
+  "source_report_task_id": "TASK_019C",
+  "source_report_status": "PASSED_WITH_WARNINGS",
+  "status": "READY_WITH_WARNINGS",
+  "policy_version": "0.1.0",
+  "policy_status": "RESEARCH_HYPOTHESIS_UNVALIDATED",
+  "source_task_id": "TASK_019C",
+  "source_feature_spec_version": "0.1.0",
+  "source_common_trade_date": "2025-12-31",
+  "source_as_of_date": "2026-06-27",
+  "calendar_age_days": 178,
+  "stale_input": true,
+  "candidate_state": "STALE_INPUT_INDETERMINATE",
+  "directional_score": 42.015411202512865,
+  "volatility_stress_score": 37.65486361912881,
+  "stability_score": 62.34513638087119,
+  "dimension_scores": [
+    {
+      "family": "TREND",
+      "score": 39.520197249999995,
+      "feature_count": 3,
+      "contributions": [
+        {
+          "feature_id": "daily_positive_return_ratio",
+          "family": "TREND",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 0.36666666666666664,
+          "normalised_score": 16.66666666666666,
+          "weight": 0.4,
+          "weighted_score": 6.666666666666664,
+          "hypothesis": "上涨证券比例高于50%通常对应更强的横截面趋势。"
+        },
+        {
+          "feature_id": "daily_mean_return_pct",
+          "family": "TREND",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 0.2704935333333333,
+          "normalised_score": 63.524676666666664,
+          "weight": 0.35,
+          "weighted_score": 22.233636833333332,
+          "hypothesis": "等权平均收益由负转正时趋势得分提高。"
+        },
+        {
+          "feature_id": "daily_median_return_pct",
+          "family": "TREND",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": -0.1504085,
+          "normalised_score": 42.479575000000004,
+          "weight": 0.25,
+          "weighted_score": 10.619893750000001,
+          "hypothesis": "中位收益用于降低极端证券对趋势判断的影响。"
+        }
+      ]
+    },
+    {
+      "family": "BREADTH",
+      "score": 30.400029438931774,
+      "feature_count": 3,
+      "contributions": [
+        {
+          "feature_id": "industry_advance_ratio",
+          "family": "BREADTH",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 0.44833782569631625,
+          "normalised_score": 37.084456424079065,
+          "weight": 0.45,
+          "weighted_score": 16.68800539083558,
+          "hypothesis": "行业节点内部上涨证券占比越高，市场宽度越强。"
+        },
+        {
+          "feature_id": "industry_breadth_ratio_median",
+          "family": "BREADTH",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 0.72,
+          "normalised_score": 21.999999999999996,
+          "weight": 0.35,
+          "weighted_score": 7.699999999999998,
+          "hypothesis": "供应商宽度比率中位数高于1时作为较强宽度候选证据。"
+        },
+        {
+          "feature_id": "industry_limit_up_share_of_up",
+          "family": "BREADTH",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 0.018036072144288578,
+          "normalised_score": 30.060120240480963,
+          "weight": 0.2,
+          "weighted_score": 6.012024048096193,
+          "hypothesis": "上涨证券中的涨停占比提供尾部强度证据，但权重较低。"
+        }
+      ]
+    },
+    {
+      "family": "LIQUIDITY",
+      "score": 38.19999999999999,
+      "feature_count": 1,
+      "contributions": [
+        {
+          "feature_id": "turnover_rate_median_pct",
+          "family": "LIQUIDITY",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 1.2639999999999998,
+          "normalised_score": 38.19999999999999,
+          "weight": 1.0,
+          "weighted_score": 38.19999999999999,
+          "hypothesis": "换手率中位数用作当前查询集合的活跃度候选证据。"
+        }
+      ]
+    },
+    {
+      "family": "VOLATILITY",
+      "score": 37.65486361912881,
+      "feature_count": 3,
+      "contributions": [
+        {
+          "feature_id": "cross_section_return_std_pct",
+          "family": "VOLATILITY",
+          "role": "SCORE",
+          "orientation": "STRESS",
+          "raw_value": 2.129311390850005,
+          "normalised_score": 63.72130795208355,
+          "weight": 0.45,
+          "weighted_score": 28.674588578437596,
+          "hypothesis": "横截面收益离散度越高，波动压力得分越高。"
+        },
+        {
+          "feature_id": "intraday_range_median_pct",
+          "family": "VOLATILITY",
+          "role": "SCORE",
+          "orientation": "STRESS",
+          "raw_value": 2.0558627177735325,
+          "normalised_score": 18.52875725911775,
+          "weight": 0.35,
+          "weighted_score": 6.485065040691212,
+          "hypothesis": "日内振幅越高，波动压力得分越高。"
+        },
+        {
+          "feature_id": "absolute_return_median_pct",
+          "family": "VOLATILITY",
+          "role": "SCORE",
+          "orientation": "STRESS",
+          "raw_value": 0.749521,
+          "normalised_score": 12.476049999999999,
+          "weight": 0.2,
+          "weighted_score": 2.49521,
+          "hypothesis": "绝对收益中位数用于补充市场普遍波动强度。"
+        }
+      ]
+    },
+    {
+      "family": "SECTOR_DIFFUSION",
+      "score": 66.66666666666667,
+      "feature_count": 2,
+      "contributions": [
+        {
+          "feature_id": "positive_industry_ratio",
+          "family": "SECTOR_DIFFUSION",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 0.43333333333333335,
+          "normalised_score": 33.333333333333336,
+          "weight": 0.5,
+          "weighted_score": 16.666666666666668,
+          "hypothesis": "上涨行业节点比例越高，正向扩散越广。"
+        },
+        {
+          "feature_id": "positive_average_return_ratio",
+          "family": "SECTOR_DIFFUSION",
+          "role": "SCORE",
+          "orientation": "POSITIVE",
+          "raw_value": 0.9666666666666667,
+          "normalised_score": 100.0,
+          "weight": 0.5,
+          "weighted_score": 50.0,
+          "hypothesis": "行业内部平均收益为正的节点比例提供扩散补充证据。"
+        }
+      ]
+    }
+  ],
+  "context_features": [
+    {
+      "feature_id": "market_amount_total_cny",
+      "family": "LIQUIDITY",
+      "role": "CONTEXT_ONLY",
+      "orientation": "NONE",
+      "raw_value": 9604044032.0,
+      "normalised_score": null,
+      "weight": 0.0,
+      "weighted_score": null,
+      "hypothesis": "当前数值只代表验收查询证券集合，缺少历史基准时不进入方向得分。"
+    },
+    {
+      "feature_id": "industry_return_std_pct",
+      "family": "SECTOR_DIFFUSION",
+      "role": "CONTEXT_ONLY",
+      "orientation": "NONE",
+      "raw_value": 0.6667367463166319,
+      "normalised_score": null,
+      "weight": 0.0,
+      "weighted_score": null,
+      "hypothesis": "行业收益离散度方向含义依赖市场阶段，首版只作上下文。"
+    }
+  ],
+  "quality_gate_features": [
+    {
+      "feature_id": "amount_field_coverage_ratio",
+      "family": "LIQUIDITY",
+      "role": "QUALITY_GATE",
+      "orientation": "NONE",
+      "raw_value": 1.0,
+      "normalised_score": null,
+      "weight": 0.0,
+      "weighted_score": null,
+      "hypothesis": "成交额字段覆盖不足时，不允许生成完整评分。"
+    }
+  ],
+  "warnings": [
+    "a_stock_daily_k:FRESHNESS:TRADING_SESSION_LAG_EXCEEDS_SLA",
+    "a_stock_daily_k:SEMANTIC_CONFIDENCE:SEMANTIC_WARNINGS_PRESENT",
+    "a_stock_daily_k:READINESS_STATUS:WARNING",
+    "hy:DAILY_FUNDS_EXACT_AVAILABLE_AT_UNPROVEN",
+    "hy:QUERY_EXECUTION:QUERY_COMPLETED_WITH_WARNINGS",
+    "hy:COVERAGE:DATE_RANGE_AND_REAL_SAMPLE_ACCEPTED",
+    "hy:FRESHNESS:TRADING_SESSION_LAG_EXCEEDS_SLA",
+    "hy:TEMPORAL_SAFETY:TEMPORAL_WARNING_PRESENT",
+    "hy:SEMANTIC_CONFIDENCE:SEMANTIC_WARNINGS_PRESENT",
+    "hy:READINESS_STATUS:WARNING",
+    "QUERY_UNIVERSE_TOTAL_NOT_PROVEN_FULL_MARKET",
+    "SCORING_POLICY_UNVALIDATED_RESEARCH_HYPOTHESIS",
+    "STALE_INPUT_EXCEEDS_MAX_CALENDAR_AGE"
+  ],
+  "blocking_reasons": [],
+  "research_score_allowed": true,
+  "candidate_state_actionable": false,
+  "manual_decision_allowed": false,
+  "official_market_state_allowed": false,
+  "trade_execution_allowed": false,
+  "regime_label": null,
+  "database_connection_attempted": false,
+  "write_operation_count": 0,
+  "issues": []
+}

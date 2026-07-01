@@ -1,0 +1,202 @@
+{
+  "task_id": "TASK_019D",
+  "policy_version": "0.1.0",
+  "policy_status": "RESEARCH_HYPOTHESIS_UNVALIDATED",
+  "source_task_id": "TASK_019C",
+  "input_feature_spec_version": "0.1.0",
+  "output_object": "ResearchMarketStateScoreSnapshot",
+  "output_scope": "RESEARCH_ONLY",
+  "manual_decision_allowed": false,
+  "official_market_state_allowed": false,
+  "trade_execution_allowed": false,
+  "regime_label_allowed": false,
+  "candidate_state_allowed": true,
+  "maximum_calendar_age_days_for_candidate": 10,
+  "minimum_amount_field_coverage_ratio": 0.95,
+  "required_feature_count": 15,
+  "scored_feature_count": 12,
+  "context_feature_count": 2,
+  "quality_gate_feature_count": 1,
+  "direction_dimension_weights": {
+    "TREND": 0.35,
+    "BREADTH": 0.3,
+    "LIQUIDITY": 0.15,
+    "SECTOR_DIFFUSION": 0.2
+  },
+  "candidate_thresholds": {
+    "bullish_min_direction_score": 60.0,
+    "bearish_max_direction_score": 40.0,
+    "volatile_transition_min_stress_score": 70.0,
+    "volatile_transition_direction_lower": 40.0,
+    "volatile_transition_direction_upper": 60.0
+  },
+  "feature_rules": [
+    {
+      "feature_id": "daily_positive_return_ratio",
+      "family": "TREND",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": 0.3,
+      "neutral_anchor": 0.5,
+      "high_anchor": 0.7,
+      "weight": 0.4,
+      "hypothesis": "上涨证券比例高于50%通常对应更强的横截面趋势。"
+    },
+    {
+      "feature_id": "daily_mean_return_pct",
+      "family": "TREND",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": -1.0,
+      "neutral_anchor": 0.0,
+      "high_anchor": 1.0,
+      "weight": 0.35,
+      "hypothesis": "等权平均收益由负转正时趋势得分提高。"
+    },
+    {
+      "feature_id": "daily_median_return_pct",
+      "family": "TREND",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": -1.0,
+      "neutral_anchor": 0.0,
+      "high_anchor": 1.0,
+      "weight": 0.25,
+      "hypothesis": "中位收益用于降低极端证券对趋势判断的影响。"
+    },
+    {
+      "feature_id": "industry_advance_ratio",
+      "family": "BREADTH",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": 0.3,
+      "neutral_anchor": 0.5,
+      "high_anchor": 0.7,
+      "weight": 0.45,
+      "hypothesis": "行业节点内部上涨证券占比越高，市场宽度越强。"
+    },
+    {
+      "feature_id": "industry_breadth_ratio_median",
+      "family": "BREADTH",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": 0.5,
+      "neutral_anchor": 1.0,
+      "high_anchor": 1.5,
+      "weight": 0.35,
+      "hypothesis": "供应商宽度比率中位数高于1时作为较强宽度候选证据。"
+    },
+    {
+      "feature_id": "industry_limit_up_share_of_up",
+      "family": "BREADTH",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": 0.0,
+      "neutral_anchor": 0.03,
+      "high_anchor": 0.08,
+      "weight": 0.2,
+      "hypothesis": "上涨证券中的涨停占比提供尾部强度证据，但权重较低。"
+    },
+    {
+      "feature_id": "market_amount_total_cny",
+      "family": "LIQUIDITY",
+      "role": "CONTEXT_ONLY",
+      "orientation": "NONE",
+      "weight": 0.0,
+      "hypothesis": "当前数值只代表验收查询证券集合，缺少历史基准时不进入方向得分。"
+    },
+    {
+      "feature_id": "turnover_rate_median_pct",
+      "family": "LIQUIDITY",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": 0.5,
+      "neutral_anchor": 1.5,
+      "high_anchor": 3.0,
+      "weight": 1.0,
+      "hypothesis": "换手率中位数用作当前查询集合的活跃度候选证据。"
+    },
+    {
+      "feature_id": "amount_field_coverage_ratio",
+      "family": "LIQUIDITY",
+      "role": "QUALITY_GATE",
+      "orientation": "NONE",
+      "weight": 0.0,
+      "minimum_value": 0.95,
+      "hypothesis": "成交额字段覆盖不足时，不允许生成完整评分。"
+    },
+    {
+      "feature_id": "cross_section_return_std_pct",
+      "family": "VOLATILITY",
+      "role": "SCORE",
+      "orientation": "STRESS",
+      "low_anchor": 0.8,
+      "neutral_anchor": 1.8,
+      "high_anchor": 3.0,
+      "weight": 0.45,
+      "hypothesis": "横截面收益离散度越高，波动压力得分越高。"
+    },
+    {
+      "feature_id": "intraday_range_median_pct",
+      "family": "VOLATILITY",
+      "role": "SCORE",
+      "orientation": "STRESS",
+      "low_anchor": 1.5,
+      "neutral_anchor": 3.0,
+      "high_anchor": 5.0,
+      "weight": 0.35,
+      "hypothesis": "日内振幅越高，波动压力得分越高。"
+    },
+    {
+      "feature_id": "absolute_return_median_pct",
+      "family": "VOLATILITY",
+      "role": "SCORE",
+      "orientation": "STRESS",
+      "low_anchor": 0.5,
+      "neutral_anchor": 1.5,
+      "high_anchor": 3.0,
+      "weight": 0.2,
+      "hypothesis": "绝对收益中位数用于补充市场普遍波动强度。"
+    },
+    {
+      "feature_id": "positive_industry_ratio",
+      "family": "SECTOR_DIFFUSION",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": 0.3,
+      "neutral_anchor": 0.5,
+      "high_anchor": 0.7,
+      "weight": 0.5,
+      "hypothesis": "上涨行业节点比例越高，正向扩散越广。"
+    },
+    {
+      "feature_id": "industry_return_std_pct",
+      "family": "SECTOR_DIFFUSION",
+      "role": "CONTEXT_ONLY",
+      "orientation": "NONE",
+      "weight": 0.0,
+      "hypothesis": "行业收益离散度方向含义依赖市场阶段，首版只作上下文。"
+    },
+    {
+      "feature_id": "positive_average_return_ratio",
+      "family": "SECTOR_DIFFUSION",
+      "role": "SCORE",
+      "orientation": "POSITIVE",
+      "low_anchor": 0.3,
+      "neutral_anchor": 0.5,
+      "high_anchor": 0.7,
+      "weight": 0.5,
+      "hypothesis": "行业内部平均收益为正的节点比例提供扩散补充证据。"
+    }
+  ],
+  "hard_rules": [
+    "评分输入必须是TASK_019C真实特征验收报告或同合同对象。",
+    "所有15项特征必须存在且特征ID唯一。",
+    "任何质量门禁失败时评分结果必须BLOCKED。",
+    "过期输入仍可计算分项研究得分，但候选状态必须为STALE_INPUT_INDETERMINATE。",
+    "所有阈值和锚点均为待历史验证的研究假设，不得描述为经验定律。",
+    "绝对成交额和行业收益离散度在缺少历史基准前只作上下文。",
+    "不得生成正式牛熊标签、仓位、选股或交易信号。",
+    "不得用于人工辅助决策或自动交易。"
+  ]
+}
