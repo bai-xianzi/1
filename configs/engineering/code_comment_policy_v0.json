@@ -1,0 +1,142 @@
+{
+  "task_id": "TASK_021A",
+  "policy_version": "0.1.0",
+  "policy_status": "ACTIVE_MIGRATION_IN_PROGRESS",
+  "authority_document": "CODE_COMMENTING_STANDARD.md",
+  "principle": "TEACHING_STYLE_PRECEDING_COMMENTS_REQUIRED",
+  "applicable_languages": {
+    "python": {
+      "extensions": [
+        ".py"
+      ],
+      "single_line_comment_prefix": "#"
+    },
+    "powershell": {
+      "extensions": [
+        ".ps1",
+        ".psm1",
+        ".psd1"
+      ],
+      "single_line_comment_prefix": "#"
+    },
+    "shell": {
+      "extensions": [
+        ".sh"
+      ],
+      "single_line_comment_prefix": "#"
+    },
+    "sql_and_dolphindb": {
+      "extensions": [
+        ".sql",
+        ".dos"
+      ],
+      "single_line_comment_prefixes": [
+        "--",
+        "//"
+      ]
+    },
+    "windows_batch": {
+      "extensions": [
+        ".bat",
+        ".cmd"
+      ],
+      "single_line_comment_prefixes": [
+        "REM",
+        "::"
+      ]
+    }
+  },
+  "required_comment_structure": [
+    "one_sentence_block_summary",
+    "unordered_detail_lines_with_dash",
+    "input_output_type_shape_range_or_state_change",
+    "constant_source_unit_scope_and_example_when_applicable",
+    "why_this_is_written_this_way",
+    "practical_example_when_useful",
+    "comment_before_corresponding_code"
+  ],
+  "required_markers": {
+    "detail_prefix": "# -",
+    "reason_phrases": [
+      "为什么这样写",
+      "为什么要这样写",
+      "为什么要这一步"
+    ],
+    "constant_evidence_phrases": [
+      "来源",
+      "单位",
+      "范围",
+      "行业通用",
+      "数据集",
+      "实例"
+    ]
+  },
+  "docstring_policy": {
+    "docstrings_may_remain": true,
+    "docstrings_may_replace_preceding_teaching_comments": false,
+    "new_docstrings_required": false
+  },
+  "logical_correspondence_policy": {
+    "comment_and_code_must_correspond": true,
+    "physical_closing_brackets_need_individual_comment": false,
+    "formatting_only_lines_need_individual_comment": false,
+    "logical_api_function_parameter_and_transformation_lines_need_comment": true
+  },
+  "constant_policy": {
+    "constants_requiring_evidence": [
+      "thresholds",
+      "timeouts",
+      "batch_sizes",
+      "concurrency_limits",
+      "statistical_constants",
+      "normalization_values",
+      "calendar_offsets",
+      "retry_counts",
+      "port_numbers",
+      "retention_periods"
+    ],
+    "must_explain_source": true,
+    "must_explain_unit": true,
+    "must_explain_valid_range": true,
+    "must_explain_example_or_industry_value_when_available": true
+  },
+  "exceptions": [
+    "python_shebang",
+    "python_encoding_declaration",
+    "powershell_requires_directive",
+    "generated_code",
+    "third_party_code",
+    "vendor_sdk_code",
+    "lock_files",
+    "json_files_without_comment_syntax",
+    "data_files",
+    "cache_files",
+    "archived_patches"
+  ],
+  "forbidden_patterns": [
+    "docstring_only_explanation",
+    "post_code_explanation_instead_of_preceding_comment",
+    "vague_comment_that_only_repeats_identifier",
+    "unknown_license_code_copy",
+    "comment_that_claims_unverified_vendor_behavior",
+    "removing_teaching_comments_during_refactor"
+  ],
+  "migration": {
+    "status": "IN_PROGRESS",
+    "inventory_report": "reports/task_021a_comment_migration_inventory.json",
+    "batch_count": 6,
+    "full_repository_enforcement_enabled": false,
+    "new_or_modified_code_enforcement_enabled": true,
+    "github_commit_blocked_until_full_migration": true,
+    "github_push_blocked_until_user_confirmation": true
+  },
+  "git_gate": {
+    "must_run_comment_audit": true,
+    "must_run_specialized_tests": true,
+    "must_run_full_tests": true,
+    "must_run_encoding_audit": true,
+    "must_run_git_diff_check": true,
+    "user_confirmation_required_before_commit": true,
+    "user_confirmation_required_before_push": true
+  }
+}

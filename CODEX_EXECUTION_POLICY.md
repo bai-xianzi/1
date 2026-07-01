@@ -109,3 +109,11 @@ Codex不得：
 
 涉及自动交易、订单状态、核对或停机功能时，必须先由项目经理明确接口、状态机和验收条件。
 
+
+<!-- TASK_021A_COMMENT_CODEX -->
+
+## Codex代码注释执行约束
+
+Codex生成补丁前必须先读取`CODE_COMMENTING_STANDARD.md`和`configs/engineering/code_comment_policy_v0.json`。
+
+所有新增和修改代码必须在对应逻辑之前提供教学式单行注释。Codex不得把docstring当作合规依据，不得绕过注释审计，也不得在用户确认前执行Git提交或推送。

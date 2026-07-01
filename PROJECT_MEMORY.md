@@ -1658,3 +1658,25 @@ configs/runtime/windows_single_machine_resource_profile_v0.json
 REUSE_FIRST_ENGINEERING_POLICY.md
 configs/engineering/reuse_first_policy_v0.json
 ```
+
+<!-- TASK_021A_COMMENT_MEMORY -->
+
+## 教学式代码注释永久原则
+
+本项目全部人工代码必须使用教学式前置注释。每个逻辑代码块先用一句话概括，再以`# -`分点说明API、参数、数据变化、类型、维度、范围和状态，并单独解释“为什么这样写”。
+
+关键常量必须记录来源、单位、有效范围和实例。docstring可以保留，但不得代替代码块前置`#`注释。
+
+最高权威文件：
+
+```text
+CODE_COMMENTING_STANDARD.md
+```
+
+机器政策：
+
+```text
+configs/engineering/code_comment_policy_v0.json
+```
+
+全量历史迁移完成前禁止Git提交；提交和推送前必须获得用户明确确认。
