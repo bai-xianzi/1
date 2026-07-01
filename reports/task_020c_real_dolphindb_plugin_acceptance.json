@@ -1,0 +1,74 @@
+{
+  "task_id": "TASK_020C",
+  "mode": "REAL_READONLY_DOLPHINDB_PLUGIN_BRIDGE_ACCEPTANCE",
+  "generated_at": "2026-07-01T05:52:51.632699+00:00",
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "provider_id": "local_dolphindb",
+  "plugin_id": "builtin.local_dolphindb.plugin_bridge",
+  "bridge_version": "0.1.0",
+  "reuse_strategy": "WRAP_WITH_THIN_ADAPTER",
+  "legacy_adapter_class": "a_stock_quant.dolphindb_adapter:DolphinDBDataSourceAdapter",
+  "custom_query_engine_implemented": false,
+  "custom_session_engine_implemented": false,
+  "custom_dolphindb_protocol_implemented": false,
+  "runtime": {
+    "provider_id": "local_dolphindb",
+    "runtime_id": "runtime:local_dolphindb:3.0.4.2",
+    "operating_systems": [
+      "Windows"
+    ],
+    "python_versions": [
+      "3.11"
+    ],
+    "architecture": "AMD64",
+    "client_name": "Local DolphinDB Server",
+    "client_version": null,
+    "sdk_name": "dolphindb",
+    "sdk_version": "3.0.4.2",
+    "installed": true,
+    "installation_probe": "importlib.util.find_spec + importlib.metadata.version",
+    "notes": "仅探测Python客户端并复用现有Adapter；不重新实现DolphinDB协议。"
+  },
+  "discovery_outcome": "COMPLETE",
+  "health_status": "HEALTHY",
+  "health_latency_ms": 595.2435999988666,
+  "capabilities": {
+    "EOD_MARKET_DATA": "VERIFIED",
+    "FUNDAMENTAL_DATA": "IMPLEMENTED",
+    "CLASSIFICATION_DATA": "IMPLEMENTED",
+    "MONEY_FLOW": "IMPLEMENTED",
+    "AUCTION_DATA": "IMPLEMENTED"
+  },
+  "query_operation": "READ_RAW_TABLE",
+  "query_database_uri": "dfs://A_STOCK_DAILY_K_DB",
+  "query_table_name": "stock_daily_k",
+  "query_limit": 5,
+  "query_result_count": 5,
+  "query_warnings": [
+    "LEGACY_ADAPTER_BRIDGE"
+  ],
+  "route_decision": "ELIGIBLE",
+  "route_score": 99.0,
+  "route_score_breakdown": {
+    "capability": 30.0,
+    "discovery": 15.0,
+    "health": 20.0,
+    "license": 20.0,
+    "priority": 9.0,
+    "exact_usage": 5.0
+  },
+  "route_reasons": [],
+  "actual_registry_modified": false,
+  "actual_capability_matrix_modified": false,
+  "activation_recommended": true,
+  "authentication_reference": "env://DOLPHINDB_PASSWORD",
+  "password_in_report": false,
+  "database_connection_attempted": true,
+  "database_readonly_query_mode": true,
+  "database_write_operation_count": 0,
+  "warnings": [
+    "LEGACY_ADAPTER_BRIDGE",
+    "REGISTRY_ACTIVATION_REQUIRES_SEPARATE_TASK"
+  ],
+  "issues": []
+}

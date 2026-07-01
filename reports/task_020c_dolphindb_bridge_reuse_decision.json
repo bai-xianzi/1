@@ -1,0 +1,90 @@
+{
+  "decision_id": "reuse:task_020c:dolphindb_adapter_bridge",
+  "task_id": "TASK_020C",
+  "problem_statement": "使现有DolphinDBDataSourceAdapter满足TASK_020B通用Provider插件协议，同时避免重复实现连接、只读查询和原始数据转换。",
+  "requirements": [
+    "ProviderPlugin.describe",
+    "ProviderPlugin.discover",
+    "ProviderPlugin.health_check",
+    "ProviderPlugin.open_session",
+    "ProviderPlugin.close_session",
+    "ProviderPlugin.query_batch",
+    "ProviderPlugin.iter_pages",
+    "ProviderPlugin.subscribe",
+    "ProviderPlugin.unsubscribe"
+  ],
+  "candidates": [
+    {
+      "candidate_id": "existing-dolphindb-adapter",
+      "candidate_type": "EXISTING_PROJECT_COMPONENT",
+      "name": "DolphinDBDataSourceAdapter",
+      "source_ref": "repo:src/a_stock_quant/dolphindb_adapter.py",
+      "version": "current-main",
+      "license_id": "PROJECT_INTERNAL",
+      "license_status": "PASSED",
+      "security_status": "PASSED",
+      "maintenance_status": "PASSED",
+      "compatibility_status": "PASSED",
+      "semantic_gap_status": "PASSED_WITH_WARNINGS",
+      "supported_requirements": [
+        "lazy_session",
+        "health_check",
+        "read_raw",
+        "run_readonly_query",
+        "readonly_script_guard",
+        "raw_result_normalisation"
+      ],
+      "gaps": [
+        "provider_plugin_descriptor",
+        "capability_discovery_result",
+        "authentication_reference",
+        "route_candidate_contract",
+        "subscription_contract"
+      ],
+      "warnings": [
+        "legacy_adapter_has_no_public_close_method",
+        "legacy_result_normaliser_is_private"
+      ],
+      "evidence_refs": [
+        "repo:src/a_stock_quant/dolphindb_adapter.py",
+        "tests:test_dolphindb_adapter"
+      ]
+    },
+    {
+      "candidate_id": "custom-dolphindb-client",
+      "candidate_type": "CUSTOM_IMPLEMENTATION",
+      "name": "New DolphinDB client and query engine",
+      "source_ref": "internal:not_selected",
+      "version": null,
+      "license_id": null,
+      "license_status": "NOT_REVIEWED",
+      "security_status": "NOT_REVIEWED",
+      "maintenance_status": "BLOCKED",
+      "compatibility_status": "NOT_REVIEWED",
+      "semantic_gap_status": "NOT_REVIEWED",
+      "supported_requirements": [],
+      "gaps": [
+        "duplicates_existing_connection_logic",
+        "duplicates_readonly_guard",
+        "duplicates_result_normalisation",
+        "adds_maintenance_cost"
+      ],
+      "warnings": [
+        "violates_reuse_first_policy"
+      ],
+      "evidence_refs": []
+    }
+  ],
+  "decision": "WRAP_WITH_THIN_ADAPTER",
+  "selected_candidate_id": "existing-dolphindb-adapter",
+  "rationale": "现有Adapter已经完成真实连接、健康检查、只读查询安全检查、有限Raw读取和结果标准化。TASK_020C只补充插件协议对象和调用编排。",
+  "custom_build_evidence": {},
+  "maintenance_owner": null,
+  "test_plan_ref": "tests/test_dolphindb_provider_plugin.py",
+  "migration_path": "未来可在不改变ProviderPlugin上层合同的情况下，替换或升级内部DolphinDBDataSourceAdapter。",
+  "evidence_refs": [
+    "policy:configs/engineering/reuse_first_policy_v0.json",
+    "repo:src/a_stock_quant/dolphindb_adapter.py",
+    "contract:configs/providers/provider_plugin_protocol_v0.json"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "task_id": "TASK_020C",
+  "bridge_version": "0.1.0",
+  "bridge_status": "REAL_ACCEPTANCE_CANDIDATE",
+  "provider_id": "local_dolphindb",
+  "plugin_id": "builtin.local_dolphindb.plugin_bridge",
+  "entrypoint": "a_stock_quant.dolphindb_provider_plugin:DolphinDBProviderPluginBridge",
+  "legacy_adapter_class": "a_stock_quant.dolphindb_adapter:DolphinDBDataSourceAdapter",
+  "reuse_strategy": "WRAP_WITH_THIN_ADAPTER",
+  "custom_query_engine_implemented": false,
+  "custom_session_engine_implemented": false,
+  "custom_dolphindb_protocol_implemented": false,
+  "authentication_reference": {
+    "reference_id": "auth:local_dolphindb",
+    "kind": "ENVIRONMENT_VARIABLE",
+    "locator": "env://DOLPHINDB_PASSWORD",
+    "scopes": [
+      "readonly"
+    ]
+  },
+  "runtime": {
+    "operating_systems": [
+      "Windows"
+    ],
+    "architecture": "x86_64",
+    "sdk_name": "dolphindb",
+    "installation_probe": "importlib.util.find_spec + importlib.metadata.version"
+  },
+  "capabilities": {
+    "EOD_MARKET_DATA": "VERIFIED",
+    "FUNDAMENTAL_DATA": "IMPLEMENTED",
+    "CLASSIFICATION_DATA": "IMPLEMENTED",
+    "MONEY_FLOW": "IMPLEMENTED",
+    "AUCTION_DATA": "IMPLEMENTED"
+  },
+  "permitted_usages": [
+    "CURRENT_SNAPSHOT_RESEARCH",
+    "STRICT_HISTORICAL_BACKTEST",
+    "HISTORICAL_MODEL_TRAINING"
+  ],
+  "rate_limit_policy": {
+    "requests_per_period": null,
+    "period_seconds": null,
+    "burst_size": null,
+    "maximum_concurrency": 2,
+    "evidence_status": "CONTRACT",
+    "evidence_refs": [
+      "config:windows_single_machine_resource_profile_v0"
+    ]
+  },
+  "retry_policy": {
+    "maximum_attempts": 3,
+    "backoff_seconds": [
+      2,
+      5
+    ],
+    "retryable_error_codes": [
+      "CONNECTION_FAILED",
+      "QUERY_TIMEOUT",
+      "SESSION_CLOSED"
+    ]
+  },
+  "batch_policy": {
+    "recommended_entities_per_request": 30,
+    "maximum_entities_per_request": 500,
+    "recommended_rows_per_batch": 20000,
+    "maximum_rows_per_batch": 100000,
+    "supports_date_range": true,
+    "supports_parallel_requests": true
+  },
+  "pagination_policy": {
+    "mode": "NONE",
+    "default_page_size": null,
+    "maximum_page_size": null,
+    "maximum_pages": null,
+    "cursor_field": null
+  },
+  "subscription_policy": {
+    "mode": "NONE",
+    "maximum_symbols": null,
+    "heartbeat_seconds": null,
+    "reconnect_supported": false,
+    "replay_supported": false
+  },
+  "license_boundary": {
+    "decision": "ALLOWED",
+    "permitted_usages": [
+      "CURRENT_SNAPSHOT_RESEARCH",
+      "STRICT_HISTORICAL_BACKTEST",
+      "HISTORICAL_MODEL_TRAINING"
+    ],
+    "cache_allowed": true,
+    "persistent_storage_allowed": true,
+    "redistribution_allowed": false,
+    "maximum_retention_days": null,
+    "evidence_refs": [
+      "project:local_user_managed_dolphindb_data",
+      "governance:source_specific_license_still_required"
+    ]
+  },
+  "supported_operations": [
+    "READ_RAW_TABLE",
+    "RUN_READONLY_QUERY"
+  ],
+  "real_acceptance_defaults": {
+    "host": "127.0.0.1",
+    "port": 8848,
+    "username": "admin",
+    "password_env": "DOLPHINDB_PASSWORD",
+    "database_uri": "dfs://A_STOCK_DAILY_K_DB",
+    "table_name": "stock_daily_k",
+    "limit": 5,
+    "capability": "EOD_MARKET_DATA",
+    "usage": "CURRENT_SNAPSHOT_RESEARCH"
+  },
+  "activation_policy": {
+    "modify_registry_during_acceptance": false,
+    "modify_capability_matrix_during_acceptance": false,
+    "automatic_activation_allowed": false,
+    "activation_requires_verified_report": true
+  },
+  "hard_rules": [
+    "桥接层必须组合现有DolphinDBDataSourceAdapter。",
+    "桥接层不得重新实现DolphinDB会话、只读安全检查或RawDataBatch转换。",
+    "密码只能通过环境变量等认证引用提供，不得写入配置、报告或Git。",
+    "真实验收只允许健康检查和有限只读查询。",
+    "真实验收不得修改插件注册表或能力矩阵。",
+    "真实验收不得执行数据库写入。",
+    "实时订阅和交易执行能力必须保持不支持。"
+  ]
+}
