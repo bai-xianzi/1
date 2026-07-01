@@ -838,3 +838,17 @@ NEXT：TASK_020B 通用Provider插件协议与能力路由
 ```
 
 当前不安装商业SDK，不接通自动交易，不下载大规模分钟线。先稳定供应商无关能力矩阵、资源档案和插件边界。
+
+<!-- TASK_020B_REUSE_STATUS -->
+
+## TASK_020B 工程治理补充
+
+```text
+复用原则：REUSE_FIRST_CUSTOM_BUILD_LAST
+未知许可证复用：禁止
+无来源复制：禁止
+重写厂商SDK：禁止
+默认自研：禁止
+```
+
+TASK_020C将通过薄Bridge复用现有DolphinDB Adapter，作为复用优先政策的第一个真实工程应用。

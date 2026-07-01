@@ -1,0 +1,72 @@
+{
+  "task_id": "TASK_020B_REUSE",
+  "policy_version": "0.1.0",
+  "policy_status": "ARCHITECTURE_GOVERNANCE",
+  "principle": "REUSE_FIRST_CUSTOM_BUILD_LAST",
+  "custom_implementation_default_allowed": false,
+  "unknown_license_reuse_allowed": false,
+  "copy_without_provenance_allowed": false,
+  "vendor_sdk_reimplementation_allowed": false,
+  "reuse_order": [
+    "EXISTING_PROJECT_COMPONENT",
+    "OFFICIAL_VENDOR_SDK",
+    "OPEN_STANDARD_PROTOCOL",
+    "MATURE_OPEN_SOURCE_LIBRARY",
+    "THIN_ADAPTER_OR_BRIDGE",
+    "CUSTOM_IMPLEMENTATION_LAST_RESORT"
+  ],
+  "required_assessment_sections": [
+    "problem_statement",
+    "existing_project_search",
+    "candidate_inventory",
+    "license_review",
+    "security_review",
+    "maintenance_review",
+    "compatibility_review",
+    "performance_review",
+    "semantic_gap_review",
+    "decision",
+    "evidence_refs"
+  ],
+  "candidate_types": [
+    "EXISTING_PROJECT_COMPONENT",
+    "OFFICIAL_VENDOR_SDK",
+    "OPEN_STANDARD_PROTOCOL",
+    "MATURE_OPEN_SOURCE_LIBRARY",
+    "REFERENCE_IMPLEMENTATION",
+    "THIN_ADAPTER_OR_BRIDGE",
+    "CUSTOM_IMPLEMENTATION"
+  ],
+  "decision_types": [
+    "REUSE_AS_IS",
+    "WRAP_WITH_THIN_ADAPTER",
+    "EXTEND_EXISTING_COMPONENT",
+    "DEFER_PENDING_DISCOVERY",
+    "CUSTOM_BUILD_APPROVED",
+    "REJECT"
+  ],
+  "required_custom_build_evidence": [
+    "documented_functional_gap",
+    "documented_candidate_comparison",
+    "documented_license_or_security_blocker",
+    "documented_maintenance_owner",
+    "documented_test_plan",
+    "documented_migration_or_replacement_path"
+  ],
+  "adapter_specific_rules": [
+    "优先复用现有DataSourceAdapter、StandardDataService、Canonical对象和门禁。",
+    "商业平台优先使用官方SDK或正式API，不重写其协议栈。",
+    "开源项目只通过稳定边界接入，不允许上层依赖其私有字段。",
+    "现有接口与新协议不一致时优先建立薄桥接层，不复制旧实现。",
+    "每个新Provider必须先做SDK、许可证、版本和授权能力发现。",
+    "不得把示例代码、博客代码或未知许可证代码直接复制进核心仓库。"
+  ],
+  "hard_rules": [
+    "开发新模块前必须先搜索项目内现有实现。",
+    "能够通过组合、配置、继承或薄适配解决时不得重写。",
+    "引入第三方组件必须记录来源、版本、许可证、维护状态和替代路径。",
+    "复用不等于盲目依赖；安全、时点、语义、许可证和可维护性仍需验收。",
+    "自研必须是有证据的最后选择，而不是默认选择。",
+    "所有复用决策必须可审计、可替换、可测试、可回滚。"
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "task_id": "TASK_020B",
+  "registry_version": "0.1.0",
+  "registry_status": "SEED_REGISTRY_NO_ACTIVE_VENDOR_PLUGIN",
+  "automatic_activation_allowed": false,
+  "entries": [
+    {
+      "provider_id": "local_dolphindb",
+      "plugin_id": "builtin.local_dolphindb.legacy_bridge",
+      "registration_status": "LEGACY_BRIDGE_REQUIRED",
+      "entrypoint": "a_stock_quant.dolphindb_adapter:DolphinDBDataSourceAdapter",
+      "priority": 10,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": "env://DOLPHINDB_PASSWORD",
+      "notes": "当前Adapter已存在，但尚未包装为TASK_020B通用插件协议。"
+    },
+    {
+      "provider_id": "wind",
+      "plugin_id": "vendor.wind.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 30,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "等待用户真实安装环境、授权模块和SDK版本。"
+    },
+    {
+      "provider_id": "ifind",
+      "plugin_id": "vendor.ifind.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 30,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "等待用户真实安装环境、授权模块和SDK版本。"
+    },
+    {
+      "provider_id": "choice",
+      "plugin_id": "vendor.choice.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 40,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "登记目标，不预填能力。"
+    },
+    {
+      "provider_id": "galaxy_xingyao",
+      "plugin_id": "broker.galaxy_xingyao.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 30,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "数据、研究、组合分析和交易能力必须分别发现。"
+    },
+    {
+      "provider_id": "qmt",
+      "plugin_id": "broker.qmt.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 50,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "潜在交易插件，默认禁用路由和执行。"
+    },
+    {
+      "provider_id": "ptrade",
+      "plugin_id": "broker.ptrade.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 50,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "潜在交易插件，默认禁用路由和执行。"
+    },
+    {
+      "provider_id": "tushare_pro",
+      "plugin_id": "public.tushare_pro.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 60,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "等待API权限、额度、许可证和字段发现。"
+    },
+    {
+      "provider_id": "akshare",
+      "plugin_id": "opensource.akshare.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 70,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "等待版本、网站来源稳定性和许可证边界发现。"
+    },
+    {
+      "provider_id": "official_exchange_sources",
+      "plugin_id": "official.exchange_sources.pending",
+      "registration_status": "REGISTERED_TARGET",
+      "entrypoint": null,
+      "priority": 20,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": null,
+      "notes": "后续按上交所、深交所、北交所、中登等拆分。"
+    },
+    {
+      "provider_id": "local_file_sources",
+      "plugin_id": "builtin.local_files.legacy_bridge",
+      "registration_status": "LEGACY_BRIDGE_REQUIRED",
+      "entrypoint": null,
+      "priority": 80,
+      "enabled_for_routing": false,
+      "discovery_result_ref": null,
+      "authentication_reference_ref": "none://local-filesystem",
+      "notes": "现有文件导入流程尚未包装为通用插件协议。"
+    }
+  ],
+  "hard_rules": [
+    "种子注册表不得自动启用任何商业或券商插件。",
+    "entrypoint为空的目标不得加载。",
+    "LEGACY_BRIDGE_REQUIRED只表示已有旧接口，不表示满足新插件协议。",
+    "所有enabled_for_routing初始值必须为false。",
+    "注册表只保存认证引用，不保存认证材料。",
+    "优先级只在全部硬门禁通过后参与评分。"
+  ]
+}

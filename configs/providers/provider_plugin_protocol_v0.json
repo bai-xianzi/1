@@ -1,0 +1,79 @@
+{
+  "task_id": "TASK_020B",
+  "protocol_version": "0.1.0",
+  "protocol_status": "ARCHITECTURE_CONTRACT",
+  "provider_neutral": true,
+  "vendor_sdk_import_boundary": "PLUGIN_IMPLEMENTATION_ONLY",
+  "automatic_plugin_activation_allowed": false,
+  "secret_material_allowed": false,
+  "network_probe_during_validation_allowed": false,
+  "database_probe_during_validation_allowed": false,
+  "required_plugin_methods": [
+    "describe",
+    "discover",
+    "health_check",
+    "open_session",
+    "close_session",
+    "query_batch",
+    "iter_pages",
+    "subscribe",
+    "unsubscribe"
+  ],
+  "required_discovery_sections": [
+    "runtime",
+    "authentication_reference",
+    "capabilities",
+    "rate_limit_policy",
+    "retry_policy",
+    "batch_policy",
+    "pagination_policy",
+    "subscription_policy",
+    "license_boundary",
+    "health",
+    "warnings",
+    "errors"
+  ],
+  "authentication_reference_prefixes": [
+    "none://",
+    "env://",
+    "keyring://",
+    "secret-manager://",
+    "interactive://"
+  ],
+  "registration_statuses_eligible_for_routing": [
+    "DISCOVERY_COMPLETE",
+    "AVAILABLE"
+  ],
+  "discovery_outcomes_eligible_for_routing": [
+    "COMPLETE"
+  ],
+  "health_statuses_eligible_for_routing": [
+    "HEALTHY",
+    "DEGRADED"
+  ],
+  "capability_statuses_eligible_for_routing": [
+    "IMPLEMENTED",
+    "VERIFIED"
+  ],
+  "license_decisions_eligible_for_routing": [
+    "ALLOWED"
+  ],
+  "route_score_weights": {
+    "capability": 30.0,
+    "discovery": 15.0,
+    "health": 20.0,
+    "license": 20.0,
+    "priority": 10.0,
+    "exact_usage": 5.0
+  },
+  "hard_rules": [
+    "核心系统与上层研究代码不得直接导入厂商SDK。",
+    "认证对象只能保存引用，不得保存密码、Token、密钥或券商账户凭据。",
+    "未完成真实能力发现的Provider不得参与路由。",
+    "未明确许可证用途的Provider不得参与路由。",
+    "交易执行能力必须与数据读取能力独立登记和激活。",
+    "实时订阅请求必须匹配非NONE订阅合同。",
+    "Provider路由必须返回可解释的原因、警告和评分分解。",
+    "TASK_020B验证过程不得访问网络、商业SDK或DolphinDB。"
+  ]
+}

@@ -750,3 +750,18 @@ available_at <= decision_time
 ```
 
 数据、研究内容、组合分析、账户、持仓和交易执行能力必须分层。新增Provider不得要求修改上层市场状态、因子、模型、组合和报告模块。
+
+<!-- TASK_020B_REUSE_ARCHITECTURE -->
+
+## 复用优先架构约束
+
+新架构层必须优先组合现有模块。旧接口升级为新协议时，默认使用Bridge、Adapter或Facade，不复制旧实现。
+
+```text
+成熟实现或官方SDK
+→ 薄插件边界
+→ Canonical与Readiness
+→ 上层业务
+```
+
+第三方私有类型和字段不得越过插件与Canonical边界。

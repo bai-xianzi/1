@@ -1635,3 +1635,26 @@ MULTI_SOURCE_ADAPTER_ARCHITECTURE.md
 configs/providers/provider_capability_matrix_v0.json
 configs/runtime/windows_single_machine_resource_profile_v0.json
 ```
+
+<!-- TASK_020B_REUSE_MEMORY -->
+
+## 复用优先永久原则
+
+项目开发必须遵守：
+
+```text
+先搜索项目已有实现
+→ 优先官方SDK与正式标准
+→ 评估成熟开源
+→ 优先组合、扩展或薄适配
+→ 自研只能作为有证据的最后选择
+```
+
+全供应商适配不等于从零重写每个接口。Wind、iFinD、银河证券星耀数智、券商SDK和数据库客户端均应优先使用官方或成熟实现，并封装在Provider插件边界内。
+
+机器可读依据：
+
+```text
+REUSE_FIRST_ENGINEERING_POLICY.md
+configs/engineering/reuse_first_policy_v0.json
+```
