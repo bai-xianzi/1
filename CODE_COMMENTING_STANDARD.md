@@ -169,9 +169,20 @@ git diff --check
 
 ## 当前迁移状态
 
-历史代码迁移按批次进行。全部人工代码迁移完成之前：
+历史人工代码的教学式注释迁移已经完成，A至H阶段施工文件已收敛为统一任务和关闭报告。
 
 ```text
-GITHUB_COMMIT_BLOCKED = true
-GITHUB_PUSH_BLOCKED = true
+COMMENT_MIGRATION_STATUS = COMPLETE
+FULL_REPOSITORY_COMMENT_ENFORCEMENT = true
+GITHUB_COMMIT_BLOCKED_BY_MIGRATION = false
+GITHUB_PUSH_REQUIRES_USER_CONFIRMATION = true
 ```
+
+后续不再使用分批迁移脚本。所有新增或修改的人工代码统一通过：
+
+```text
+scripts/audit_teaching_comments.py
+tests/test_code_comment_policy.py
+```
+
+Git提交前仍须执行教学式注释审计、专项测试、完整测试、编码审计和`git diff --check`，并遵守用户确认要求。

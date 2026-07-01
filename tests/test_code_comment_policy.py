@@ -1,7 +1,8 @@
-# 本测试模块核心功能：验证代码注释机器政策、迁移状态和审计器的最小教学式结构判断。
-# - json和tempfile用于构造临时政策与临时代码文件，不污染真实仓库。
-# - unittest提供项目现有标准测试框架，无需新增第三方依赖。
-# - 为什么这样写：规则只有进入自动测试，才能在后续批量改代码时保持稳定。
+# 本测试模块核心功能：验证全项目教学式注释迁移完成后的唯一机器政策和长期门禁。
+# - 输入：读取仓库中的代码注释JSON政策，并通过强类型加载器完成合同校验。
+# - 处理：检查迁移完成、全仓库强制审计、提交解锁和推送确认等最终状态。
+# - 输出：全部断言通过表示阶段脚本可以删除，长期注释门禁仍然有效。
+# - 为什么这样写：用一个稳定政策测试替代A至H阶段测试，减少维护重复而不降低约束。
 from __future__ import annotations
 
 import json
@@ -17,174 +18,101 @@ from a_stock_quant.code_comment_policy import (
 from a_stock_quant.data_contracts import DataContractError
 
 
-# 测试路径：定位仓库中的机器可读代码注释政策。
-# - __file__从当前测试文件出发。
-# - parents[1]回到项目根目录。
-# - 为什么这样写：测试不依赖当前工作目录，可从IDE、PowerShell或unittest discover运行。
+# 政策路径：从当前测试文件定位项目根目录，避免依赖PowerShell当前目录。
+# - parents[1]固定回到仓库根目录。
+# - 为什么这样写：同一测试可由IDE、unittest discover和验证脚本调用。
 ROOT = Path(__file__).resolve().parents[1]
-POLICY_PATH = (
-    ROOT
-    / "configs"
-    / "engineering"
-    / "code_comment_policy_v0.json"
-)
+POLICY_PATH = ROOT / "configs" / "engineering" / "code_comment_policy_v0.json"
 
 
-# 政策测试类：每个测试前加载一次真实政策。
-# - setUp避免每个测试重复书写加载逻辑。
-# - 为什么这样写：所有断言都基于同一份仓库权威配置。
+# 最终政策测试：集中验证注释迁移完成后的机器合同。
+# - setUp和各测试方法分别检查一个长期约束。
+# - 为什么这样写：所有长期断言基于同一事实源，避免阶段测试互相重复。
 class TestCodeCommentPolicy(unittest.TestCase):
-    # 测试准备：加载并保存CodeCommentPolicy实例。
-    # - self.policy在每个测试方法中可直接访问。
-    # - 为什么这样写：减少重复并保持测试意图清晰。
+
+    # 测试准备：加载并保存强类型注释政策对象。
+    # - 每个测试都从同一权威JSON重新加载，避免测试间共享可变状态。
+    # - 为什么这样写：单元测试应独立运行，并同时覆盖政策加载器的数据合同。
     def setUp(self) -> None:
         self.policy = load_code_comment_policy(POLICY_PATH)
 
-    # 原则测试：确认项目启用了教学式前置注释。
-    # - 精确字符串断言防止规则被改成宽松的普通注释。
-    # - 为什么这样写：这是用户六条规则的核心机器标识。
-    def test_principle_is_teaching_style_preceding_comments(self):
+    # 加载器类型测试：确认政策通过强类型对象暴露。
+    # - 输入是权威JSON，输出必须是CodeCommentPolicy实例。
+    # - 为什么这样写：后续审计器不能依赖未经校验的松散字典。
+    def test_loader_returns_policy_object(self) -> None:
+        self.assertIsInstance(self.policy, CodeCommentPolicy)
+
+    # 权威与原则测试：锁定最高标准文件和教学式前置注释原则。
+    # - 两个字符串是所有审计脚本和开发指导共同依赖的稳定标识。
+    # - 为什么这样写：防止迁移关闭时意外弱化或分叉注释规则。
+    def test_authority_and_principle_are_stable(self) -> None:
+        self.assertEqual(
+            self.policy.authority_document,
+            "CODE_COMMENTING_STANDARD.md",
+        )
         self.assertEqual(
             self.policy.principle,
             "TEACHING_STYLE_PRECEDING_COMMENTS_REQUIRED",
         )
 
-    # 权威文件测试：确认最高标准文件名稳定。
-    # - 其他代理和验证脚本依赖该路径。
-    # - 为什么这样写：避免规则分散到多个互相冲突的文档。
-    def test_authority_document_is_stable(self):
-        self.assertEqual(
-            self.policy.authority_document,
-            "CODE_COMMENTING_STANDARD.md",
-        )
-
-    # 迁移状态测试：确认当前处于历史代码分批迁移阶段。
-    # - IN_PROGRESS允许盘点模式运行，但不能允许Git提交。
-    # - 为什么这样写：123个代码文件不适合一次盲目修改。
-    def test_migration_is_in_progress(self):
+    # 迁移完成测试：验证状态、全仓库审计和临时提交阻断同步切换。
+    # - COMPLETE必须配合full_repository_enforcement_enabled=True。
+    # - 为什么这样写：不能只修改状态文字而遗漏机器门禁的状态转换。
+    def test_migration_is_complete(self) -> None:
         self.assertIs(
             self.policy.migration.status,
-            CommentMigrationStatus.IN_PROGRESS,
+            CommentMigrationStatus.COMPLETE,
         )
-
-    # Git提交阻断测试：确认全仓库迁移完成前不能提交。
-    # - True是当前阶段的硬门禁。
-    # - 为什么这样写：防止规则只写进文档但旧代码尚未迁移就被提交。
-    def test_commit_is_blocked_until_full_migration(self):
         self.assertTrue(
-            self.policy.migration
-            .github_commit_blocked_until_full_migration
+            self.policy.migration.full_repository_enforcement_enabled
+        )
+        self.assertFalse(
+            self.policy.migration.github_commit_blocked_until_full_migration
         )
 
-    # 新代码即时审计测试：确认新改代码不能继续制造注释债务。
-    # - 历史迁移可以分批，但新增代码必须立即遵守。
-    # - 为什么这样写：否则迁移速度可能赶不上新债务增长。
-    def test_new_or_modified_code_enforcement_is_enabled(self):
+    # 长期门禁测试：确认迁移完成后仍保留审计、测试和用户确认。
+    # - 临时迁移阻断解除不等于解除正常的提交与推送安全约束。
+    # - 为什么这样写：项目后续新增代码仍必须持续满足相同质量标准。
+    def test_permanent_gates_remain_enabled(self) -> None:
+        gate = self.policy.git_gate
         self.assertTrue(
-            self.policy.migration
-            .new_or_modified_code_enforcement_enabled
+            self.policy.migration.new_or_modified_code_enforcement_enabled
         )
-
-    # 用户提交确认测试：确认执行git commit前必须得到用户确认。
-    # - 该规则来自用户明确要求。
-    # - 为什么这样写：把对话约定变成长期机器门禁。
-    def test_user_confirmation_is_required_before_commit(self):
         self.assertTrue(
-            self.policy.git_gate
-            .user_confirmation_required_before_commit
+            self.policy.migration.github_push_blocked_until_user_confirmation
         )
+        self.assertTrue(gate.must_run_comment_audit)
+        self.assertTrue(gate.must_run_specialized_tests)
+        self.assertTrue(gate.must_run_full_tests)
+        self.assertTrue(gate.must_run_encoding_audit)
+        self.assertTrue(gate.must_run_git_diff_check)
+        self.assertTrue(gate.user_confirmation_required_before_commit)
+        self.assertTrue(gate.user_confirmation_required_before_push)
 
-    # 用户推送确认测试：确认执行git push前必须再次满足用户确认。
-    # - 提交和推送分别记录，避免本地提交被自动推到GitHub。
-    # - 为什么这样写：远程发布是更高风险动作，需要独立门禁。
-    def test_user_confirmation_is_required_before_push(self):
-        self.assertTrue(
-            self.policy.git_gate
-            .user_confirmation_required_before_push
-        )
-
-    # 注释审计门禁测试：确认Git流程必须运行教学式注释审计。
-    # - 仅人工目视无法稳定覆盖上百个文件。
-    # - 为什么这样写：自动审计用于发现遗漏，人工评审用于判断解释质量。
-    def test_comment_audit_is_required(self):
-        self.assertTrue(
-            self.policy.git_gate.must_run_comment_audit
-        )
-
-    # 完整测试门禁：确认批量补注释后仍需运行全部单元测试。
-    # - 注释通常不改变语义，但批量编辑可能误伤缩进或字符串。
-    # - 为什么这样写：测试是证明业务行为未改变的主要证据。
-    def test_full_tests_are_required(self):
-        self.assertTrue(
-            self.policy.git_gate.must_run_full_tests
-        )
-
-    # 编码审计门禁：确认中文注释加入后必须检查UTF-8和BOM问题。
-    # - Windows PowerShell和Python对编码处理可能不同。
-    # - 为什么这样写：大量中文注释会提高编码错误风险。
-    def test_encoding_audit_is_required(self):
-        self.assertTrue(
-            self.policy.git_gate.must_run_encoding_audit
-        )
-
-    # 规则结构数量测试：确认七个教学式组成部分全部存在。
-    # - 数量下限覆盖概括、分点、数据变化、常量、原因、实例和先后顺序。
-    # - 为什么这样写：防止后续修改配置时漏掉用户原始要求。
-    def test_required_structure_has_seven_parts(self):
-        self.assertGreaterEqual(
-            len(self.policy.required_comment_structure),
-            7,
-        )
-
-    # 例外测试：确认JSON文件不会被错误插入#注释。
-    # - JSON标准不支持注释。
-    # - 为什么这样写：错误注释会使配置无法解析并破坏运行。
-    def test_json_without_comment_syntax_is_excepted(self):
-        self.assertIn(
-            "json_files_without_comment_syntax",
-            self.policy.exceptions,
-        )
-
-    # docstring禁止替代测试：直接读取原始JSON中的精确布尔值。
-    # - 数据类聚焦核心门禁，详细语言规则仍保存在原始政策中。
-    # - 为什么这样写：确保用户特别强调的禁止事项没有丢失。
-    def test_docstring_cannot_replace_preceding_comments(self):
+    # 教学式结构测试：验证七项结构、分点标记、原因短语和docstring限制。
+    # - 直接读取原始JSON以覆盖强类型对象没有暴露的语言细节。
+    # - 为什么这样写：迁移结束后也不能把教学式注释降级为普通一句话注释。
+    def test_teaching_comment_contract_remains_complete(self) -> None:
         raw = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(raw["required_comment_structure"]), 7)
+        self.assertEqual(raw["required_markers"]["detail_prefix"], "# -")
+        self.assertIn(
+            "为什么这样写",
+            raw["required_markers"]["reason_phrases"],
+        )
         self.assertFalse(
             raw["docstring_policy"][
                 "docstrings_may_replace_preceding_teaching_comments"
             ]
         )
 
-    # 分点标记测试：确认政策指定# -作为Python和PowerShell教学列表格式。
-    # - 精确标记便于审计器识别。
-    # - 为什么这样写：统一格式可以提高可读性并降低自动审计误报。
-    def test_detail_prefix_is_hash_dash(self):
+    # 非法完成状态测试：构造关闭全仓库审计的临时政策。
+    # - COMPLETE与full_repository_enforcement_enabled=False必须被加载器拒绝。
+    # - 为什么这样写：证明迁移完成门禁由代码强制，而不是只依赖人工约定。
+    def test_complete_policy_rejects_disabled_enforcement(self) -> None:
         raw = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
-        self.assertEqual(
-            raw["required_markers"]["detail_prefix"],
-            "# -",
-        )
+        raw["migration"]["full_repository_enforcement_enabled"] = False
 
-    # 自定义原因短语测试：确认至少包含“为什么这样写”。
-    # - 该短语是用户要求的解释段落标志。
-    # - 为什么这样写：自动审计需要一个稳定且通俗的可识别信号。
-    def test_reason_phrase_is_present(self):
-        raw = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
-        self.assertIn(
-            "为什么这样写",
-            raw["required_markers"]["reason_phrases"],
-        )
-
-    # 政策弱化拒绝测试：临时把提交确认改为False，加载时必须失败。
-    # - tempfile创建隔离目录。
-    # - json.dumps保留合法JSON结构。
-    # - 为什么这样写：证明机器数据合同确实能阻止绕过用户确认。
-    def test_policy_rejects_disabled_commit_confirmation(self):
-        raw = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
-        raw["git_gate"][
-            "user_confirmation_required_before_commit"
-        ] = False
         with tempfile.TemporaryDirectory() as temp_dir:
             path = Path(temp_dir) / "bad_policy.json"
             path.write_text(
@@ -194,35 +122,9 @@ class TestCodeCommentPolicy(unittest.TestCase):
             with self.assertRaises(DataContractError):
                 load_code_comment_policy(path)
 
-    # 迁移弱化拒绝测试：进行中状态关闭提交阻断时必须加载失败。
-    # - 该测试覆盖最关键的历史迁移门禁。
-    # - 为什么这样写：防止在只完成少量文件时提前提交到GitHub。
-    def test_policy_rejects_unblocked_in_progress_migration(self):
-        raw = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
-        raw["migration"][
-            "github_commit_blocked_until_full_migration"
-        ] = False
-        with tempfile.TemporaryDirectory() as temp_dir:
-            path = Path(temp_dir) / "bad_policy.json"
-            path.write_text(
-                json.dumps(raw, ensure_ascii=False),
-                encoding="utf-8",
-            )
-            with self.assertRaises(DataContractError):
-                load_code_comment_policy(path)
 
-    # 对象类型测试：确认加载器返回强类型CodeCommentPolicy。
-    # - 这证明脚本不会只得到一个未经校验的字典。
-    # - 为什么这样写：类型对象更适合被后续审计和迁移工具复用。
-    def test_loader_returns_policy_object(self):
-        self.assertIsInstance(
-            self.policy,
-            CodeCommentPolicy,
-        )
-
-
-# 测试入口：允许直接运行本文件，也兼容unittest discover。
-# - unittest.main收集当前模块全部test_方法。
-# - 为什么这样写：开发者可以单独调试，也可以加入完整测试套件。
+# 测试入口：兼容单文件执行和完整unittest发现。
+# - unittest.main把测试结果转换成标准进程退出码。
+# - 为什么这样写：统一测试既可单独排错，也可进入完整项目测试。
 if __name__ == "__main__":
     unittest.main()

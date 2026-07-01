@@ -1,7 +1,7 @@
 {
   "task_id": "TASK_021A",
-  "policy_version": "0.1.0",
-  "policy_status": "ACTIVE_MIGRATION_IN_PROGRESS",
+  "policy_version": "1.0.0",
+  "policy_status": "ACTIVE_COMPLETE",
   "authority_document": "CODE_COMMENTING_STANDARD.md",
   "principle": "TEACHING_STYLE_PRECEDING_COMMENTS_REQUIRED",
   "applicable_languages": {
@@ -122,12 +122,12 @@
     "removing_teaching_comments_during_refactor"
   ],
   "migration": {
-    "status": "IN_PROGRESS",
-    "inventory_report": "reports/task_021a_comment_migration_inventory.json",
-    "batch_count": 6,
-    "full_repository_enforcement_enabled": false,
+    "status": "COMPLETE",
+    "inventory_report": "reports/task_021_code_comment_restoration_closure.md",
+    "batch_count": 8,
+    "full_repository_enforcement_enabled": true,
     "new_or_modified_code_enforcement_enabled": true,
-    "github_commit_blocked_until_full_migration": true,
+    "github_commit_blocked_until_full_migration": false,
     "github_push_blocked_until_user_confirmation": true
   },
   "git_gate": {
