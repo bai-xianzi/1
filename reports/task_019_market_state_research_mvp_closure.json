@@ -1,0 +1,97 @@
+{
+  "task_id": "TASK_019",
+  "task_name": "市场状态研究MVP",
+  "closure_version": "0.1.0",
+  "overall_status": "CLOSED_WITH_WARNINGS",
+  "scope": "RESEARCH_ONLY",
+  "closed_subtasks": [
+    {
+      "task_id": "TASK_019A",
+      "name": "市场状态输入合同与用途边界",
+      "status": "COMPLETED"
+    },
+    {
+      "task_id": "TASK_019B",
+      "name": "可解释市场状态研究特征",
+      "status": "COMPLETED"
+    },
+    {
+      "task_id": "TASK_019C",
+      "name": "真实DolphinDB市场状态特征验收",
+      "status": "PASSED_WITH_WARNINGS"
+    },
+    {
+      "task_id": "TASK_019D",
+      "name": "研究级可解释市场状态评分",
+      "status": "PASSED_WITH_WARNINGS"
+    }
+  ],
+  "real_feature_acceptance": {
+    "common_trade_date": "2025-12-31",
+    "as_of_date": "2026-06-27",
+    "required_dataset_count": 2,
+    "generated_feature_count": 15,
+    "generated_feature_family_count": 5,
+    "unique_source_query_id_count": 2,
+    "input_assessment_status": "READY_WITH_WARNINGS",
+    "feature_snapshot_status": "READY_WITH_WARNINGS",
+    "research_feature_build_allowed": true,
+    "manual_decision_allowed": false,
+    "official_market_state_allowed": false,
+    "database_readonly_query_mode": true,
+    "write_operation_count": 0,
+    "issues": []
+  },
+  "research_scoring_acceptance": {
+    "policy_status": "RESEARCH_HYPOTHESIS_UNVALIDATED",
+    "source_common_trade_date": "2025-12-31",
+    "source_as_of_date": "2026-06-27",
+    "calendar_age_days": 178,
+    "stale_input": true,
+    "candidate_state": "STALE_INPUT_INDETERMINATE",
+    "directional_score": 42.015411202512865,
+    "volatility_stress_score": 37.65486361912881,
+    "stability_score": 62.34513638087119,
+    "dimension_score_count": 5,
+    "research_score_allowed": true,
+    "candidate_state_actionable": false,
+    "manual_decision_allowed": false,
+    "official_market_state_allowed": false,
+    "trade_execution_allowed": false,
+    "write_operation_count": 0,
+    "issues": []
+  },
+  "closure_invariants": {
+    "market_state_input_contract_exists": true,
+    "explainable_feature_spec_exists": true,
+    "real_readonly_acceptance_exists": true,
+    "research_scoring_policy_exists": true,
+    "feature_count": 15,
+    "feature_family_count": 5,
+    "formal_regime_label_allowed": false,
+    "manual_decision_allowed": false,
+    "official_market_state_allowed": false,
+    "trade_execution_allowed": false,
+    "database_write_operation_count": 0
+  },
+  "retained_warnings": [
+    "日K当前快照时效未达到正式决策要求。",
+    "日K来源涨跌幅存在已识别的符号语义警告。",
+    "行业快照最新共同日期为2025-12-31，不能代表当前市场。",
+    "行业快照精确available_at尚未得到供应商文档证明。",
+    "行业快照尚未证明完整实体全集覆盖。",
+    "评分锚点、权重和阈值均为RESEARCH_HYPOTHESIS_UNVALIDATED。",
+    "TASK_019输出不得用于人工决策、正式市场状态或交易执行。"
+  ],
+  "next_task": {
+    "task_id": "TASK_020",
+    "name": "全供应商多源适配架构与单机资源运行档案",
+    "objectives": [
+      "建立供应商无关的Universal Multi-Source Adapter Framework。",
+      "覆盖Wind、iFinD、银河证券星耀数智及其他数据和券商SDK的能力模型。",
+      "建立Provider能力矩阵、认证、限频、批量、订阅和许可边界。",
+      "建立适配当前Windows、i7-10750H、16GB内存、GTX 1650 Ti 4GB和本地DolphinDB的单机资源档案。",
+      "保持模块化单体、小批次、增量、断点续跑和磁盘配额优先。"
+    ]
+  }
+}

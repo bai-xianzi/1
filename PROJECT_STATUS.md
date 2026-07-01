@@ -796,3 +796,33 @@ HEAD 与两个远程 main 一致
 ```
 
 TASK_018关闭提交完成最终测试、双远程推送并创建、推送`task-018`标签后正式闭环；当前开发入口转入TASK_019。
+
+<!-- TASK_019_CLOSURE_START -->
+
+## TASK_019 市场状态研究MVP关闭记录
+
+```text
+关闭状态：CLOSED_WITH_WARNINGS
+用途范围：RESEARCH_ONLY
+真实特征：15项 / 5个特征族
+真实共同交易日：2025-12-31
+研究评分政策：RESEARCH_HYPOTHESIS_UNVALIDATED
+真实评分候选：STALE_INPUT_INDETERMINATE
+人工决策：BLOCKED
+正式市场状态：BLOCKED
+交易执行：BLOCKED
+数据库写操作：0
+```
+
+TASK_019已经建立统一门禁输入、可解释特征、真实只读验收和研究评分链路。由于真实共同日期已经过期，且评分阈值未完成历史校准，TASK_019不得用于当前市场判断或实盘决策。
+
+下一任务：
+
+```text
+TASK_020
+全供应商多源适配架构与单机资源运行档案
+```
+
+TASK_020必须覆盖Wind、iFinD、银河证券星耀数智及其他数据和券商SDK的统一能力模型，同时按照当前单机硬件采用小批次、增量、断点续跑和磁盘配额优先的实现方式。
+
+<!-- TASK_019_CLOSURE_END -->
