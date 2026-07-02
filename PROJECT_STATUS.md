@@ -1,26 +1,28 @@
 # A股量化投资辅助操作系统——项目状态
 
-更新日期：2026-06-27
+更新日期：2026-07-02
 
 ## 一、当前阶段
 
 ```text
-阶段：统一数据质量门禁完成，进入市场状态识别MVP建设
-当前工作：关闭 TASK_018，并启动 TASK_019
-下一任务：TASK_019 市场状态输入合同与可解释基线
+阶段：本地DolphinDB Provider已激活，进入外部Provider接入前置发现阶段
+已完成：TASK_022 DolphinDB Provider正式激活与真实注册表路由回归
+当前任务：TASK_023 外部Provider环境发现与首个接入候选选择
+当前小任务：TASK_023A 供应商无关的离线环境发现合同
+下一小任务：TASK_023B 用户Windows真实环境盘点
 ```
 
-当前阶段仍然不开发复杂因子库、选股模型、自动交易或前端系统。
+当前阶段仍然不开发复杂因子库、选股模型、自动交易或大型前端系统；也不自动安装、登录或调用商业与券商SDK。
 
 当前最优先目标是：
 
 ```text
-真实数据
-→ 数据集注册
-→ 字段和语义画像
-→ Canonical 标准对象
-→ 质量、血缘、时点门禁
-→ StandardDataService
+通用Provider协议
+→ 本地DolphinDB真实Provider激活
+→ 外部Provider环境发现（当前位置）
+→ 用户授权、许可证和能力审查
+→ 首个外部Provider薄适配
+→ Canonical与Readiness统一门禁
 → 市场状态与风险仓位
 ```
 
@@ -45,7 +47,11 @@
 - TASK_015：七类快照来源治理、完整画像、字典审计与接入合同。
 - TASK_016：七类日线资金预导入、DolphinDB Raw层真实导入与幂等验收。
 - TASK_017：七类日线资金Canonical字典升级、只读标准化服务、七个StandardDataService Provider与真实统一入口验收。
-- TASK_018：统一数据就绪度合同、八维证据适配、外部覆盖/时效/启用证据与九数据集真实用途级门禁验收。
+- TASK_018：统一数据就绪度合同、八维证据适配、外部覆盖/时效/启用证据与九数据集真实用途级门禁验收；
+- TASK_019：市场状态研究MVP、真实特征验收、研究评分和用途阻断闭环；
+- TASK_020：全供应商能力矩阵、Provider插件协议、复用治理和DolphinDB薄Bridge；
+- TASK_021：全项目教学式注释、阶段性冗余文件清理、Git提交与本地健康仓库恢复；
+- TASK_022：local_dolphindb正式激活、真实注册表路由回归和GitHub `main`闭环。
 
 ---
 
@@ -781,21 +787,19 @@ CWMS 因果世界—市场仿真引擎属于长期研究底座。
 
 ## 十四、Git 与 GitHub 交付闭环
 
-每个任务只有同时满足以下条件才算完成：
+每一个小任务只有同时满足以下条件才算完成：
 
 ```text
-代码和文档已进入正式仓库
-全量测试通过
-PROJECT_STATUS.md 已更新
-Git 提交说明准确
-本地工作区干净
-已推送 origin/main
-已推送 public/main
-HEAD 与两个远程 main 一致
-任务标签已建立并推送
+代码、测试、任务文件和验收报告已进入正式仓库
+专项测试和适用的全量测试通过
+PROJECT_STATUS.md 与架构当前位置已更新
+Git 提交只包含本小任务且说明准确
+提交已推送 GitHub origin/main
+HEAD 与 origin/main 一致
+本地工作区恢复干净健康
 ```
 
-TASK_018关闭提交完成最终测试、双远程推送并创建、推送`task-018`标签后正式闭环；当前开发入口转入TASK_019。
+修改包只是本地交付和恢复手段，不能代替Git提交与GitHub推送。项目如仍维护其他远程，可在任务关闭后同步，但GitHub `main`是权威远程仓库和任务交接区。
 
 <!-- TASK_019_CLOSURE_START -->
 
@@ -829,15 +833,17 @@ TASK_020必须覆盖Wind、iFinD、银河证券星耀数智及其他数据和券
 
 <!-- TASK_020A_STATUS -->
 
-## TASK_020 当前阶段
+## TASK_020 历史阶段记录（已完成）
 
 ```text
-TASK_019：市场状态研究MVP已关闭
-CURRENT：TASK_020A 全供应商适配与单机资源合同
-NEXT：TASK_020B 通用Provider插件协议与能力路由
+TASK_020A：全供应商适配与单机资源合同已完成
+TASK_020B：通用Provider插件协议、能力路由和复用治理已完成
+TASK_020C：DolphinDB Provider薄Bridge真实验收已完成
+后续激活任务：TASK_022已完成
+当前任务：TASK_023
 ```
 
-当前不安装商业SDK，不接通自动交易，不下载大规模分钟线。先稳定供应商无关能力矩阵、资源档案和插件边界。
+TASK_020建立了供应商无关能力矩阵、资源档案和插件边界；该历史阶段不再作为当前开发入口。
 
 <!-- TASK_020B_REUSE_STATUS -->
 
@@ -855,20 +861,19 @@ TASK_020C将通过薄Bridge复用现有DolphinDB Adapter，作为复用优先政
 
 <!-- TASK_021A_COMMENT_STATUS -->
 
-## TASK_021A代码注释迁移状态
+## TASK_021代码注释与仓库健康恢复（已完成）
 
 ```text
-COMMENT_POLICY：DEFINED
-AUTHORITY_FILES：PENDING_PATCH_APPLICATION
-FULL_REPOSITORY_MIGRATION：IN_PROGRESS
-TARGET_CODE_FILES：123
-PYTHON_FILES：102
-POWERSHELL_FILES：21
-MIGRATION_BATCHES：6
-GITHUB_COMMIT_BLOCKED：true
-GITHUB_PUSH_BLOCKED：true
-USER_CONFIRMATION_REQUIRED：true
+COMMENT_POLICY：DEFINED_AND_APPLIED
+FULL_REPOSITORY_MIGRATION：CLOSED
+TEACHING_COMMENTS：COMPLETED
+STAGE_REDUNDANCY_CLEANUP：COMPLETED
+GIT_COMMIT：COMPLETED
+GITHUB_MAIN_PUSH：COMPLETED
+LOCAL_HEALTHY_REPOSITORY：RESTORED
 ```
+
+TASK_021已经完成全项目教学式注释和阶段性冗余清理，不再作为当前进行中的任务。
 
 <!-- TASK_022_STATUS_START -->
 
@@ -882,3 +887,35 @@ USER_CONFIRMATION_REQUIRED：true
 - 阶段终点：本状态文件与 TASK_022 全部成果将由完成脚本提交并推送到 GitHub `main`。
 
 <!-- TASK_022_STATUS_END -->
+
+<!-- TASK_023_STATUS_START -->
+
+## TASK_023：外部Provider环境发现与首个接入候选选择
+
+```text
+TASK_022：CLOSED
+CURRENT PROGRAM：TASK_023
+CURRENT SUBTASK：TASK_023A 供应商无关的离线环境发现合同
+NEXT：TASK_023B 用户Windows真实环境盘点
+ARCHITECTURE LOCATION：第1层多源接入层 → 第2层DolphinDB事实源交界
+```
+
+TASK_023A交付：
+
+- 外部Provider发现清单；
+- 不导入供应商SDK的离线环境扫描器；
+- 不记录秘密值的环境报告；
+- 自动排除交易执行Provider；
+- 复用优先审查；
+- 架构当前位置标记；
+- 专项测试和沙盒验证。
+
+TASK_023A不做：
+
+- 安装或调用Wind、iFinD、Choice、银河星耀、QMT、PTrade等SDK；
+- 登录、联网查询或写入凭据；
+- 修改TASK_022注册表和能力矩阵；
+- 启用任何新的正式路由；
+- 启用交易执行能力。
+
+<!-- TASK_023_STATUS_END -->

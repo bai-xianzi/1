@@ -1,0 +1,118 @@
+{
+  "task_id": "TASK_023A",
+  "manifest_version": "0.1.0",
+  "manifest_status": "OFFLINE_DISCOVERY_CONTRACT",
+  "secret_values_allowed": false,
+  "vendor_sdk_import_allowed": false,
+  "network_calls_allowed": false,
+  "targets": [
+    {
+      "provider_id": "wind",
+      "display_name": "Wind",
+      "provider_kind": "COMMERCIAL_DATA_VENDOR",
+      "execution_capability": false,
+      "priority": 30,
+      "python_module_candidates": ["WindPy"],
+      "credential_reference_names": [],
+      "discovery_method": "PYTHON_MODULE_OR_MANUAL_CLIENT_REVIEW",
+      "evidence_level": "OFFICIAL_CLIENT_API_AND_OFFICIAL_WRAPPER",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "ifind",
+      "display_name": "同花顺iFinD",
+      "provider_kind": "COMMERCIAL_DATA_VENDOR",
+      "execution_capability": false,
+      "priority": 30,
+      "python_module_candidates": ["iFinDPy"],
+      "credential_reference_names": [],
+      "discovery_method": "PYTHON_MODULE_OR_MANUAL_CLIENT_REVIEW",
+      "evidence_level": "OFFICIAL_DOCUMENTATION",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "choice",
+      "display_name": "东方财富Choice",
+      "provider_kind": "COMMERCIAL_DATA_VENDOR",
+      "execution_capability": false,
+      "priority": 40,
+      "python_module_candidates": [],
+      "credential_reference_names": [],
+      "discovery_method": "MANUAL_VENDOR_DOCUMENT_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "galaxy_xingyao",
+      "display_name": "银河证券星耀数智",
+      "provider_kind": "BROKER_OR_INSTITUTION_PLATFORM",
+      "execution_capability": false,
+      "priority": 30,
+      "python_module_candidates": [],
+      "credential_reference_names": [],
+      "discovery_method": "MANUAL_VENDOR_DOCUMENT_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "qmt",
+      "display_name": "QMT",
+      "provider_kind": "BROKER_TRADING_PLATFORM",
+      "execution_capability": true,
+      "priority": 50,
+      "python_module_candidates": [],
+      "credential_reference_names": [],
+      "discovery_method": "MANUAL_BROKER_SDK_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "ptrade",
+      "display_name": "PTrade",
+      "provider_kind": "BROKER_TRADING_PLATFORM",
+      "execution_capability": true,
+      "priority": 50,
+      "python_module_candidates": [],
+      "credential_reference_names": [],
+      "discovery_method": "MANUAL_BROKER_SDK_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "tushare_pro",
+      "display_name": "Tushare Pro",
+      "provider_kind": "PUBLIC_OR_SUBSCRIPTION_API",
+      "execution_capability": false,
+      "priority": 60,
+      "python_module_candidates": ["tushare"],
+      "credential_reference_names": ["TUSHARE_TOKEN"],
+      "discovery_method": "PYTHON_MODULE_AND_CREDENTIAL_REFERENCE",
+      "evidence_level": "OFFICIAL_DOCUMENTATION",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "akshare",
+      "display_name": "AKShare",
+      "provider_kind": "OPEN_SOURCE_AGGREGATOR",
+      "execution_capability": false,
+      "priority": 70,
+      "python_module_candidates": ["akshare"],
+      "credential_reference_names": [],
+      "discovery_method": "PYTHON_MODULE",
+      "evidence_level": "OFFICIAL_PROJECT",
+      "license_review_required": true
+    },
+    {
+      "provider_id": "official_exchange_sources",
+      "display_name": "交易所及监管官方来源",
+      "provider_kind": "OFFICIAL_SOURCE",
+      "execution_capability": false,
+      "priority": 20,
+      "python_module_candidates": [],
+      "credential_reference_names": [],
+      "discovery_method": "MANUAL_SOURCE_BY_SOURCE_REVIEW_REQUIRED",
+      "evidence_level": "SOURCE_SPECIFIC_REVIEW_REQUIRED",
+      "license_review_required": true
+    }
+  ]
+}

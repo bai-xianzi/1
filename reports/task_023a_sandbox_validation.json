@@ -1,0 +1,184 @@
+{
+  "task_id": "TASK_023A",
+  "mode": "OFFLINE_PROVIDER_ENVIRONMENT_DISCOVERY",
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "python_version": "3.13.5",
+  "python_executable": "/opt/pyvenv/bin/python",
+  "platform_system": "Linux",
+  "platform_release": "4.4.0",
+  "machine": "x86_64",
+  "provider_count": 9,
+  "runtime_present_count": 0,
+  "recommended_next_discovery_provider_ids": [],
+  "selection_status": "NO_EXTERNAL_RUNTIME_DETECTED",
+  "findings": [
+    {
+      "provider_id": "wind",
+      "display_name": "Wind",
+      "provider_kind": "COMMERCIAL_DATA_VENDOR",
+      "execution_capability": false,
+      "priority": 30,
+      "runtime_status": "RUNTIME_NOT_DETECTED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "PYTHON_MODULE_OR_MANUAL_CLIENT_REVIEW",
+      "evidence_level": "OFFICIAL_CLIENT_API_AND_OFFICIAL_WRAPPER",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "PYTHON_RUNTIME_NOT_DETECTED",
+        "LICENSE_REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "ifind",
+      "display_name": "同花顺iFinD",
+      "provider_kind": "COMMERCIAL_DATA_VENDOR",
+      "execution_capability": false,
+      "priority": 30,
+      "runtime_status": "RUNTIME_NOT_DETECTED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "PYTHON_MODULE_OR_MANUAL_CLIENT_REVIEW",
+      "evidence_level": "OFFICIAL_DOCUMENTATION",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "PYTHON_RUNTIME_NOT_DETECTED",
+        "LICENSE_REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "choice",
+      "display_name": "东方财富Choice",
+      "provider_kind": "COMMERCIAL_DATA_VENDOR",
+      "execution_capability": false,
+      "priority": 40,
+      "runtime_status": "MANUAL_REVIEW_REQUIRED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "MANUAL_VENDOR_DOCUMENT_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "NO_VERIFIED_PYTHON_MODULE_HINT",
+        "LICENSE_REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "galaxy_xingyao",
+      "display_name": "银河证券星耀数智",
+      "provider_kind": "BROKER_OR_INSTITUTION_PLATFORM",
+      "execution_capability": false,
+      "priority": 30,
+      "runtime_status": "MANUAL_REVIEW_REQUIRED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "MANUAL_VENDOR_DOCUMENT_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "NO_VERIFIED_PYTHON_MODULE_HINT",
+        "LICENSE_REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "qmt",
+      "display_name": "QMT",
+      "provider_kind": "BROKER_TRADING_PLATFORM",
+      "execution_capability": true,
+      "priority": 50,
+      "runtime_status": "MANUAL_REVIEW_REQUIRED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "MANUAL_BROKER_SDK_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "NO_VERIFIED_PYTHON_MODULE_HINT",
+        "LICENSE_REVIEW_REQUIRED",
+        "EXECUTION_CAPABILITY_SEPARATE_ACTIVATION_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "ptrade",
+      "display_name": "PTrade",
+      "provider_kind": "BROKER_TRADING_PLATFORM",
+      "execution_capability": true,
+      "priority": 50,
+      "runtime_status": "MANUAL_REVIEW_REQUIRED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "MANUAL_BROKER_SDK_REVIEW_REQUIRED",
+      "evidence_level": "UNVERIFIED_IN_CURRENT_TASK",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "NO_VERIFIED_PYTHON_MODULE_HINT",
+        "LICENSE_REVIEW_REQUIRED",
+        "EXECUTION_CAPABILITY_SEPARATE_ACTIVATION_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "tushare_pro",
+      "display_name": "Tushare Pro",
+      "provider_kind": "PUBLIC_OR_SUBSCRIPTION_API",
+      "execution_capability": false,
+      "priority": 60,
+      "runtime_status": "RUNTIME_NOT_DETECTED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "PYTHON_MODULE_AND_CREDENTIAL_REFERENCE",
+      "evidence_level": "OFFICIAL_DOCUMENTATION",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "PYTHON_RUNTIME_NOT_DETECTED",
+        "LICENSE_REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "akshare",
+      "display_name": "AKShare",
+      "provider_kind": "OPEN_SOURCE_AGGREGATOR",
+      "execution_capability": false,
+      "priority": 70,
+      "runtime_status": "RUNTIME_NOT_DETECTED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "PYTHON_MODULE",
+      "evidence_level": "OFFICIAL_PROJECT",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "PYTHON_RUNTIME_NOT_DETECTED",
+        "LICENSE_REVIEW_REQUIRED"
+      ]
+    },
+    {
+      "provider_id": "official_exchange_sources",
+      "display_name": "交易所及监管官方来源",
+      "provider_kind": "OFFICIAL_SOURCE",
+      "execution_capability": false,
+      "priority": 20,
+      "runtime_status": "MANUAL_REVIEW_REQUIRED",
+      "detected_python_modules": [],
+      "present_credential_references": [],
+      "discovery_method": "MANUAL_SOURCE_BY_SOURCE_REVIEW_REQUIRED",
+      "evidence_level": "SOURCE_SPECIFIC_REVIEW_REQUIRED",
+      "license_review_required": true,
+      "eligible_for_next_discovery": false,
+      "blockers": [
+        "NO_VERIFIED_PYTHON_MODULE_HINT",
+        "LICENSE_REVIEW_REQUIRED"
+      ]
+    }
+  ],
+  "vendor_sdk_imports": 0,
+  "network_calls": 0,
+  "database_write_operations": 0,
+  "secret_values_recorded": 0
+}
