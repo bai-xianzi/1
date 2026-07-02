@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wjx.local/schemas/b2c_action_contract.schema.json",
+  "title": "WJX B2C Action Contract",
+  "description": "Maps one user-visible operation to a controlled internal execution path.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "action_id",
+    "action_name",
+    "module_id",
+    "required_inputs",
+    "preview_supported",
+    "dry_run_supported",
+    "human_approval_required",
+    "execution_target",
+    "failure_behavior",
+    "rollback_supported",
+    "explanation_level"
+  ],
+  "properties": {
+    "action_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"},
+    "action_name": {"type": "string", "minLength": 1},
+    "module_id": {"type": "string", "minLength": 1},
+    "required_inputs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "optional_inputs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "default_values": {"type": "object"},
+    "allowed_ranges": {"type": "object"},
+    "preview_supported": {"type": "boolean"},
+    "dry_run_supported": {"type": "boolean"},
+    "human_approval_required": {"type": "boolean"},
+    "execution_target": {"type": "string", "minLength": 1},
+    "output_artifacts": {"type": "array", "items": {"type": "string"}},
+    "failure_behavior": {
+      "type": "string",
+      "enum": ["FAIL_CLOSED", "RETURN_WARNING", "ALLOW_PARTIAL_REVIEW"]
+    },
+    "rollback_supported": {"type": "boolean"},
+    "explanation_level": {
+      "type": "string",
+      "enum": ["SUMMARY", "DETAILED", "FULL_WHITEBOX"]
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wjx.local/schemas/research_artifact.schema.json",
+  "title": "WJX Research Artifact",
+  "description": "Carries evidence, hypotheses, variable mappings and candidate factors between Skills and governed financial experiments.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_id",
+    "artifact_type",
+    "produced_by_skill_id",
+    "skill_version",
+    "source_refs",
+    "evidence_grade",
+    "causal_level",
+    "validation_status",
+    "review_status",
+    "created_at",
+    "content_hash"
+  ],
+  "properties": {
+    "artifact_id": {"type": "string", "minLength": 1},
+    "artifact_type": {"type": "string", "enum": ["INSIGHT", "HYPOTHESIS", "CANDIDATE_FACTOR", "APPROVED_FACTOR"]},
+    "produced_by_skill_id": {"type": "string", "minLength": 1},
+    "skill_version": {"type": "string", "minLength": 1},
+    "source_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "evidence_grade": {"type": "string", "minLength": 1},
+    "causal_level": {"type": "string", "minLength": 1},
+    "canonical_field_refs": {"type": "array", "items": {"type": "string"}},
+    "applicability_conditions": {"type": "array", "items": {"type": "string"}},
+    "failure_conditions": {"type": "array", "items": {"type": "string"}},
+    "validation_status": {"type": "string", "minLength": 1},
+    "review_status": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "available_at": {"type": ["string", "null"], "format": "date-time"},
+    "content_hash": {"type": "string", "minLength": 1},
+    "lineage_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}

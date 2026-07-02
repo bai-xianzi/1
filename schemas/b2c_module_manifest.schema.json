@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wjx.local/schemas/b2c_module_manifest.schema.json",
+  "title": "WJX B2C Module Manifest",
+  "description": "Declares how one internal domain module is exposed through the B2C control plane.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "module_id",
+    "module_name",
+    "module_version",
+    "description",
+    "available_actions",
+    "permission_policy",
+    "explanation_schema_ref",
+    "audit_policy"
+  ],
+  "properties": {
+    "module_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"},
+    "module_name": {"type": "string", "minLength": 1},
+    "module_version": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "available_actions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "input_schema_refs": {"type": "array", "items": {"type": "string"}},
+    "output_schema_refs": {"type": "array", "items": {"type": "string"}},
+    "ui_schema_refs": {"type": "array", "items": {"type": "string"}},
+    "permission_policy": {"type": "string", "minLength": 1},
+    "preview_policy": {"type": "string"},
+    "execution_policy": {"type": "string"},
+    "approval_policy": {"type": "string"},
+    "explanation_schema_ref": {"type": "string", "minLength": 1},
+    "code_references": {"type": "array", "items": {"type": "string"}},
+    "test_references": {"type": "array", "items": {"type": "string"}},
+    "audit_policy": {"type": "string", "minLength": 1},
+    "rollback_policy": {"type": "string"}
+  }
+}

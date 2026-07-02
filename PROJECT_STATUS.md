@@ -2,6 +2,8 @@
 
 更新日期：2026-07-02
 
+横向架构更新：已建立全系统B2C用户控制平面、系统内部执行平面、统一Skill平台和白箱解释合同；该设计不改变当前TASK_024D实施顺序，但从本任务起约束所有新模块。
+
 ## 一、当前阶段
 
 ```text
@@ -1031,3 +1033,18 @@ TASK_024C：已完成领域合同
 下一任务：`TASK_024D_WINDOWS_CREDENTIAL_REFERENCE_BACKEND`。
 
 <!-- TASK_024C_PROJECT_STATUS_END -->
+
+## TASK_025A：全系统B2C双视图与Skill平台权威架构
+
+状态：`AUTHORITY_CONTRACT_COMPLETED`。
+
+已完成：
+
+- 新增 `B2C_INTERACTION_AND_WHITEBOX_ARCHITECTURE.md`；
+- 新增 `SKILL_PLATFORM_ARCHITECTURE.md`；
+- 总体结构升级为用户端操作视图与内部执行视图成对设计；
+- 建立 `B2CModuleManifest`、`B2CActionContract`、`ExplanationTrace`、`FieldProposal` 和 `ResearchArtifact` 基础Schema；
+- 明确数据、字典、因子、仿真、回测、风险和组合的B2C交互要求；
+- 明确人物蒸馏只产生证据、机制假设和候选因子，不能绕过实验与发布门禁；
+- 接入中心被确认为全系统B2C交互的首个纵向样板；
+- 当前业务实施顺序保持：TASK_024D → TASK_024E → TASK_024F；后续实现必须服从本任务合同。

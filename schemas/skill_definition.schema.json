@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wjx.local/schemas/skill_definition.schema.json",
+  "title": "WJX Skill Definition",
+  "description": "Defines a versioned, permissioned and auditable development or product Skill.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "skill_id",
+    "name",
+    "version",
+    "skill_type",
+    "input_schema_ref",
+    "output_schema_ref",
+    "workflow_ref",
+    "permission_domain",
+    "publication_ceiling"
+  ],
+  "properties": {
+    "skill_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"},
+    "name": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "skill_type": {"type": "string", "enum": ["DEVELOPMENT", "PRODUCT"]},
+    "input_schema_ref": {"type": "string", "minLength": 1},
+    "output_schema_ref": {"type": "string", "minLength": 1},
+    "ui_schema_ref": {"type": ["string", "null"]},
+    "workflow_ref": {"type": "string", "minLength": 1},
+    "permission_domain": {
+      "type": "string",
+      "enum": ["DEVELOPMENT", "RESEARCH", "B2C_USER", "FINANCIAL_EXPERIMENT", "PRODUCTION_RESEARCH", "ADMINISTRATION"]
+    },
+    "tool_policy_ref": {"type": ["string", "null"]},
+    "source_policy_ref": {"type": ["string", "null"]},
+    "evidence_policy_ref": {"type": ["string", "null"]},
+    "resource_policy_ref": {"type": ["string", "null"]},
+    "dependencies": {"type": "array", "items": {"type": "string"}},
+    "publication_ceiling": {
+      "type": "string",
+      "enum": ["INSIGHT", "HYPOTHESIS", "CANDIDATE_FACTOR", "APPROVED_FACTOR"]
+    }
+  }
+}

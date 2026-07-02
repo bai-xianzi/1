@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wjx.local/schemas/field_proposal.schema.json",
+  "title": "WJX Field Proposal",
+  "description": "Captures a governed request for a new or derived Canonical field discovered by a user, Skill, factor or simulation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "proposal_id",
+    "proposed_name",
+    "business_meaning",
+    "value_type",
+    "time_semantics",
+    "review_status"
+  ],
+  "properties": {
+    "proposal_id": {"type": "string", "minLength": 1},
+    "proposed_name": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "business_meaning": {"type": "string", "minLength": 1},
+    "source_concept": {"type": ["string", "null"]},
+    "candidate_data_sources": {"type": "array", "items": {"type": "string"}},
+    "unit": {"type": ["string", "null"]},
+    "value_type": {"type": "string", "minLength": 1},
+    "time_semantics": {"type": "string", "minLength": 1},
+    "availability_semantics": {"type": ["string", "null"]},
+    "existing_similar_fields": {"type": "array", "items": {"type": "string"}},
+    "derivation_rule": {"type": ["string", "null"]},
+    "requested_by_skill": {"type": ["string", "null"]},
+    "requested_by_factor": {"type": ["string", "null"]},
+    "review_status": {
+      "type": "string",
+      "enum": ["DRAFT", "PROPOSED", "UNDER_REVIEW", "APPROVED", "MERGED", "DATA_PENDING", "REJECTED", "DEPRECATED"]
+    }
+  }
+}
