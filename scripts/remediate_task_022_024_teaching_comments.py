@@ -2,7 +2,7 @@
 # - 输入：项目根目录、固定目标文件清单和文件中现有的UTF-8源码。
 # - 处理：使用Python AST识别定义与控制流，使用受限正则识别PowerShell逻辑块，只插入注释和空行。
 # - 输出：原路径上的已整改源码；重复运行时不会重复插入已经完整的教学块。
-# - 常量依据：目标范围来自TASK_022、TASK_023A/B/C和TASK_024A正式交付文件，教学标签来自CODE_COMMENTING_STANDARD.md。
+# - 常量依据：目标范围来自TASK_022、TASK_023A/B/C、TASK_024A/A1和TASK_024B正式交付文件，教学标签来自CODE_COMMENTING_STANDARD.md。
 # - 为什么这样写：自动化只负责稳定补齐结构，避免人工漏项；它不改变函数签名、状态值、数据接口或交易边界。
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Sequence
 
 
-# 本段代码核心功能：定义Python整改目标，覆盖TASK_022至TASK_024A人工源码、入口和测试。
+# 本段代码核心功能：定义Python整改目标，覆盖TASK_022至TASK_024B人工源码、入口和测试。
 # - 输入：任务文件中记录的允许修改范围。
 # - 处理：使用不可变元组固定路径，防止运行时扩大到第三方SDK、虚拟环境、缓存或历史归档。
 # - 输出：供主流程逐文件读取和整改的相对路径集合。
@@ -40,6 +40,9 @@ PYTHON_TARGETS = (
     "scripts/run_task_024a_official_source_baseline.py",
     "scripts/run_task_024a_syntax_check.py",
     "tests/test_source_authority.py",
+    "src/a_stock_quant/broker_sdk_inventory.py",
+    "scripts/run_task_024b_broker_sdk_inventory.py",
+    "tests/test_broker_sdk_inventory.py",
     "tests/test_task_022_024_teaching_comment_compliance.py",
     "scripts/remediate_task_022_024_teaching_comments.py",
 )

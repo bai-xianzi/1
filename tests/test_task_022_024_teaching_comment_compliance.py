@@ -1,8 +1,8 @@
-# 本文件核心功能：验证TASK_022至TASK_024人工代码在交付前具备完整教学式前置注释。
+# 本文件核心功能：验证TASK_022至TASK_024B人工代码在交付前具备完整教学式前置注释。
 # - 输入：项目根目录中的目标Python和PowerShell文件，以及每个文件的源代码文本。
 # - 处理：解析Python语法树并扫描PowerShell控制结构，检查文件头、定义和主要逻辑块之前的教学说明。
 # - 输出：全部检查通过时单元测试成功；任一文件缺少输入、处理、输出、常量依据或原因说明时给出精确行号。
-# - 常量依据：目标文件清单来自TASK_022、TASK_023A/B/C和TASK_024A的正式交付范围。
+# - 常量依据：目标文件清单来自TASK_022、TASK_023A/B/C、TASK_024A/A1和TASK_024B的正式交付范围。
 # - 为什么这样写：把用户要求转化为可重复门禁，防止后续沙盒代码再次先开发、后补注释。
 
 from __future__ import annotations
@@ -28,11 +28,11 @@ REQUIRED_MARKERS = (
 )
 
 
-# 本段代码核心功能：定义TASK_022至TASK_024需要接受教学注释回归检查的Python文件。
+# 本段代码核心功能：定义TASK_022至TASK_024B需要接受教学注释回归检查的Python文件。
 # - 输入：任务交付历史中的人工Python源码、入口脚本和测试文件相对路径。
 # - 处理：用不可变元组固定范围，不扫描第三方SDK、JSON、缓存或自动生成文件。
 # - 输出：输出相对项目根目录的路径集合，供逐文件检查循环使用。
-# - 常量依据：清单覆盖TASK_022激活、TASK_023发现/盘点/选择和TASK_024A来源权威基线。
+# - 常量依据：清单覆盖TASK_022激活、TASK_023发现/盘点/选择、TASK_024A来源权威基线和TASK_024B券商SDK盘点。
 # - 为什么这样写：明确范围既能覆盖本次缺陷，又不会误改第三方或历史归档代码。
 PYTHON_TARGETS = (
     "src/a_stock_quant/dolphindb_provider_plugin.py",
@@ -54,6 +54,9 @@ PYTHON_TARGETS = (
     "scripts/run_task_024a_official_source_baseline.py",
     "scripts/run_task_024a_syntax_check.py",
     "tests/test_source_authority.py",
+    "src/a_stock_quant/broker_sdk_inventory.py",
+    "scripts/run_task_024b_broker_sdk_inventory.py",
+    "tests/test_broker_sdk_inventory.py",
 )
 
 

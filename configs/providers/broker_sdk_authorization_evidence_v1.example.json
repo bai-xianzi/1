@@ -1,0 +1,56 @@
+{
+  "task_id": "TASK_024B",
+  "evidence_version": "1.0.0",
+  "instructions": [
+    "Copy this file to a local_validation directory before editing.",
+    "Do not commit the local copy.",
+    "Do not add account IDs, passwords, tokens, API keys, server addresses, IPs or ports.",
+    "Set booleans to true only after checking the current official broker package or written authorization."
+  ],
+  "providers": [
+    {
+      "provider_id": "galaxy_xingyao",
+      "official_package_confirmed": false,
+      "user_authorization_confirmed": false,
+      "read_only_quote_entitlement_confirmed": false,
+      "execution_domain_present": false,
+      "execution_domain_isolated_confirmed": false,
+      "sdk_version": "",
+      "client_version": "",
+      "documentation_version": ""
+    },
+    {
+      "provider_id": "zhongtai_xtp",
+      "official_package_confirmed": false,
+      "user_authorization_confirmed": false,
+      "read_only_quote_entitlement_confirmed": false,
+      "execution_domain_present": false,
+      "execution_domain_isolated_confirmed": false,
+      "sdk_version": "",
+      "client_version": "",
+      "documentation_version": ""
+    },
+    {
+      "provider_id": "guosen_iquant",
+      "official_package_confirmed": false,
+      "user_authorization_confirmed": false,
+      "read_only_quote_entitlement_confirmed": false,
+      "execution_domain_present": false,
+      "execution_domain_isolated_confirmed": false,
+      "sdk_version": "",
+      "client_version": "",
+      "documentation_version": ""
+    },
+    {
+      "provider_id": "gf_touyitong",
+      "official_package_confirmed": false,
+      "user_authorization_confirmed": false,
+      "read_only_quote_entitlement_confirmed": false,
+      "execution_domain_present": false,
+      "execution_domain_isolated_confirmed": false,
+      "sdk_version": "",
+      "client_version": "",
+      "documentation_version": ""
+    }
+  ]
+}

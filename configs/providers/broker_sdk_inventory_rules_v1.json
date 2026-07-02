@@ -1,0 +1,202 @@
+{
+  "task_id": "TASK_024B",
+  "rules_version": "1.0.0",
+  "as_of_date": "2026-07-02",
+  "rules_status": "AUTHORIZED_BROKER_SDK_READ_ONLY_INVENTORY",
+  "network_calls_allowed": false,
+  "vendor_sdk_import_allowed": false,
+  "broker_login_allowed": false,
+  "trade_session_initialization_allowed": false,
+  "order_submission_allowed": false,
+  "secret_values_allowed": false,
+  "whole_drive_scan_allowed": false,
+  "file_content_read_allowed": false,
+  "absolute_paths_recorded": false,
+  "providers": [
+    {
+      "provider_id": "galaxy_xingyao",
+      "display_name": "中国银河证券星耀数智与 TFast",
+      "catalog_source_id": "galaxy_xingyao_tfast",
+      "strategy_rank": 10,
+      "official_domains": [
+        "chinastock.com.cn"
+      ],
+      "artifact_name_tokens": [
+        "xingyao",
+        "tfast",
+        "星耀数智",
+        "银河证券星耀"
+      ],
+      "allowed_extensions": [
+        ".zip",
+        ".7z",
+        ".rar",
+        ".whl",
+        ".pyd",
+        ".dll",
+        ".exe",
+        ".msi",
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".chm",
+        ".md",
+        ".txt"
+      ],
+      "read_only_capability_markers": [
+        "STANDARDIZED_FINANCIAL_DATA",
+        "PERFORMANCE_ATTRIBUTION",
+        "READ_ONLY_DATA_CHANNEL_REVIEW"
+      ],
+      "execution_capability_markers": [
+        "PYTHON_OR_CPP_STRATEGY_EXECUTION",
+        "TFAST_EXECUTION"
+      ],
+      "verified_runtime_notes": [
+        "OFFICIAL_PRODUCT_PAGE_VERIFIED",
+        "PUBLIC_SDK_PACKAGE_AND_MODULE_NAME_NOT_VERIFIED",
+        "USER_SUPPLIED_OFFICIAL_PACKAGE_REQUIRED"
+      ],
+      "official_evidence_status": "OFFICIAL_PRODUCT_PAGE_VERIFIED_PUBLIC_SDK_PACKAGE_NOT_VERIFIED"
+    },
+    {
+      "provider_id": "zhongtai_xtp",
+      "display_name": "中泰证券 XTP",
+      "catalog_source_id": "zhongtai_xtp",
+      "strategy_rank": 20,
+      "official_domains": [
+        "zts.com.cn",
+        "github.com/ztsec"
+      ],
+      "artifact_name_tokens": [
+        "xtp_api",
+        "xtpapi",
+        "xtp_quote",
+        "xtpquoteapi",
+        "中泰证券xtp"
+      ],
+      "allowed_extensions": [
+        ".zip",
+        ".7z",
+        ".rar",
+        ".whl",
+        ".pyd",
+        ".dll",
+        ".so",
+        ".exe",
+        ".msi",
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".chm",
+        ".md",
+        ".txt"
+      ],
+      "read_only_capability_markers": [
+        "QUOTE_API",
+        "LEVEL2_QUOTE_API"
+      ],
+      "execution_capability_markers": [
+        "TRADING_API",
+        "TRADER_API"
+      ],
+      "verified_runtime_notes": [
+        "OFFICIAL_REPOSITORY_API_VERSION_2_2_50_8_AS_OF_2025_09",
+        "OFFICIAL_BINARY_REFERENCE_PYTHON_3_9_13_X64",
+        "QUOTE_AND_TRADER_LIBRARIES_MUST_BE_SEPARATED",
+        "TEST_ACCOUNT_AND_CONNECTION_DETAILS_REQUIRE_OFFICIAL_APPLICATION"
+      ],
+      "official_evidence_status": "OFFICIAL_PUBLIC_PYTHON_API_REPOSITORY_VERIFIED"
+    },
+    {
+      "provider_id": "guosen_iquant",
+      "display_name": "国信证券 iQuant",
+      "catalog_source_id": "guosen_iquant",
+      "strategy_rank": 30,
+      "official_domains": [
+        "guosen.com.cn"
+      ],
+      "artifact_name_tokens": [
+        "iquant",
+        "国信iquant",
+        "国信证券iquant"
+      ],
+      "allowed_extensions": [
+        ".zip",
+        ".7z",
+        ".rar",
+        ".whl",
+        ".pyd",
+        ".dll",
+        ".exe",
+        ".msi",
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".chm",
+        ".md",
+        ".txt"
+      ],
+      "read_only_capability_markers": [
+        "MARKET_DATA",
+        "FUNDAMENTAL_DATA",
+        "HISTORICAL_DATA"
+      ],
+      "execution_capability_markers": [
+        "TRADING_API",
+        "AUTOMATED_TRADING"
+      ],
+      "verified_runtime_notes": [
+        "OFFICIAL_CLIENT_VERSION_3_11_PUBLISHED_2026_01_30",
+        "PUBLIC_PYTHON_MANUAL_FOUND_IS_OLDER_AND_REQUIRES_CURRENT_CLIENT_CONFIRMATION",
+        "CURRENT_CLIENT_BUILT_IN_DOCUMENTATION_IS_RUNTIME_AUTHORITY"
+      ],
+      "official_evidence_status": "OFFICIAL_CLIENT_AND_PYTHON_MANUAL_VERIFIED_VERSION_REVIEW_REQUIRED"
+    },
+    {
+      "provider_id": "gf_touyitong",
+      "display_name": "广发证券投易通",
+      "catalog_source_id": "gf_touyitong",
+      "strategy_rank": 40,
+      "official_domains": [
+        "gf.com.cn"
+      ],
+      "artifact_name_tokens": [
+        "touyitong",
+        "投易通",
+        "广发投易通"
+      ],
+      "allowed_extensions": [
+        ".zip",
+        ".7z",
+        ".rar",
+        ".whl",
+        ".pyd",
+        ".dll",
+        ".exe",
+        ".msi",
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".chm",
+        ".md",
+        ".txt"
+      ],
+      "read_only_capability_markers": [
+        "REALTIME_MARKET_DATA",
+        "PYTHON_QUANT_ANALYSIS",
+        "PERFORMANCE_ANALYSIS"
+      ],
+      "execution_capability_markers": [
+        "QUANT_TRADING",
+        "ALGORITHM_TRADING"
+      ],
+      "verified_runtime_notes": [
+        "OFFICIAL_PRODUCT_PAGE_VERIFIED",
+        "PUBLIC_STANDALONE_SDK_DOCUMENTATION_NOT_VERIFIED",
+        "USER_SUPPLIED_CURRENT_OFFICIAL_PACKAGE_REQUIRED"
+      ],
+      "official_evidence_status": "OFFICIAL_PRODUCT_PAGE_VERIFIED_PUBLIC_SDK_DOCUMENTATION_NOT_VERIFIED"
+    }
+  ]
+}
