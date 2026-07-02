@@ -424,3 +424,9 @@ V6 数据、字典、Skill、因子、仿真、回测、风险和报告统一工
 ```
 
 现有业务开发顺序继续有效；本路线为所有阶段提供用户端和内部系统双视图约束。
+
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_START -->
+## Windows秘密字段B2C动作合同
+
+秘密输入控件必须是writeOnly：用户可输入、替换、测试和删除，但不能从后端读回原文。提交动作在同一次请求中完成字段白名单校验、Windows Credential Manager写入和安全引用返回；状态接口只返回`backend`、`reference`、`configured`及固定为`null`的`secret_value`。代码查看器可展示算法和教学式注释，不得展示真实CredentialBlob或用户凭据列表。
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->

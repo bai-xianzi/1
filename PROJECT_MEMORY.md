@@ -1726,3 +1726,9 @@ configs/engineering/code_comment_policy_v0.json
 ```
 
 全量历史迁移完成前禁止Git提交；提交和推送前必须获得用户明确确认。
+
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_START -->
+## Windows秘密引用长期原则
+
+用户可以在B2C界面输入API Key、Secret、Token或密码，但秘密只允许在同一次后端请求内存中短暂存在。Windows个人用户环境默认复用微软官方Credential Manager；配置、日志、报告、数据库和Git只保存`windows-credential://WJX/provider/...`安全引用。系统禁止自动退回明文JSON、环境变量、普通配置或自制加密文件。运行时读取、UI状态和删除能力必须分权，普通UI永远不能读回秘密原文。完整合同见`WINDOWS_CREDENTIAL_STORE.md`。
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->

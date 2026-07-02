@@ -32,3 +32,9 @@
 ## 任务闭环
 
 GitHub `main` 是权威远程仓库和任务交接区。每个小任务必须经过沙盒验证、本地适用验证、独立提交、推送和远程一致性检查。ZIP只用于修改传递和恢复，不能替代GitHub闭环。
+
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_START -->
+## Windows凭据后端权威索引
+
+`WINDOWS_CREDENTIAL_STORE.md`定义Provider、Skill、模型、搜索和其他外部服务在Windows用户端的秘密保存、引用、读取、撤销和B2C安全状态。涉及任何秘密字段的后续任务必须先读取该文件。
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->

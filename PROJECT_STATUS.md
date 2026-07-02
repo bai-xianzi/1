@@ -1048,3 +1048,22 @@ TASK_024C：已完成领域合同
 - 明确人物蒸馏只产生证据、机制假设和候选因子，不能绕过实验与发布门禁；
 - 接入中心被确认为全系统B2C交互的首个纵向样板；
 - 当前业务实施顺序保持：TASK_024D → TASK_024E → TASK_024F；后续实现必须服从本任务合同。
+
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_START -->
+## TASK_024D：Windows凭据引用安全后端
+
+状态：`COMPLETED_AND_REAL_WINDOWS_ACCEPTED`。
+
+已完成：
+
+- 使用微软WinCred官方函数的薄适配器；
+- TASK_024C表单秘密即时交换为Windows安全引用；
+- B2C状态不回显秘密；
+- 引用命名空间、大小、载荷版本、读取和删除门禁；
+- 跨平台假后端专项测试；
+- 用户Windows真实写入、读取、无泄漏、删除探针；
+- 零网络、零数据库写入、零交易动作；
+- 独立Git提交和GitHub main闭环。
+
+下一主线：`TASK_024E`接入中心页面与后端接口，实现Provider卡片、动态表单、凭据状态、只读连接测试入口和白箱审计展示。
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->

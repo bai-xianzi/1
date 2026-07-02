@@ -166,3 +166,11 @@ TASK_024E 接入中心可视化页面与后端接口
 TASK_024F 首个已授权券商只读连接测试
 TASK_024G 首个券商薄适配器、Canonical映射与Readiness验收
 ```
+
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_START -->
+## TASK_024D Windows正式凭据后端
+
+TASK_024C的`CredentialReferenceWriter`由`WindowsCredentialStore`正式实现。秘密字段通过同一次`submit_connection_form`调用写入当前Windows用户Credential Manager，连接档案只保存`windows-credential://WJX/provider/<provider>/<connection>/<field>`引用。
+
+B2C只允许显示后端、引用和“已配置/未配置”；替换秘密覆盖同一目标，删除动作必须同时删除操作系统凭据。真实SDK连接只能在受控运行时按引用解析秘密，不得把原文返回页面、日志、报告、数据库或Git。详细合同见`WINDOWS_CREDENTIAL_STORE.md`。
+<!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->
