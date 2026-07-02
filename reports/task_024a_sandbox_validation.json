@@ -1,0 +1,41 @@
+{
+  "task_id": "TASK_024A",
+  "validation_date": "2026-07-02",
+  "environment": {
+    "platform": "Linux sandbox",
+    "python": "3.11.8",
+    "powershell_available": false
+  },
+  "results": {
+    "python_compileall": "PASSED",
+    "targeted_tests": {
+      "status": "PASSED",
+      "count": 20
+    },
+    "full_tests_in_delivery_workspace": {
+      "status": "PASSED",
+      "count": 20
+    },
+    "offline_source_authority_cli": "PASSED",
+    "corrected_task_023c_selection_cli": "PASSED",
+    "selected_semantic_baseline": "official_exchange_sources",
+    "third_party_primary_source_forbidden": true,
+    "utf8_validation": "PASSED",
+    "single_newline_eof_validation": "PASSED",
+    "json_parse_validation": "PASSED"
+  },
+  "safety_counters": {
+    "vendor_sdk_imports": 0,
+    "network_calls_by_delivery_code": 0,
+    "database_write_operations": 0,
+    "registry_write_operations": 0,
+    "secret_values_recorded": 0,
+    "provider_activation_operations": 0,
+    "execution_activation_operations": 0
+  },
+  "limitations": [
+    "The sandbox does not contain the user's complete repository, so the Windows package runs the repository-wide regression suite locally.",
+    "PowerShell is not installed in the sandbox; scripts received static encoding, structure and delimiter checks and must be executed on the user's Windows machine.",
+    "Official interface research records public documentation evidence only and does not imply that the user has exchange, broker or vendor authorization."
+  ]
+}

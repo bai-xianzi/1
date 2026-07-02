@@ -1,3 +1,10 @@
+# 本文件核心功能：实现 `run_task_022_real_registry_route_acceptance.py` 在TASK_022至TASK_024范围内的单一任务职责。
+# - 输入：来自项目配置、离线本地环境、命令行参数或单元测试夹具，不读取未声明秘密值。
+# - 处理：先完成类型和值域校验，再执行离线发现、排序、报告生成或断言；默认不联网、不交易、不写数据库。
+# - 输出：强类型对象、UTF-8报告、稳定退出码或可重复测试结果，供下一任务和Git门禁使用。
+# - 常量依据：任务号、来源层级、安全计数器和状态值来自TASK_022至TASK_024权威文件与官方接口基线。
+# - 为什么这样写：维护者先理解边界再阅读实现，可防止第三方聚合源或交易能力被误升为主链。
+
 # 本脚本核心功能：使用真实 Provider 配置完成 TASK_022 的只读验收，并把结果写入结构化报告。
 # - 输入：项目根目录、DolphinDB 连接参数、目标数据库表和最多 5 行的读取上限。
 # - 输出：JSON、Markdown 验收报告，以及用于 Git 闭环前判断的进程退出码。
@@ -34,6 +41,13 @@ TASK_SECTION_END = "<!-- TASK_022_STATUS_END -->"
 # - 输入：PROJECT_STATUS.md 路径、状态值和下一操作说明。
 # - 输出：UTF-8、LF 换行的项目状态文件。
 # - 为什么这样写：真实验收通过后应立刻留下权威状态，但必须避免破坏其他任务记录。
+# 本段代码核心功能：定义 `update_task_status`，完成 `update_task_status` 对应的单一业务步骤并返回明确结果。
+# - 输入：参数为 `path、status、current_action`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+# - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+# - 输出：返回类型为 `None`；测试函数通过断言表达通过或失败，不产生生产副作用。
+# - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+# - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
 def update_task_status(path: Path, *, status: str, current_action: str) -> None:
     text = path.read_text(encoding="utf-8-sig")
     block = f"""{TASK_SECTION_START}
@@ -46,6 +60,13 @@ def update_task_status(path: Path, *, status: str, current_action: str) -> None:
 - 安全边界：只读；数据库写操作为 0；未启用交易能力。
 
 {TASK_SECTION_END}"""
+    # 本段代码核心功能：根据条件 `TASK_SECTION_START not in text or TASK_SECTION_END not in text` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if TASK_SECTION_START not in text or TASK_SECTION_END not in text:
         raise RuntimeError("PROJECT_STATUS.md 缺少 TASK_022 受控状态区块。")
     before = text.split(TASK_SECTION_START, 1)[0].rstrip()
@@ -58,6 +79,13 @@ def update_task_status(path: Path, *, status: str, current_action: str) -> None:
 # - 参数 argv：可选命令行参数序列；为空时读取系统命令行。
 # - 输出：通过返回 0，任何硬性验收条件失败返回 1。
 # - 为什么这样写：统一退出码让 PowerShell 能在失败时立即阻断 Git 提交和推送。
+# 本段代码核心功能：定义 `main`，执行 `run_task_022_real_registry_route_acceptance.py` 的命令行主流程并返回标准退出码。
+# - 输入：参数为 `argv`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+# - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+# - 输出：返回类型为 `int`；测试函数通过断言表达通过或失败，不产生生产副作用。
+# - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+# - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", default=".")
@@ -75,8 +103,22 @@ def main(argv: Sequence[str] | None = None) -> int:
     output = root / args.output_dir
     output.mkdir(parents=True, exist_ok=True)
     password = os.environ.get(args.password_env)
+    # 本段代码核心功能：根据条件 `not password` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if not password:
         raise RuntimeError(f"环境变量未设置：{args.password_env}")
+    # 本段代码核心功能：根据条件 `not 1 <= args.limit <= 5` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if not 1 <= args.limit <= 5:
         raise RuntimeError("TASK_022 真实验收最多读取 5 行。")
 
@@ -105,14 +147,42 @@ def main(argv: Sequence[str] | None = None) -> int:
     bridge = DolphinDBProviderPluginBridge(adapter=adapter, config=provider_config)
     issues: list[str] = []
     bridge.open_session(provider_config.authentication_reference)
+    # 本段代码核心功能：执行可能失败的本地解析或探测并在异常时保持安全降级。
+    # - 输入：文件、解释器、注册表、模块查找或类型转换等本地操作。
+    # - 处理：成功时保留证据，失败时转换为受控状态，清理动作由finally保证。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：第三方环境不可假定稳定，受控异常能防止单点失败破坏整份盘点。
+
     try:
         health = bridge.health_check()
+        # 本段代码核心功能：根据条件 `health.status is ProviderHealthStatus.UNAVAILABLE` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if health.status is ProviderHealthStatus.UNAVAILABLE:
             issues.append("PROVIDER_HEALTH_UNAVAILABLE")
 
         discovery = bridge.discover()
+        # 本段代码核心功能：根据条件 `discovery.outcome.value != 'COMPLETE'` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if discovery.outcome.value != "COMPLETE":
             issues.append("DISCOVERY_NOT_COMPLETE")
+        # 本段代码核心功能：根据条件 `discovery.errors` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if discovery.errors:
             issues.extend(discovery.errors)
 
@@ -129,6 +199,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             maximum_rows=args.limit,
         )
         result = bridge.query_batch(query)
+        # 本段代码核心功能：根据条件 `not 1 <= len(result.records) <= args.limit` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not 1 <= len(result.records) <= args.limit:
             issues.append("REAL_READ_COUNT_OUT_OF_RANGE")
 
@@ -147,18 +224,46 @@ def main(argv: Sequence[str] | None = None) -> int:
             for item in candidates
             if item.decision is RouteDecision.ELIGIBLE
         ]
+        # 本段代码核心功能：根据条件 `eligible_provider_ids != ['local_dolphindb']` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if eligible_provider_ids != ["local_dolphindb"]:
             issues.append(
                 "ELIGIBLE_PROVIDER_SET_INVALID:" + ",".join(eligible_provider_ids)
             )
         local = [item for item in candidates if item.provider_id == "local_dolphindb"]
+        # 本段代码核心功能：根据条件 `len(local) != 1` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if len(local) != 1:
             issues.append("LOCAL_ROUTE_CANDIDATE_COUNT_INVALID")
             candidate = None
         else:
             candidate = local[0]
+            # 本段代码核心功能：根据条件 `candidate.decision is not RouteDecision.ELIGIBLE` 选择安全分支。
+            # - 输入：条件表达式和此前已经规范化的局部变量。
+            # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+            # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+            # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+            # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
             if candidate.decision is not RouteDecision.ELIGIBLE:
                 issues.extend(candidate.reasons)
+            # 本段代码核心功能：根据条件 `candidate.score <= 90.0` 选择安全分支。
+            # - 输入：条件表达式和此前已经规范化的局部变量。
+            # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+            # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+            # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+            # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
             if candidate.score <= 90.0:
                 issues.append("ROUTE_SCORE_NOT_GREATER_THAN_90")
 
@@ -229,6 +334,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
         encoding="utf-8",
     )
+    # 本段代码核心功能：根据条件 `not issues` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if not issues:
         update_task_status(
             root / "PROJECT_STATUS.md",
@@ -242,5 +354,12 @@ def main(argv: Sequence[str] | None = None) -> int:
 # 脚本入口：把主流程退出码原样交给 PowerShell 验收脚本。
 # - 输入：操作系统命令行参数。
 # - 为什么这样写：保留非零退出码，确保真实验收失败时不会继续提交。
+# 本段代码核心功能：根据条件 `__name__ == '__main__'` 选择安全分支。
+# - 输入：条件表达式和此前已经规范化的局部变量。
+# - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+# - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+# - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+# - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
 if __name__ == "__main__":
     raise SystemExit(main())

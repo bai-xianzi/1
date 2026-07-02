@@ -1,3 +1,10 @@
+# 本文件核心功能：实现 `dolphindb_provider_plugin.py` 在TASK_022至TASK_024范围内的单一任务职责。
+# - 输入：来自项目配置、离线本地环境、命令行参数或单元测试夹具，不读取未声明秘密值。
+# - 处理：先完成类型和值域校验，再执行离线发现、排序、报告生成或断言；默认不联网、不交易、不写数据库。
+# - 输出：强类型对象、UTF-8报告、稳定退出码或可重复测试结果，供下一任务和Git门禁使用。
+# - 常量依据：任务号、来源层级、安全计数器和状态值来自TASK_022至TASK_024权威文件与官方接口基线。
+# - 为什么这样写：维护者先理解边界再阅读实现，可防止第三方聚合源或交易能力被误升为主链。
+
 # 模块总览：TASK_020C：现有DolphinDB Adapter的通用Provider插件薄桥接。
 # - 输入输出：本模块通过强类型对象和纯函数交换数据，不在导入阶段执行隐式网络或数据库写入。
 # - 数据变化：只有显式构造、校验、加载或方法调用才会产生新对象或更新受控状态。
@@ -70,10 +77,24 @@ RuntimeProbe = Callable[[], Mapping[str, Any]]
 # - 输出：返回类型str；调用方按该类型继续校验、路由或序列化。
 # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
 # - 为什么这样写：统一拒绝空字符串，避免无效标识进入后续注册、路由或持久化流程。
+# 本段代码核心功能：定义 `_require_text`，提供局部纯函数辅助以统一规范化、查找或匹配规则。
+# - 输入：参数为 `value、field_name`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+# - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+# - 输出：返回类型为 `str`；测试函数通过断言表达通过或失败，不产生生产副作用。
+# - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+# - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
 def _require_text(value: Any, field_name: str) -> str:
     # 条件门禁：判断`not isinstance(value, str) or not value.strip()`，条件为真时进入受保护分支。
     # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
     # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+    # 本段代码核心功能：根据条件 `not isinstance(value, str) or not value.strip()` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if not isinstance(value, str) or not value.strip():
         # 错误阻断：抛出`DataContractError(f'{field_name}不能为空。')`并停止当前路径。
         # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -91,10 +112,24 @@ def _require_text(value: Any, field_name: str) -> str:
 # - 输出：返回类型int；调用方按该类型继续校验、路由或序列化。
 # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
 # - 为什么这样写：把布尔值排除在整数之外并限制为正数，防止批次、并发或页数出现零和负值。
+# 本段代码核心功能：定义 `_positive_int`，提供局部纯函数辅助以统一规范化、查找或匹配规则。
+# - 输入：参数为 `value、field_name`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+# - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+# - 输出：返回类型为 `int`；测试函数通过断言表达通过或失败，不产生生产副作用。
+# - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+# - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
 def _positive_int(value: Any, field_name: str) -> int:
     # 条件门禁：判断`isinstance(value, bool) or not isinstance(value, int) or value < 1`，条件为真时进入受保护分支。
     # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
     # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+    # 本段代码核心功能：根据条件 `isinstance(value, bool) or not isinstance(value, int) or value < 1` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if isinstance(value, bool) or not isinstance(value, int) or value < 1:
         # 错误阻断：抛出`DataContractError(f'{field_name}必须是正整数。')`并停止当前路径。
         # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -112,6 +147,13 @@ def _positive_int(value: Any, field_name: str) -> int:
 # - 输出：返回类型tuple[list[str], list[dict[str, Any]]]；调用方按该类型继续校验、路由或序列化。
 # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
 # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+# 本段代码核心功能：定义 `_normalise_records_with_legacy_adapter`，提供局部纯函数辅助以统一规范化、查找或匹配规则。
+# - 输入：参数为 `adapter、result`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+# - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+# - 输出：返回类型为 `tuple[list[str], list[dict[str, Any]]]`；测试函数通过断言表达通过或失败，不产生生产副作用。
+# - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+# - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
 def _normalise_records_with_legacy_adapter(
     adapter: DolphinDBDataSourceAdapter,
     result: Any,
@@ -123,6 +165,13 @@ def _normalise_records_with_legacy_adapter(
     # 条件门禁：判断`not callable(normaliser)`，条件为真时进入受保护分支。
     # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
     # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+    # 本段代码核心功能：根据条件 `not callable(normaliser)` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if not callable(normaliser):
         # 错误阻断：抛出`DataContractError('现有DolphinDB Adapter缺少结果标准化能力。')`并停止当前路径。
         # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -152,6 +201,13 @@ def _normalise_records_with_legacy_adapter(
 # - 其余字段：另有19项，均在对象创建时统一校验。
 # - 数据变化：类本身不执行隐式I/O，实例字段只在显式构造、校验或方法调用时变化。
 # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+# 本段代码核心功能：定义 `DolphinDBProviderPluginBridgeConfig`，封装 `dolphindb_provider_plugin.py` 所需的稳定数据结构。
+# - 输入：实例字段由配置加载器、发现流程或测试夹具显式传入，不从全局状态隐式取值。
+# - 处理：使用类型标注、不可变数据类或枚举限制字段形状和允许状态，避免原始字典扩散。
+# - 输出：输出可比较、可序列化或可排序的 `DolphinDBProviderPluginBridgeConfig` 实例，供报告和门禁使用。
+# - 常量依据：状态名和字段名来自TASK_022至TASK_024任务合同，本定义不新增未经验证的厂商能力。
+# - 为什么这样写：先建立稳定合同再接官方SDK，能够降低供应商替换成本并阻止秘密值进入报告。
+
 @dataclass(frozen=True, slots=True)
 class DolphinDBProviderPluginBridgeConfig:
     # 变量更新：计算并保存task_id，右侧逻辑为`类型声明`。
@@ -271,10 +327,24 @@ class DolphinDBProviderPluginBridgeConfig:
     # - 输出：返回类型None；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：在不可变或数据类对象创建后立即校验字段关系，阻止不一致对象进入系统。
+    # 本段代码核心功能：定义 `__post_init__`，提供局部纯函数辅助以统一规范化、查找或匹配规则。
+    # - 输入：参数为 `self`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `None`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def __post_init__(self) -> None:
         # 迭代处理：依次读取`('task_id', 'bridge_version', 'bridge_status', 'provider_id', 'plugin_id', 'e...`中的元素，并绑定到`field_name`。
         # - 维度变化：每轮处理一个元素，可能向列表、字典或累计值中增加一项。
         # - 为什么这样写：显式逐项校验可以精确指出哪个字段或Provider不符合合同。
+        # 本段代码核心功能：逐项遍历有限配置条目、发现证据或测试样本。
+        # - 输入：可迭代的配置、证据或样本序列。
+        # - 处理：每轮只更新当前条目局部结果，最终按稳定顺序汇总。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：逐项处理保留来源级证据，避免聚合后无法追溯单个Provider。
+
         for field_name in (
             "task_id",
             "bridge_version",
@@ -299,6 +369,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`self.task_id != 'TASK_020C'`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `self.task_id != 'TASK_020C'` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if self.task_id != "TASK_020C":
             # 错误阻断：抛出`DataContractError('桥接配置task_id异常。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -307,6 +384,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`self.provider_id != 'local_dolphindb'`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `self.provider_id != 'local_dolphindb'` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if self.provider_id != "local_dolphindb":
             # 错误阻断：抛出`DataContractError('桥接配置provider_id异常。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -315,6 +399,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`self.reuse_strategy != 'WRAP_WITH_THIN_ADAPTER'`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `self.reuse_strategy != 'WRAP_WITH_THIN_ADAPTER'` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if self.reuse_strategy != "WRAP_WITH_THIN_ADAPTER":
             # 错误阻断：抛出`DataContractError('DolphinDB必须使用薄桥接复用策略。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -323,6 +414,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`any((self.custom_query_engine_implemented, self.custom_session_engine_implemented, self.custom_do...`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `any((self.custom_query_engine_implemented, self.custom_session_engine_implemented, self.custom_dolph` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if any(
             (
                 self.custom_query_engine_implemented,
@@ -337,6 +435,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`self.authentication_reference.kind is not AuthenticationReferenceKind.ENVIRONMENT_VARIABLE`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `self.authentication_reference.kind is not AuthenticationReferenceKind.ENVIRONMENT_VARIABLE` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if (
             self.authentication_reference.kind
             is not AuthenticationReferenceKind.ENVIRONMENT_VARIABLE
@@ -348,6 +453,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`not self.authentication_reference.locator.startswith('env://')`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not self.authentication_reference.locator.startswith('env://')` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not self.authentication_reference.locator.startswith("env://"):
             # 错误阻断：抛出`DataContractError('DolphinDB认证引用必须使用env://。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -363,6 +475,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`not operating_systems`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not operating_systems` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not operating_systems:
             # 错误阻断：抛出`DataContractError('operating_systems不能为空。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -390,6 +509,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`'EOD_MARKET_DATA' not in capabilities`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `'EOD_MARKET_DATA' not in capabilities` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if "EOD_MARKET_DATA" not in capabilities:
             # 错误阻断：抛出`DataContractError('桥接配置必须包含EOD_MARKET_DATA。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -409,6 +535,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`not usages or len(usages) != len(set(usages))`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not usages or len(usages) != len(set(usages))` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not usages or len(usages) != len(set(usages)):
             # 错误阻断：抛出`DataContractError('permitted_usages必须非空且唯一。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -435,6 +568,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`set(operations) != expected_operations`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `set(operations) != expected_operations` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if set(operations) != expected_operations:
             # 错误阻断：抛出`DataContractError('桥接支持操作集合异常。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -447,6 +587,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`self.pagination_policy.mode is not PaginationMode.NONE`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `self.pagination_policy.mode is not PaginationMode.NONE` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if self.pagination_policy.mode is not PaginationMode.NONE:
             # 错误阻断：抛出`DataContractError('当前薄桥接不得虚构分页能力。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -455,6 +602,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`self.subscription_policy.mode is not SubscriptionMode.NONE`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `self.subscription_policy.mode is not SubscriptionMode.NONE` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if self.subscription_policy.mode is not SubscriptionMode.NONE:
             # 错误阻断：抛出`DataContractError('当前薄桥接不得虚构订阅能力。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -463,6 +617,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`self.batch_policy.maximum_rows_per_batch > 100000`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `self.batch_policy.maximum_rows_per_batch > 100000` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if self.batch_policy.maximum_rows_per_batch > 100000:
             # 错误阻断：抛出`DataContractError('桥接批次超过现有Adapter上限。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -480,6 +641,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`set(self.activation_policy) != required_activation_keys`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `set(self.activation_policy) != required_activation_keys` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if set(self.activation_policy) != required_activation_keys:
             # 错误阻断：抛出`DataContractError('activation_policy字段异常。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -488,6 +656,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`any((self.activation_policy['modify_registry_during_acceptance'], self.activation_policy['modify_...`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `any((self.activation_policy['modify_registry_during_acceptance'], self.activation_policy['modify_cap` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if any(
             (
                 self.activation_policy[
@@ -508,6 +683,13 @@ class DolphinDBProviderPluginBridgeConfig:
         # 条件门禁：判断`not self.activation_policy['activation_requires_verified_report']`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not self.activation_policy['activation_requires_verified_report']` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not self.activation_policy[
             "activation_requires_verified_report"
         ]:
@@ -522,6 +704,13 @@ class DolphinDBProviderPluginBridgeConfig:
 # - 输出：返回类型DolphinDBProviderPluginBridgeConfig；调用方按该类型继续校验、路由或序列化。
 # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
 # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+# 本段代码核心功能：定义 `load_dolphindb_provider_plugin_bridge_config`，读取UTF-8配置或报告并在返回前完成字段、类型和值域校验。
+# - 输入：参数为 `path`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+# - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+# - 输出：返回类型为 `DolphinDBProviderPluginBridgeConfig`；测试函数通过断言表达通过或失败，不产生生产副作用。
+# - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+# - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
 def load_dolphindb_provider_plugin_bridge_config(
     path: str | Path,
 ) -> DolphinDBProviderPluginBridgeConfig:
@@ -532,6 +721,13 @@ def load_dolphindb_provider_plugin_bridge_config(
     # 条件门禁：判断`not isinstance(raw, dict)`，条件为真时进入受保护分支。
     # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
     # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+    # 本段代码核心功能：根据条件 `not isinstance(raw, dict)` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if not isinstance(raw, dict):
         # 错误阻断：抛出`DataContractError('DolphinDB桥接配置根节点必须是对象。')`并停止当前路径。
         # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -702,6 +898,13 @@ def load_dolphindb_provider_plugin_bridge_config(
 # - 输出：返回类型Mapping[str, Any]；调用方按该类型继续校验、路由或序列化。
 # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
 # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+# 本段代码核心功能：定义 `default_dolphindb_runtime_probe`，完成 `default_dolphindb_runtime_probe` 对应的单一业务步骤并返回明确结果。
+# - 输入：参数为 `无显式参数`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+# - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+# - 输出：返回类型为 `Mapping[str, Any]`；测试函数通过断言表达通过或失败，不产生生产副作用。
+# - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+# - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
 def default_dolphindb_runtime_probe() -> Mapping[str, Any]:
     # 变量更新：计算并保存spec，右侧逻辑为`importlib.util.find_spec('dolphindb')`。
     # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -718,10 +921,24 @@ def default_dolphindb_runtime_probe() -> Mapping[str, Any]:
     # 条件门禁：判断`installed`，条件为真时进入受保护分支。
     # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
     # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+    # 本段代码核心功能：根据条件 `installed` 选择安全分支。
+    # - 输入：条件表达式和此前已经规范化的局部变量。
+    # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+    # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+    # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+    # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
     if installed:
         # 异常边界：执行可能失败的转换或外部调用，并把底层异常转换为项目可理解的合同错误。
         # - 数据变化：成功路径产生正常结果，失败路径保留原异常作为cause或记录明确错误。
         # - 为什么这样写：统一异常类型可以让上层门禁稳定处理，而不依赖第三方异常细节。
+        # 本段代码核心功能：执行可能失败的本地解析或探测并在异常时保持安全降级。
+        # - 输入：文件、解释器、注册表、模块查找或类型转换等本地操作。
+        # - 处理：成功时保留证据，失败时转换为受控状态，清理动作由finally保证。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：第三方环境不可假定稳定，受控异常能防止单点失败破坏整份盘点。
+
         try:
             # 变量更新：计算并保存version，右侧逻辑为`importlib.metadata.version('dolphindb')`。
             # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -753,6 +970,13 @@ def default_dolphindb_runtime_probe() -> Mapping[str, Any]:
 # - 状态成员：枚举值或方法共同描述该合同允许的有限状态和行为。
 # - 数据变化：类本身不执行隐式I/O，实例字段只在显式构造、校验或方法调用时变化。
 # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+# 本段代码核心功能：定义 `DolphinDBProviderPluginBridge`，封装 `dolphindb_provider_plugin.py` 所需的稳定数据结构。
+# - 输入：实例字段由配置加载器、发现流程或测试夹具显式传入，不从全局状态隐式取值。
+# - 处理：使用类型标注、不可变数据类或枚举限制字段形状和允许状态，避免原始字典扩散。
+# - 输出：输出可比较、可序列化或可排序的 `DolphinDBProviderPluginBridge` 实例，供报告和门禁使用。
+# - 常量依据：状态名和字段名来自TASK_022至TASK_024任务合同，本定义不新增未经验证的厂商能力。
+# - 为什么这样写：先建立稳定合同再接官方SDK，能够降低供应商替换成本并阻止秘密值进入报告。
+
 class DolphinDBProviderPluginBridge:
     """复用DolphinDBDataSourceAdapter的通用Provider插件桥。"""
 
@@ -763,6 +987,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型None；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+    # 本段代码核心功能：定义 `__init__`，提供局部纯函数辅助以统一规范化、查找或匹配规则。
+    # - 输入：参数为 `self、adapter、config、runtime_probe`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `None`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def __init__(
         self,
         *,
@@ -773,6 +1004,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`adapter is None`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `adapter is None` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if adapter is None:
             # 错误阻断：抛出`DataContractError('adapter不能为空。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -781,6 +1019,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`not isinstance(config, DolphinDBProviderPluginBridgeConfig)`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not isinstance(config, DolphinDBProviderPluginBridgeConfig)` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not isinstance(config, DolphinDBProviderPluginBridgeConfig):
             # 错误阻断：抛出`DataContractError('config类型异常。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -810,6 +1055,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型DolphinDBDataSourceAdapter；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+    # 本段代码核心功能：定义 `adapter`，完成 `adapter` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `DolphinDBDataSourceAdapter`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     @property
     def adapter(self) -> DolphinDBDataSourceAdapter:
         # 结果返回：把`self._adapter`交给调用方。
@@ -822,6 +1074,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型ProviderRegistryEntry；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：返回静态插件身份但保持路由禁用，防止描述阶段自动激活。
+    # 本段代码核心功能：定义 `describe`，完成 `describe` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `ProviderRegistryEntry`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def describe(self) -> ProviderRegistryEntry:
         # 结果返回：把`ProviderRegistryEntry(provider_id=self.config.provider_id, plugin_id=self.config.plugin_id, regis...`交给调用方。
         # - 数据变化：函数在此结束，返回对象保持当前已校验状态。
@@ -850,6 +1109,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型ProviderHealthSnapshot；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把底层健康结果翻译为Provider统一状态，便于路由层使用同一判定标准。
+    # 本段代码核心功能：定义 `health_check`，完成 `health_check` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `ProviderHealthSnapshot`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def health_check(self) -> ProviderHealthSnapshot:
         # 变量更新：计算并保存started，右侧逻辑为`time.perf_counter()`。
         # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -879,6 +1145,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`status_value == 'PASSED' and (not blocking)`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `status_value == 'PASSED' and (not blocking)` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if status_value == "PASSED" and not blocking:
             # 变量更新：计算并保存status，右侧逻辑为`ProviderHealthStatus.HEALTHY`。
             # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -889,6 +1162,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`status_value in {'WARNING', 'WARN'} and (not blocking)`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `status_value in {'WARNING', 'WARN'} and (not blocking)` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         elif status_value in {"WARNING", "WARN"} and not blocking:
             # 变量更新：计算并保存status，右侧逻辑为`ProviderHealthStatus.DEGRADED`。
             # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -925,6 +1205,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型ProviderDiscoveryResult；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把运行时、健康、许可证和能力证据合并成单一发现结果，避免把计划能力误当成真实能力。
+    # 本段代码核心功能：定义 `discover`，完成 `discover` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `ProviderDiscoveryResult`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def discover(self) -> ProviderDiscoveryResult:
         # 变量更新：计算并保存runtime_raw，右侧逻辑为`dict(self._runtime_probe())`。
         # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -951,6 +1238,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`not installed`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not installed` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not installed:
             # API调用：执行`errors.append('DOLPHINDB_PYTHON_CLIENT_NOT_INSTALLED')`以触发注册、写入对象状态或其他显式副作用。
             # - 参数变化：实参按函数签名传入，返回值未保存表示调用目的主要是副作用或校验。
@@ -959,6 +1253,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`health.status is ProviderHealthStatus.UNAVAILABLE`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `health.status is ProviderHealthStatus.UNAVAILABLE` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if health.status is ProviderHealthStatus.UNAVAILABLE:
             # API调用：执行`errors.append('DOLPHINDB_HEALTH_UNAVAILABLE')`以触发注册、写入对象状态或其他显式副作用。
             # - 参数变化：实参按函数签名传入，返回值未保存表示调用目的主要是副作用或校验。
@@ -1050,6 +1351,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型None；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：只校验认证引用和环境变量存在性，不把密码写入配置或对象。
+    # 本段代码核心功能：定义 `open_session`，完成 `open_session` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self、authentication_reference`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `None`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def open_session(
         self,
         authentication_reference: AuthenticationReference,
@@ -1057,6 +1365,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`authentication_reference.reference_id != self.config.authentication_reference.reference_id or aut...`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `authentication_reference.reference_id != self.config.authentication_reference.reference_id or authen` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if (
             authentication_reference.reference_id
             != self.config.authentication_reference.reference_id
@@ -1078,6 +1393,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`not env_name or not os.environ.get(env_name)`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not env_name or not os.environ.get(env_name)` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not env_name or not os.environ.get(env_name):
             # 错误阻断：抛出`DataContractError(f"环境变量未设置：{env_name or '<empty>'}")`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -1095,6 +1417,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型None；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：显式释放可释放的底层会话并更新插件状态，防止关闭后继续查询。
+    # 本段代码核心功能：定义 `close_session`，完成 `close_session` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `None`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def close_session(self) -> None:
         # 变量更新：计算并保存close_method，右侧逻辑为`getattr(self._adapter, 'close', None)`。
         # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -1103,6 +1432,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`callable(close_method)`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `callable(close_method)` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if callable(close_method):
             # API调用：执行`close_method()`以触发注册、写入对象状态或其他显式副作用。
             # - 参数变化：实参按函数签名传入，返回值未保存表示调用目的主要是副作用或校验。
@@ -1118,10 +1454,24 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型None；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+    # 本段代码核心功能：定义 `_assert_request`，提供局部纯函数辅助以统一规范化、查找或匹配规则。
+    # - 输入：参数为 `self、request`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `None`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def _assert_request(self, request: ProviderQueryRequest) -> None:
         # 条件门禁：判断`not self._session_open`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `not self._session_open` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if not self._session_open:
             # 错误阻断：抛出`DataContractError('Provider插件会话尚未打开。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -1130,6 +1480,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`request.provider_id != self.config.provider_id`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `request.provider_id != self.config.provider_id` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if request.provider_id != self.config.provider_id:
             # 错误阻断：抛出`DataContractError('请求provider_id与插件不一致。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -1138,6 +1495,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`request.capability not in self.config.capabilities`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `request.capability not in self.config.capabilities` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if request.capability not in self.config.capabilities:
             # 错误阻断：抛出`DataContractError('请求能力未在桥接配置中登记。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -1152,6 +1516,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`capability_status not in {CapabilityImplementationStatus.IMPLEMENTED, CapabilityImplementationSta...`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `capability_status not in {CapabilityImplementationStatus.IMPLEMENTED, CapabilityImplementationStatus` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if capability_status not in {
             CapabilityImplementationStatus.IMPLEMENTED,
             CapabilityImplementationStatus.VERIFIED,
@@ -1163,6 +1534,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`request.usage not in self.config.permitted_usages`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `request.usage not in self.config.permitted_usages` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if request.usage not in self.config.permitted_usages:
             # 错误阻断：抛出`DataContractError('请求用途不在本地数据许可范围。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -1171,6 +1549,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`request.maximum_rows > self.config.batch_policy.maximum_rows_per_batch`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `request.maximum_rows > self.config.batch_policy.maximum_rows_per_batch` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if (
             request.maximum_rows
             > self.config.batch_policy.maximum_rows_per_batch
@@ -1182,6 +1567,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`request.operation not in self.config.supported_operations`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `request.operation not in self.config.supported_operations` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if request.operation not in self.config.supported_operations:
             # 错误阻断：抛出`DataContractError('桥接不支持请求操作。')`并停止当前路径。
             # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -1193,6 +1585,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型ProviderQueryBatch；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把通用请求委托给现有适配器并转换为统一批次，复用已有安全和查询逻辑。
+    # 本段代码核心功能：定义 `query_batch`，完成 `query_batch` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self、request`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `ProviderQueryBatch`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def query_batch(
         self,
         request: ProviderQueryRequest,
@@ -1208,6 +1607,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`request.operation == 'READ_RAW_TABLE'`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `request.operation == 'READ_RAW_TABLE'` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         if request.operation == "READ_RAW_TABLE":
             # 变量更新：计算并保存source_object_name，右侧逻辑为`_require_text(request.parameters.get('source_object_name'), 'source_object_name')`。
             # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -1248,6 +1654,13 @@ class DolphinDBProviderPluginBridge:
         # 条件门禁：判断`request.operation == 'RUN_READONLY_QUERY'`，条件为真时进入受保护分支。
         # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
         # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+        # 本段代码核心功能：根据条件 `request.operation == 'RUN_READONLY_QUERY'` 选择安全分支。
+        # - 输入：条件表达式和此前已经规范化的局部变量。
+        # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+        # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+        # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+        # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
         elif request.operation == "RUN_READONLY_QUERY":
             # 变量更新：计算并保存script，右侧逻辑为`_require_text(request.parameters.get('script'), 'script')`。
             # - 数据变化：赋值只改变当前作用域中的目标变量或对象字段，类型由注解或右侧表达式决定。
@@ -1270,6 +1683,13 @@ class DolphinDBProviderPluginBridge:
             # 条件门禁：判断`len(normalised) > request.maximum_rows`，条件为真时进入受保护分支。
             # - 数据变化：分支本身不改变值，只有分支体内的显式赋值、返回或异常会改变控制流。
             # - 为什么这样写：把无效状态尽早拒绝，避免错误数据继续传播到更深层。
+            # 本段代码核心功能：根据条件 `len(normalised) > request.maximum_rows` 选择安全分支。
+            # - 输入：条件表达式和此前已经规范化的局部变量。
+            # - 处理：只执行满足合同的分支，非法状态通过异常或阻断原因显式返回。
+            # - 输出：更新局部结果、阻断原因或测试断言，不绕过上层来源和授权门禁。
+            # - 常量依据：分支状态和零副作用要求来自对应TASK合同，不把经验猜测写成官方规则。
+            # - 为什么这样写：避免把缺失证据、未授权运行时或危险能力误判为可用。
+
             if len(normalised) > request.maximum_rows:
                 # 错误阻断：抛出`DataContractError('只读查询返回行数超过请求maximum_rows；请在查询中显式限制结果。')`并停止当前路径。
                 # - 数据变化：不产生正常返回值，调用方必须捕获或让任务失败。
@@ -1318,6 +1738,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型Iterator[ProviderQueryBatch]；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+    # 本段代码核心功能：定义 `iter_pages`，完成 `iter_pages` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self、request`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `Iterator[ProviderQueryBatch]`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def iter_pages(
         self,
         request: ProviderQueryRequest,
@@ -1329,6 +1756,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型str；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+    # 本段代码核心功能：定义 `subscribe`，完成 `subscribe` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self、request`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `str`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def subscribe(
         self,
         request: ProviderSubscriptionRequest,
@@ -1348,6 +1782,13 @@ class DolphinDBProviderPluginBridge:
     # - 输出：返回类型None；调用方按该类型继续校验、路由或序列化。
     # - 数据变化：函数只按签名和合同更新局部值、对象字段或明确返回值；不会隐藏额外副作用。
     # - 为什么这样写：把该职责封装在独立边界内，可以减少重复代码并让校验、测试和替换路径保持一致。
+    # 本段代码核心功能：定义 `unsubscribe`，完成 `unsubscribe` 对应的单一业务步骤并返回明确结果。
+    # - 输入：参数为 `self、subscription_id`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
+    # - 处理：只执行函数名对应的单一职责；缺字段、非法状态或越界值立即失败，不做静默猜测。
+    # - 输出：返回类型为 `None`；测试函数通过断言表达通过或失败，不产生生产副作用。
+    # - 常量依据：任务号、状态枚举、零网络/零交易计数和候选优先级来自TASK_022至TASK_024权威合同。
+    # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让官方交易所或券商SDK通过薄适配器接入。
+
     def unsubscribe(self, subscription_id: str) -> None:
         # API调用：执行`_require_text(subscription_id, 'subscription_id')`以触发注册、写入对象状态或其他显式副作用。
         # - 参数变化：实参按函数签名传入，返回值未保存表示调用目的主要是副作用或校验。

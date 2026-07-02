@@ -5,12 +5,13 @@
 ## 一、当前阶段
 
 ```text
-阶段：本地DolphinDB Provider已激活，进入Windows机器级Provider环境盘点阶段
-已完成：TASK_022 DolphinDB Provider正式激活与真实注册表路由回归
-当前任务：TASK_023 外部Provider环境发现与首个接入候选选择
-已完成小任务：TASK_023A 供应商无关的离线环境发现合同
-当前小任务：TASK_023B 用户Windows真实环境盘点
-下一小任务：TASK_023C 首个外部Provider选择与接入任务书
+阶段：官方交易所语义基准与券商优先接入基线已经建立
+已完成：TASK_023A 供应商无关离线发现合同
+已完成：TASK_023B Windows机器级环境盘点与候选排序
+已纠正：TASK_023C 不再选择AKShare作为首个正式外部Provider
+已完成：TASK_024A 官方交易所、结算机构与券商接口基线
+当前任务：TASK_024 官方来源与券商接入准备
+当前小任务：TASK_024B 用户已授权券商SDK包与只读行情能力盘点
 ```
 
 当前阶段仍然不开发复杂因子库、选股模型、自动交易或大型前端系统；也不自动安装、登录或调用商业与券商SDK。
@@ -21,9 +22,11 @@
 通用Provider协议
 → 本地DolphinDB真实Provider激活
 → 外部Provider离线发现合同（TASK_023A已完成）
-→ Windows机器级环境盘点与候选排序（当前位置）
-→ 用户授权、许可证和能力审查
-→ 首个外部Provider薄适配
+→ Windows机器级环境盘点与候选排序（TASK_023B已完成）
+→ TASK_023C方向纠正：官方基准与券商优先，第三方聚合仅补充
+→ TASK_024A 官方交易所与券商接口目录及来源权威门禁（已完成）
+→ TASK_024B 用户已授权券商SDK包与只读行情能力盘点（当前位置）
+→ 首个券商官方只读数据Provider薄适配与真实验收
 → Canonical与Readiness统一门禁
 → 市场状态与风险仓位
 ```
@@ -54,6 +57,10 @@
 - TASK_020：全供应商能力矩阵、Provider插件协议、复用治理和DolphinDB薄Bridge；
 - TASK_021：全项目教学式注释、阶段性冗余文件清理、Git提交与本地健康仓库恢复；
 - TASK_022：local_dolphindb正式激活、真实注册表路由回归和GitHub `main`闭环。
+- TASK_023A：供应商无关离线发现合同、九类Provider安全清单和零SDK导入发现；
+- TASK_023B：Windows机器级多Python、客户端与安全引用盘点及候选排序；
+- TASK_023C：原AKShare优先结论已被TASK_024A纠正；官方市场基础设施为语义基准，已授权券商官方SDK为优先实际接入通道。
+- TASK_024A：官方交易所、结算机构、券商和商业SDK接口目录，来源权威分级及第三方聚合源降级门禁。
 
 ---
 
@@ -939,3 +946,42 @@ TASK_023B不做：
 - 启用任何行情路由或交易执行能力。
 
 <!-- TASK_023_STATUS_END -->
+
+<!-- TASK_024_STATUS_START -->
+
+## TASK_024：官方交易所与券商接口基线
+
+CURRENT PROGRAM：TASK_024
+COMPLETED SUBTASK：TASK_024A 官方接口目录与来源权威门禁
+CURRENT SUBTASK：TASK_024B 用户已授权券商SDK包与只读行情能力盘点
+NEXT：选择首个券商官方只读Provider并设计薄适配
+
+TASK_024A结论：
+
+- 上交所、深交所、北交所、港交所和中国结算是语义与验收基准；
+- 个人项目的优先实际接入通道是用户已经获得授权的券商官方SDK；
+- 首批已核验券商候选包括银河星耀/TFast、中泰XTP、国信iQuant和广发投易通；
+- Wind、iFinD等商业官方SDK仅在用户持有有效授权时进入；
+- AKShare、Tushare只允许补充研究和交叉核验；
+- 未验证网页接口、逆向接口和高频爬取在核心数据链中BLOCKED；
+- 所有交易执行能力继续保持NOT_ACTIVATED。
+
+TASK_024B必须取得用户本机或官方安装包中的真实证据，不得凭产品宣传编写SDK入口。
+
+<!-- TASK_024_STATUS_END -->
+
+<!-- TASK_024A1_STATUS_START -->
+
+## TASK_024A1：TASK_022至TASK_024教学式前置注释合规整改
+
+```text
+STATUS：READY_FOR_LOCAL_ACCEPTANCE
+CHANGE TYPE：COMMENT_AND_QUALITY_GATE_ONLY
+BUSINESS LOGIC CHANGE：0
+CURRENT ARCHITECTURE LOCATION：横切质量门禁，覆盖第1层多源接入层TASK_022至TASK_024
+NEXT BUSINESS TASK：TASK_024B 用户已授权券商SDK包与只读行情能力盘点
+```
+
+本任务要求所有新增或修改的人工代码在第一次沙盒语法检查前完成教学式前置注释，禁止交付后补注释。TASK_024B只有在本整改通过官方注释审计、专项测试、全量测试并独立推送GitHub `main`后才能开始。
+
+<!-- TASK_024A1_STATUS_END -->

@@ -1,0 +1,22 @@
+{
+  "task_id": "TASK_023C",
+  "document_status": "EXAMPLE_ONLY_DO_NOT_STORE_SECRETS",
+  "approvals": [
+    {
+      "provider_id": "official_exchange_sources",
+      "source_role": "OFFICIAL_MARKET_INFRASTRUCTURE_BASELINE",
+      "official_document_review": "APPROVED_FOR_SEMANTIC_BASELINE",
+      "direct_feed_authorization_review": "NOT_ASSUMED",
+      "runtime_installation_review": "NOT_APPLICABLE"
+    },
+    {
+      "provider_id": "galaxy_xingyao",
+      "source_role": "AUTHORIZED_BROKER_OFFICIAL_ACCESS",
+      "official_package_review": "NOT_YET_PERFORMED",
+      "account_entitlement_review": "NOT_YET_PERFORMED",
+      "read_only_capability_review": "NOT_YET_PERFORMED",
+      "execution_activation_review": "BLOCKED_SEPARATE_PROJECT"
+    }
+  ],
+  "secret_values_allowed": false
+}

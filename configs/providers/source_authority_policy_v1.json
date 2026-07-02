@@ -1,0 +1,86 @@
+{
+  "task_id": "TASK_024A",
+  "policy_version": "1.0.0",
+  "policy_status": "OFFICIAL_EXCHANGE_AND_BROKER_FIRST",
+  "as_of_date": "2026-07-02",
+  "network_calls_allowed": false,
+  "vendor_sdk_import_allowed": false,
+  "provider_activation_allowed": false,
+  "secret_values_allowed": false,
+  "execution_activation_allowed": false,
+  "semantic_authority_order": [
+    "T0_OFFICIAL_MARKET_INFRASTRUCTURE",
+    "T1_AUTHORIZED_BROKER_OFFICIAL",
+    "T2_LICENSED_COMMERCIAL_OFFICIAL_SDK",
+    "T3_THIRD_PARTY_AGGREGATOR_SUPPLEMENTAL",
+    "T4_UNVERIFIED_SCRAPE_BLOCKED"
+  ],
+  "practical_access_order": [
+    "T1_AUTHORIZED_BROKER_OFFICIAL",
+    "T0_OFFICIAL_MARKET_INFRASTRUCTURE",
+    "T2_LICENSED_COMMERCIAL_OFFICIAL_SDK",
+    "T3_THIRD_PARTY_AGGREGATOR_SUPPLEMENTAL"
+  ],
+  "rules": {
+    "official_market_infrastructure_is_semantic_baseline": true,
+    "authorized_broker_is_preferred_personal_access_channel": true,
+    "commercial_sdk_requires_user_license": true,
+    "third_party_aggregator_primary_source_forbidden": true,
+    "unverified_scraping_core_pipeline_forbidden": true,
+    "execution_capability_requires_separate_activation_project": true,
+    "canonical_mapping_required": true,
+    "readiness_gate_required": true,
+    "cross_source_reconciliation_required": true
+  },
+  "tiers": [
+    {
+      "tier_id": "T0_OFFICIAL_MARKET_INFRASTRUCTURE",
+      "semantic_authority_rank": 0,
+      "access_channel_rank": 20,
+      "primary_source_eligible": true,
+      "allowed_roles": [
+        "SEMANTIC_BASELINE",
+        "OFFICIAL_RULE_REFERENCE",
+        "OFFICIAL_FILE_OR_FEED_REFERENCE",
+        "RECONCILIATION_AUTHORITY"
+      ],
+      "required_domain_classes": ["EXCHANGE", "CLEARING_OR_REGULATORY_INFRASTRUCTURE"]
+    },
+    {
+      "tier_id": "T1_AUTHORIZED_BROKER_OFFICIAL",
+      "semantic_authority_rank": 10,
+      "access_channel_rank": 0,
+      "primary_source_eligible": true,
+      "allowed_roles": [
+        "AUTHORIZED_READ_ONLY_MARKET_DATA_CHANNEL",
+        "AUTHORIZED_REFERENCE_DATA_CHANNEL",
+        "AUTHORIZED_ACCOUNT_DATA_CHANNEL"
+      ],
+      "required_domain_classes": ["BROKER_OFFICIAL"]
+    },
+    {
+      "tier_id": "T2_LICENSED_COMMERCIAL_OFFICIAL_SDK",
+      "semantic_authority_rank": 20,
+      "access_channel_rank": 10,
+      "primary_source_eligible": true,
+      "allowed_roles": ["LICENSED_DATA_CHANNEL", "CROSS_SOURCE_REFERENCE"],
+      "required_domain_classes": ["COMMERCIAL_VENDOR_OFFICIAL"]
+    },
+    {
+      "tier_id": "T3_THIRD_PARTY_AGGREGATOR_SUPPLEMENTAL",
+      "semantic_authority_rank": 30,
+      "access_channel_rank": 30,
+      "primary_source_eligible": false,
+      "allowed_roles": ["SUPPLEMENTAL_RESEARCH", "DISCOVERY_CLUE", "CROSS_CHECK_ONLY"],
+      "required_domain_classes": ["THIRD_PARTY_PROJECT"]
+    },
+    {
+      "tier_id": "T4_UNVERIFIED_SCRAPE_BLOCKED",
+      "semantic_authority_rank": 99,
+      "access_channel_rank": 99,
+      "primary_source_eligible": false,
+      "allowed_roles": [],
+      "required_domain_classes": ["UNVERIFIED_WEB_ENDPOINT"]
+    }
+  ]
+}

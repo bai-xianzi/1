@@ -1,30 +1,24 @@
-# 本文件核心功能：执行TASK_023B Windows机器级Provider证据盘点并输出安全报告。
+# 本文件核心功能：执行TASK_024A官方交易所与券商来源基线验证。
 # - 输入：来自项目配置、离线本地环境、命令行参数或单元测试夹具；不读取未声明的秘密值。
 # - 处理：先完成类型和值域校验，再执行离线发现、排序、报告生成或断言；默认不联网、不交易、不写数据库。
 # - 输出：强类型对象、UTF-8 JSON报告、稳定退出码或可重复测试结果，供下一任务和Git门禁使用。
 # - 常量依据：任务号、来源层级、安全计数器和状态值来自TASK_022至TASK_024权威文件与官方接口基线。
 # - 为什么这样写：教学式前置说明让维护者先理解边界再阅读实现，也防止第三方聚合源或交易能力被误升为主链。
 
-#!/usr/bin/env python3
-# 本脚本核心功能：运行TASK_023B Windows机器级Provider环境盘点并写出本地JSON报告。
-# - 不导入任何供应商SDK；
-# - 不联网、不登录、不读取秘密值；
-# - 不修改注册表、数据库或Provider激活状态。
-"""运行TASK_023B Windows机器级Provider环境盘点。"""
+# 本脚本核心功能：离线验证官方交易所与券商优先的来源权威目录。
+"""运行TASK_024A官方来源基线检查。"""
 
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
-from a_stock_quant.provider_environment_discovery import load_provider_discovery_manifest
-from a_stock_quant.provider_windows_inventory import (
-    build_windows_inventory_report,
-    build_windows_provider_findings,
-    collect_installed_applications,
-    collect_python_interpreter_evidence,
-    load_windows_inventory_rules,
-    write_windows_inventory_report,
+from a_stock_quant.source_authority import (
+    build_source_authority_report,
+    load_official_interface_catalog,
+    load_source_authority_policy,
+    write_source_authority_report,
 )
 
 
@@ -36,26 +30,20 @@ from a_stock_quant.provider_windows_inventory import (
 # - 为什么这样写：显式输入输出和失败模式便于教学排查，也让未来官方交易所或券商SDK只需通过薄适配器接入。
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--manifest",
-        default="configs/providers/provider_discovery_targets_v0.json",
-        help="TASK_023A Provider manifest path.",
+        "--policy",
+        default="configs/providers/source_authority_policy_v1.json",
     )
     parser.add_argument(
-        "--rules",
-        default="configs/providers/provider_windows_inventory_rules_v0.json",
-        help="TASK_023B Windows inventory rules path.",
+        "--catalog",
+        default="configs/providers/official_interface_catalog_v1.json",
     )
-    parser.add_argument(
-        "--output",
-        required=True,
-        help="Local UTF-8 JSON report path. This report must not be committed automatically.",
-    )
+    parser.add_argument("--output", required=True)
     return parser.parse_args()
 
 
-# 本段代码核心功能：定义 `main`，执行TASK_023B Windows机器级Provider证据盘点并输出安全报告。
+# 本段代码核心功能：定义 `main`，执行TASK_024A官方交易所与券商来源基线验证。
 # - 输入：参数为 `无显式参数`；路径和外部文本按UTF-8处理，安全开关必须由显式配置提供。
 # - 处理：只执行函数名对应的单一职责；遇到缺字段、非法状态或越界值立即失败，不做静默猜测。
 # - 输出：返回类型为 `int`；测试函数则通过断言表达通过或失败，不产生生产副作用。
@@ -64,38 +52,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    targets = load_provider_discovery_manifest(args.manifest)
-    rules = load_windows_inventory_rules(args.rules)
-    module_names = tuple(
-        sorted(
-            {
-                module_name
-                for target in targets
-                for module_name in target.python_module_candidates
-            }
-        )
-    )
-    interpreters = collect_python_interpreter_evidence(module_names)
-    applications = collect_installed_applications()
-    findings = build_windows_provider_findings(
-        targets,
-        rules,
-        interpreters,
-        applications,
-    )
-    report = build_windows_inventory_report(findings, interpreters, applications)
-    output = write_windows_inventory_report(report, Path(args.output))
-
-    print(f"TASK_023B provider count: {report['provider_count']}")
-    print(
-        "Providers with local evidence: "
-        f"{report['providers_with_local_evidence_count']}"
-    )
-    print(f"Python interpreter count: {report['python_interpreter_count']}")
-    print(f"Selection status: {report['selection_status']}")
-    print(f"Candidates: {report['recommended_task_023c_provider_ids']}")
+    policy = load_source_authority_policy(args.policy)
+    catalog = load_official_interface_catalog(args.catalog)
+    report = build_source_authority_report(policy, catalog)
+    output = write_source_authority_report(report, Path(args.output))
+    print(json.dumps(report, ensure_ascii=False, indent=2))
     print(f"Report: {output}")
-    return 0
+    return 0 if report["overall_status"] == "PASSED" else 2
 
 
 # 本段代码核心功能：根据条件 `__name__ == '__main__'` 选择安全分支。
