@@ -1067,3 +1067,22 @@ TASK_024C：已完成领域合同
 
 下一主线：`TASK_024E`接入中心页面与后端接口，实现Provider卡片、动态表单、凭据状态、只读连接测试入口和白箱审计展示。
 <!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->
+
+<!-- TASK_024E_PROVIDER_CONNECTION_B2C_START -->
+## TASK_024E：数据接口接入中心页面与后端接口
+
+状态：`COMPLETED_AND_PUSHED`。
+
+这个功能用于在本机UI中选择数据源、填写连接信息、安全保存密钥、查看连接状态和执行只读测试，不需要手工修改配置。
+
+已完成：
+
+- Provider卡片与JSON Schema动态表单；
+- Windows凭据后端与无秘密档案事务组合；
+- 本机限制、CSRF、请求大小和浏览器no-store安全；
+- 只读测试器端口与状态机；
+- 停用时凭据与档案的恢复式删除；
+- 14项专项测试和白箱任务报告。
+
+下一主线：`TASK_024F`选择用户已经正式授权的首个Provider，接入最小只读连接测试器；不启用交易能力。
+<!-- TASK_024E_PROVIDER_CONNECTION_B2C_END -->

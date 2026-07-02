@@ -430,3 +430,9 @@ V6 数据、字典、Skill、因子、仿真、回测、风险和报告统一工
 
 秘密输入控件必须是writeOnly：用户可输入、替换、测试和删除，但不能从后端读回原文。提交动作在同一次请求中完成字段白名单校验、Windows Credential Manager写入和安全引用返回；状态接口只返回`backend`、`reference`、`configured`及固定为`null`的`secret_value`。代码查看器可展示算法和教学式注释，不得展示真实CredentialBlob或用户凭据列表。
 <!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->
+
+<!-- TASK_024E_PROVIDER_CONNECTION_B2C_START -->
+## 数据接口接入中心纵向样板已实现
+
+TASK_024E已实现全系统B2C控制平面的第一个可运行纵向样板：Provider卡片、Schema驱动表单、安全秘密输入、预览状态、只读测试入口、停用撤销、任务状态和无秘密解释对象。后续字典、因子、仿真和Skill页面应复用其“页面动作→应用服务→领域合同→安全后端→解释状态”的结构，而不是直接从UI修改内部数据。
+<!-- TASK_024E_PROVIDER_CONNECTION_B2C_END -->

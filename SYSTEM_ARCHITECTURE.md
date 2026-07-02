@@ -1032,3 +1032,17 @@ B2C秘密输入
 
 该层复用Windows官方Credential Manager，不自研加密算法，不提供明文回退。它是后续Provider页面、券商SDK、搜索、模型和产品型Skill认证能力的共同安全基础，但不激活交易能力。
 <!-- TASK_024D_WINDOWS_CREDENTIAL_STORE_END -->
+
+<!-- TASK_024E_PROVIDER_CONNECTION_B2C_START -->
+## TASK_024E完成：接入中心B2C纵向样板
+
+```text
+用户端Provider卡片与动态表单
+⇅ 本地JSON API / CSRF / no-store
+ProviderConnectionCenterService
+⇅ TASK_024C领域合同
+Windows凭据后端 + 无秘密档案 + 只读测试器端口
+```
+
+该样板证明用户端和内部执行端可以逐项映射。当前未注册真实Provider测试器，所有外部网络与交易能力保持关闭；TASK_024F只需实现一个正式授权Provider的薄测试器并注入现有端口。
+<!-- TASK_024E_PROVIDER_CONNECTION_B2C_END -->

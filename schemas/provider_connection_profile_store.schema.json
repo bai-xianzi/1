@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wjx.local/schemas/provider_connection_profile_store.schema.json",
+  "title": "WJX Provider Connection Profile Store",
+  "description": "Secret-free local provider connection profiles. Secret material is stored only in Windows Credential Manager.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profiles"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "provider_id",
+          "connection_id",
+          "status",
+          "public_configuration",
+          "credential_references",
+          "official_authorization_confirmed",
+          "read_only_entitlement_confirmed",
+          "execution_domain_isolated"
+        ],
+        "properties": {
+          "provider_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,63}$"},
+          "connection_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,63}$"},
+          "status": {"type": "string"},
+          "public_configuration": {"type": "object"},
+          "credential_references": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^windows-credential://WJX/provider/"
+            }
+          },
+          "official_authorization_confirmed": {"type": "boolean"},
+          "read_only_entitlement_confirmed": {"type": "boolean"},
+          "execution_domain_isolated": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}
