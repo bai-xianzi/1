@@ -37,7 +37,8 @@ P0 复用、借鉴与自研批准门禁
 1. 多源金融与现实数据接入层
    ├─ 通用Provider能力矩阵与插件协议：已完成
    ├─ local_dolphindb真实Provider激活：TASK_022已完成
-   └─ >>> 当前：TASK_023 外部Provider环境发现与首个接入候选选择
+   ├─ TASK_023A 供应商无关离线发现合同：已完成
+   └─ >>> 当前：TASK_023B Windows机器级环境盘点与候选排序
         ↓
 2. DolphinDB数据底座与数据验收层（当前事实源，保持不变）
         ↓
@@ -46,7 +47,7 @@ P0 复用、借鉴与自研批准门禁
 4. Canonical标准数据与Readiness门禁
 ```
 
-当前位置说明：TASK_023位于第1层多源接入层，并处在第1层向第2层交接的位置。它只决定下一项外部Provider接入任务应选择谁，不改变DolphinDB当前事实源，不绕过Canonical、时间语义和Readiness门禁。
+当前位置说明：TASK_023B位于第1层多源接入层，并处在第1层向第2层交接的位置。它把TASK_023A的当前Python离线发现扩展为Windows机器级盘点，只生成TASK_023C人工评审证据，不改变DolphinDB当前事实源，不绕过Canonical、时间语义和Readiness门禁。
 
 ---
 
@@ -101,8 +102,9 @@ P0 复用、借鉴与自研批准门禁
 │  · local_dolphindb Provider 已经真实激活并通过路由回归         │
 │                                                              │
 │  当前开发位置：                                               │
-│  · TASK_023 外部Provider环境发现与首个接入候选选择             │
-│  · 当前只做离线发现、许可证前置审查和候选排序                   │
+│  · TASK_023B Windows机器级Provider环境盘点（当前位置）          │
+│  · TASK_023A离线发现合同已经完成                               │
+│  · 当前盘点多Python解释器、已安装客户端和安全引用名称            │
 │  · 不安装、不登录、不调用商业或券商SDK                         │
 │                                                              │
 │  近期可能接入：                                               │

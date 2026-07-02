@@ -5,11 +5,12 @@
 ## 一、当前阶段
 
 ```text
-阶段：本地DolphinDB Provider已激活，进入外部Provider接入前置发现阶段
+阶段：本地DolphinDB Provider已激活，进入Windows机器级Provider环境盘点阶段
 已完成：TASK_022 DolphinDB Provider正式激活与真实注册表路由回归
 当前任务：TASK_023 外部Provider环境发现与首个接入候选选择
-当前小任务：TASK_023A 供应商无关的离线环境发现合同
-下一小任务：TASK_023B 用户Windows真实环境盘点
+已完成小任务：TASK_023A 供应商无关的离线环境发现合同
+当前小任务：TASK_023B 用户Windows真实环境盘点
+下一小任务：TASK_023C 首个外部Provider选择与接入任务书
 ```
 
 当前阶段仍然不开发复杂因子库、选股模型、自动交易或大型前端系统；也不自动安装、登录或调用商业与券商SDK。
@@ -19,7 +20,8 @@
 ```text
 通用Provider协议
 → 本地DolphinDB真实Provider激活
-→ 外部Provider环境发现（当前位置）
+→ 外部Provider离线发现合同（TASK_023A已完成）
+→ Windows机器级环境盘点与候选排序（当前位置）
 → 用户授权、许可证和能力审查
 → 首个外部Provider薄适配
 → Canonical与Readiness统一门禁
@@ -895,8 +897,9 @@ TASK_021已经完成全项目教学式注释和阶段性冗余清理，不再作
 ```text
 TASK_022：CLOSED
 CURRENT PROGRAM：TASK_023
-CURRENT SUBTASK：TASK_023A 供应商无关的离线环境发现合同
-NEXT：TASK_023B 用户Windows真实环境盘点
+COMPLETED SUBTASK：TASK_023A 供应商无关的离线环境发现合同
+CURRENT SUBTASK：TASK_023B 用户Windows真实环境盘点
+NEXT：TASK_023C 首个外部Provider选择与接入任务书
 ARCHITECTURE LOCATION：第1层多源接入层 → 第2层DolphinDB事实源交界
 ```
 
@@ -917,5 +920,22 @@ TASK_023A不做：
 - 修改TASK_022注册表和能力矩阵；
 - 启用任何新的正式路由；
 - 启用交易执行能力。
+
+TASK_023B交付：
+
+- 机器级多Python解释器发现与离线模块探测；
+- Windows卸载注册表已安装客户端名称盘点；
+- PATH可执行入口和凭据引用名称存在性检查；
+- 不记录安装路径、秘密值或账户信息的本地报告；
+- 非交易Provider的TASK_023C人工评审候选排序；
+- 交易执行Provider继续保持独立激活阻断。
+
+TASK_023B不做：
+
+- 导入、登录或调用任何供应商SDK；
+- 自动安装客户端、Python包或许可证；
+- 把本地机器盘点报告自动提交到Git；
+- 修改TASK_022注册表、Canonical、Readiness或数据库；
+- 启用任何行情路由或交易执行能力。
 
 <!-- TASK_023_STATUS_END -->

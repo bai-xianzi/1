@@ -1,0 +1,56 @@
+{
+  "task_id": "TASK_023B",
+  "rules_version": "0.1.0",
+  "rules_status": "WINDOWS_MACHINE_INVENTORY_HINTS",
+  "secret_values_allowed": false,
+  "vendor_sdk_import_allowed": false,
+  "network_calls_allowed": false,
+  "registry_install_location_allowed": false,
+  "providers": [
+    {
+      "provider_id": "wind",
+      "installed_app_name_tokens": ["Wind金融终端", "Wind Financial Terminal", "Wind资讯金融终端"],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "ifind",
+      "installed_app_name_tokens": ["同花顺iFinD", "iFinD"],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "choice",
+      "installed_app_name_tokens": ["东方财富Choice", "Choice金融终端"],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "galaxy_xingyao",
+      "installed_app_name_tokens": ["银河证券星耀数智", "星耀数智"],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "qmt",
+      "installed_app_name_tokens": ["QMT", "迅投"],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "ptrade",
+      "installed_app_name_tokens": ["PTrade"],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "tushare_pro",
+      "installed_app_name_tokens": [],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "akshare",
+      "installed_app_name_tokens": [],
+      "executable_candidates": []
+    },
+    {
+      "provider_id": "official_exchange_sources",
+      "installed_app_name_tokens": [],
+      "executable_candidates": []
+    }
+  ]
+}

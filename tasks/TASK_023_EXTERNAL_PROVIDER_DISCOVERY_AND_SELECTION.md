@@ -11,7 +11,8 @@ P0 复用优先与自研批准门禁
 → 1. 多源金融与现实数据接入层
    → 通用Provider协议：已完成
    → 本地DolphinDB真实Provider：TASK_022已激活
-   → 外部Provider环境发现：TASK_023（当前位置）
+   → 外部Provider环境发现：TASK_023A（已完成）
+   → Windows机器级环境盘点：TASK_023B（当前位置）
 → 2. DolphinDB数据底座与数据验收层
 → 3. 时间、公司行为与可见性处理层
 → 4. Canonical标准数据与Readiness门禁
@@ -21,7 +22,7 @@ TASK_023 位于第1层和第2层的交界：它决定下一项真实外部来源
 
 ## 3. 分阶段
 
-### TASK_023A：供应商无关的离线环境发现合同
+### TASK_023A：供应商无关的离线环境发现合同（已完成）
 
 - 建立外部Provider发现清单；
 - 只检查模块入口和凭据引用名称是否存在；
@@ -30,7 +31,7 @@ TASK_023 位于第1层和第2层的交界：它决定下一项真实外部来源
 - 排除交易执行Provider自动推荐；
 - 生成候选顺序，但不激活任何Provider。
 
-### TASK_023B：用户Windows真实环境盘点
+### TASK_023B：用户Windows真实环境盘点（当前）
 
 - 在用户本地项目虚拟环境中运行发现脚本；
 - 生成真实环境报告；
@@ -78,4 +79,36 @@ TASK_023 位于第1层和第2层的交界：它决定下一项真实外部来源
 - 交易执行Provider不会被自动推荐；
 - 测试、语法检查和JSON解析通过；
 - 架构图明确标出TASK_023当前位置；
+- 创建独立Git提交并推送GitHub `main`。
+
+
+## 7. TASK_023B允许修改
+
+- `configs/providers/provider_windows_inventory_rules_v0.json`
+- `src/a_stock_quant/provider_windows_inventory.py`
+- `scripts/run_task_023b_windows_provider_inventory.py`
+- `tests/test_provider_windows_inventory.py`
+- `reports/task_023b_reuse_assessment.md`
+- `reports/task_023b_sandbox_validation.json`
+- 本任务文件、`SYSTEM_ARCHITECTURE.md`、`MULTI_SOURCE_ADAPTER_ARCHITECTURE.md`、`PROJECT_STATUS.md`
+
+## 8. TASK_023B设计约束
+
+- 复用Python标准库的`importlib.util.find_spec`、`subprocess`、`winreg`和Windows卸载注册表，不自行实现包管理器或客户端管理器；
+- 只发现当前解释器、PATH、虚拟环境和`py -0p`明确列出的Python，不进行全盘扫描；
+- 注册表只读取程序名称、版本和发布者，不读取或记录安装路径；
+- 环境变量只记录配置中的引用名称是否存在，不记录值；
+- 供应商SDK仅做模块入口探测，绝不执行`import`；
+- 本地真实报告保存在修改包的`local_validation`目录，不自动进入Git。
+
+## 9. TASK_023B验收标准
+
+- 能发现多个Python解释器并分别探测模块入口；
+- 能读取Windows已安装程序安全元数据并匹配Provider提示；
+- 当前解释器、其他解释器、客户端和凭据引用证据分层记录；
+- 交易执行Provider不进入TASK_023C自动候选；
+- 报告不含秘密值、安装路径或账户信息；
+- SDK导入、网络调用、注册表写入和数据库写入均为0；
+- 专项测试、全量离线测试、JSON解析和`git diff --check`通过；
+- 架构图明确标出TASK_023B当前位置；
 - 创建独立Git提交并推送GitHub `main`。

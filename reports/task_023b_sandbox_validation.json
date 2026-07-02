@@ -1,0 +1,29 @@
+{
+  "task_id": "TASK_023B",
+  "validation_scope": "SANDBOX_OFFLINE_VALIDATION",
+  "overall_status": "PASSED_WITH_WARNINGS",
+  "sandbox_platform": "Linux",
+  "windows_machine_inventory_executed": false,
+  "python_compileall": "PASSED",
+  "task_023b_unit_tests": {
+    "status": "PASSED",
+    "tests_run": 7
+  },
+  "task_023a_regression_tests": {
+    "status": "PASSED",
+    "tests_run": 6
+  },
+  "offline_cli_smoke_test": {
+    "status": "PASSED",
+    "provider_count": 9,
+    "selection_status": "NO_LOCAL_PROVIDER_EVIDENCE"
+  },
+  "json_parse": "PASSED",
+  "vendor_sdk_imports": 0,
+  "network_calls": 0,
+  "database_write_operations": 0,
+  "registry_write_operations": 0,
+  "secret_values_recorded": 0,
+  "installation_paths_recorded": 0,
+  "warning": "The real Windows registry and multi-interpreter inventory must be executed by the package verification script on the user's Windows host."
+}
