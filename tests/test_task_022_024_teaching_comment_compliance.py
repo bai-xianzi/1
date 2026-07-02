@@ -57,6 +57,9 @@ PYTHON_TARGETS = (
     "src/a_stock_quant/broker_sdk_inventory.py",
     "scripts/run_task_024b_broker_sdk_inventory.py",
     "tests/test_broker_sdk_inventory.py",
+    "src/a_stock_quant/provider_connection_center.py",
+    "scripts/run_task_024c_provider_connection_center.py",
+    "tests/test_provider_connection_center.py",
 )
 
 

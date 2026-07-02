@@ -240,3 +240,21 @@ TASK_024B只接受三类输入：
 ```
 
 任何一项缺失都保持阻断。评分用于排序，不能替代准入门禁。报告不得保存绝对路径、未命中文件、完整软件清单、账号、密码、Token、连接地址或端口。
+
+
+<!-- TASK_024C_CONNECTION_CENTER_ADAPTER_START -->
+
+## Provider接入中心与适配器边界
+
+```text
+UI接入中心
+→ ProviderConnectionDefinition / JSON Schema动态表单
+→ CredentialReferenceWriter安全端口
+→ SDK环境发现与只读连接测试
+→ Provider薄适配器
+→ Canonical / Readiness
+```
+
+UI不得直接导入厂商SDK，也不得把厂商私有字段传到Canonical上层。TASK_024B继续提供后台环境证据；TASK_024C提供用户交互合同；TASK_024D实现操作系统凭据引用后端；具体券商薄适配器必须等待官方字段、授权和只读测试全部通过。
+
+<!-- TASK_024C_CONNECTION_CENTER_ADAPTER_END -->

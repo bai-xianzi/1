@@ -1,5 +1,12 @@
 # START_HERE.md
 
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_START_HERE_START -->
+
+涉及券商、交易所、商业数据SDK、API Key、证书或连接UI时，开始编码前必须阅读`PROVIDER_CONNECTION_CENTER.md`，并确认具体字段已有官方文档依据、秘密只保存为操作系统凭据引用、交易激活保持阻断。
+
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_START_HERE_END -->
+
+
 ## 这一步只做什么
 
 这是项目正式启动的第一个动作：

@@ -27,24 +27,25 @@
 
 ---
 
-## 1.1 当前开发位置（TASK_024B，等待Windows真实证据）
+## 1.1 当前开发位置（TASK_024C完成，进入TASK_024D）
 
 ```text
 P0 复用、借鉴与自研批准门禁
         ↓
 0. 轻量项目控制与统一运行入口
         ↓
+用户交互层：官方数据源与券商接入中心
+   ├─ Provider卡片与官方申请指引：TASK_024C完成
+   ├─ 动态表单与凭据引用合同：TASK_024C完成
+   ├─ Windows安全凭据后端：>>> 当前TASK_024D
+   └─ 可视化页面与只读连接测试：TASK_024E—024F
+        ↓
 1. 多源金融与现实数据接入层
-   ├─ 通用Provider能力矩阵与插件协议：已完成
-   ├─ local_dolphindb真实Provider激活：TASK_022已完成
-   ├─ TASK_023A 供应商无关离线发现合同：已完成
-   ├─ TASK_023B Windows机器级环境盘点与候选排序：已完成
-   ├─ TASK_023C 首个外部Provider选择：已纠正并完成
-   │  └─ 官方交易所/结算机构作为语义基准，第三方聚合源降为补充
+   ├─ 通用Provider协议与local_dolphindb：已完成
+   ├─ TASK_023A—023C 环境发现、盘点和来源选择纠偏：已完成
    ├─ TASK_024A 官方交易所与券商接口基线：已完成
-   ├─ TASK_024B 盘点工具与四道准入门禁：已实现
-   └─ >>> 当前：等待Windows官方SDK、授权和只读权限真实证据
-       └─ 仅产生READY候选后进入TASK_024C券商只读薄适配
+   ├─ TASK_024B 官方SDK与授权证据盘点：已完成，转为后台辅助能力
+   └─ TASK_024C 接入中心领域模型与UI合同：已完成
         ↓
 2. DolphinDB数据底座与数据验收层（当前事实源，保持不变）
         ↓
@@ -53,7 +54,7 @@ P0 复用、借鉴与自研批准门禁
 4. Canonical标准数据与Readiness门禁
 ```
 
-当前位置说明：当前仍位于第1层多源接入层，并处在第1层向第2层交接的位置。TASK_024A已经建立两条独立优先级：交易所、监管和结算机构官方资料是语义与验收基准；用户已授权的券商官方SDK是个人项目的优先实际接入通道。TASK_024B代码已经实现，现在等待Windows专用证据目录和非秘密授权确认产生真实结果。AKShare、Tushare等第三方聚合源只允许补充研究和交叉核验，不得成为Canonical事实源。
+当前位置说明：项目仍位于第1层多源接入建设阶段，但已把最终用户交互入口前置为“官方数据源与券商接入中心”。TASK_024B不再要求用户编辑JSON或依赖命令行完成全部接入，它只负责后台发现SDK与授权证据；TASK_024C负责Provider卡片、官方申请指引、动态表单、凭据引用、状态机和安全ViewModel。当前TASK_024D将复用Windows操作系统密钥库能力实现凭据引用后端，明文秘密不得进入普通配置、日志、报告、数据库或Git。
 
 ---
 
@@ -919,3 +920,24 @@ available_at <= decision_time
 盘点器禁止整盘扫描、文件内容读取、绝对路径记录、SDK导入、券商登录、网络连接、交易会话和订单提交。没有READY候选时仍停留在TASK_024B，不得用第三方聚合源替代官方券商通道。
 
 <!-- TASK_024B_ARCHITECTURE_END -->
+
+
+<!-- TASK_024C_CONNECTION_CENTER_ARCHITECTURE_START -->
+
+## TASK_024C官方数据源与券商接入中心
+
+```text
+用户选择官方Provider
+→ 查看官方申请和授权说明
+→ 动态表单接收SDK位置、证书或秘密
+→ 秘密立即交换为操作系统凭据引用
+→ 最小只读连接测试
+→ Canonical语义审查与Readiness
+→ 研究用途启用
+```
+
+TASK_024B的机器盘点器是接入中心后台能力，不是最终产品入口。具体券商字段只有在官方文档或用户官方授权包确认后才能启用；未确认时必须显示`OFFICIAL_FIELD_SPEC_REQUIRED`。普通接入中心永久保持`execution_activation = BLOCKED`。
+
+权威详细设计见`PROVIDER_CONNECTION_CENTER.md`。
+
+<!-- TASK_024C_CONNECTION_CENTER_ARCHITECTURE_END -->

@@ -1,5 +1,12 @@
 #
 
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_INDEX_START -->
+
+- `PROVIDER_CONNECTION_CENTER.md`：官方数据源与券商接入中心的产品、动态表单、凭据引用、状态机和只读连接安全权威合同。
+
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_INDEX_END -->
+
+
 > 当前正式版本：V8。V7及以前版本只作为历史参考。
  README_PROJECT_MEMORY.md
 

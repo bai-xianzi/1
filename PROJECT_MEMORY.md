@@ -1,5 +1,20 @@
 # PROJECT_MEMORY.md
 
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_MEMORY_START -->
+
+## 官方数据源与券商接入中心长期原则
+
+用户配置券商、交易所数据服务和商业数据SDK时，最终入口必须是可视化接入中心，而不是要求用户长期编辑Python、PowerShell或普通JSON。TASK_024B的机器级SDK盘点保留为后台能力。
+
+具体Provider表单字段必须来自对应官方接口文档或用户取得的官方授权材料；字段尚未核验时只能显示`OFFICIAL_FIELD_SPEC_REQUIRED`，不得猜测API Key、账户号、服务器地址或证书字段。
+
+用户在UI中提交的API Key、Secret、Token、密码和证书口令必须在同一次后端调用中直接交给操作系统安全存储。项目配置、日志、报告、数据库和Git只允许保存凭据引用，不得保存或回显秘密原文。
+
+普通Provider接入流程只允许只读连接测试，交易能力永久单独阻断。详细权威合同见`PROVIDER_CONNECTION_CENTER.md`。
+
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_MEMORY_END -->
+
+
 # A股量化投资辅助操作系统——项目长期记忆
 
 > 本文件只属于当前“A股量化投资辅助操作系统”项目，不应影响其他项目。  

@@ -1002,3 +1002,32 @@ CONDITIONAL NEXT：TASK_024C_FIRST_AUTHORIZED_BROKER_READ_ONLY_ADAPTER
 TASK_024B只扫描用户明确指定的专用证据目录，复用TASK_023B脱敏报告，并读取不含账号、密码、Token、IP或端口的本地授权确认。无READY候选属于正常结果，项目不得自动选择AKShare、Tushare或未验证抓取接口。
 
 <!-- TASK_024B_STATUS_END -->
+
+
+<!-- TASK_024C_PROJECT_STATUS_START -->
+
+## TASK_024C 官方数据源与券商接入中心领域模型及UI合同
+
+状态：COMPLETED_PENDING_GIT_CLOSURE
+
+已完成：
+
+- 将TASK_024B机器盘点器重新定位为接入中心后台能力；
+- 新增Provider卡片、安全ViewModel和连接状态机；
+- 新增JSON Schema 2020-12动态表单合同；
+- 新增`CredentialReferenceWriter`端口，档案只保存凭据引用；
+- 未核验官方字段的Provider保持`OFFICIAL_FIELD_SPEC_REQUIRED`；
+- 普通接入流程的交易激活保持`BLOCKED`；
+- 新增权威文件`PROVIDER_CONNECTION_CENTER.md`。
+
+当前所在位置：
+
+```text
+用户交互层 / 官方数据源与券商接入中心
+TASK_024C：已完成领域合同
+>>> TASK_024D：Windows凭据引用安全后端
+```
+
+下一任务：`TASK_024D_WINDOWS_CREDENTIAL_REFERENCE_BACKEND`。
+
+<!-- TASK_024C_PROJECT_STATUS_END -->

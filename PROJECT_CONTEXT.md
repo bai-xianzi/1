@@ -1,5 +1,12 @@
 # PROJECT_CONTEXT.md
 
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_CONTEXT_START -->
+
+项目的个人用户交互边界包含“官方数据源与券商接入中心”。它负责Provider选择、官方申请指引、动态表单、凭据安全引用、SDK发现、只读连接测试和状态展示；厂商SDK仍被限制在Provider插件边界内，第三方聚合源不得替代官方语义基准和已授权券商通道。
+
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_CONTEXT_END -->
+
+
 ## 一、项目定位
 
 本项目是面向个人长期使用的A股量化投资辅助操作系统。

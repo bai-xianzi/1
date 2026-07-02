@@ -1,6 +1,6 @@
 # TASK_024B：用户已授权券商SDK包与只读行情能力盘点
 
-状态：IMPLEMENTED_PENDING_WINDOWS_EVIDENCE
+状态：COMPLETED_AS_CONNECTION_CENTER_BACKEND_CAPABILITY
 
 ## 一、当前位置
 
@@ -93,3 +93,22 @@ next_task = TASK_024B_AUTHORIZED_SDK_EVIDENCE_INTAKE
 - 本机UTF-8 JSON盘点报告；
 - 架构图、项目状态和多源适配架构当前位置更新；
 - 教学式前置注释回归门禁扩展。
+
+
+<!-- TASK_024C_UI_RELATION_START -->
+
+## 八、与可视化接入中心的关系
+
+TASK_024B不是最终用户必须直接操作的命令行产品。它保留为`PROVIDER_CONNECTION_CENTER.md`定义的后台SDK环境发现能力：
+
+```text
+接入中心UI选择Provider
+→ TASK_024B检查本地官方SDK/客户端证据
+→ UI提示缺少的官方材料
+→ 用户通过动态表单提交官方字段
+→ 安全后端保存秘密并返回凭据引用
+```
+
+用户不应长期编辑授权JSON来完成日常接入。TASK_024C已经建立UI领域合同，下一步由TASK_024D实现Windows凭据引用后端。
+
+<!-- TASK_024C_UI_RELATION_END -->

@@ -1,0 +1,112 @@
+{
+  "catalog_id": "provider_connection_center_catalog_v1",
+  "version": "1.0.0",
+  "schema_dialect": "https://json-schema.org/draft/2020-12/schema",
+  "policy": {
+    "official_fields_required_before_form_enablement": true,
+    "secret_values_must_use_credential_reference": true,
+    "third_party_aggregators_are_primary_sources": false,
+    "execution_activation": "BLOCKED"
+  },
+  "providers": [
+    {
+      "provider_id": "official_exchange_sources",
+      "display_name": "交易所、监管与结算官方来源",
+      "provider_kind": "OFFICIAL_SEMANTIC_BASELINE",
+      "authority_tier": "TIER_1_OFFICIAL",
+      "official_application_reference": "PROVIDER_CONNECTION_CENTER.md#official-exchange-access",
+      "form_definition_status": "OFFICIAL_FIELD_SPEC_REQUIRED",
+      "supports_read_only_data": true,
+      "contains_execution_capability": false,
+      "fields": []
+    },
+    {
+      "provider_id": "galaxy_xingyao",
+      "display_name": "中国银河证券星耀数智 / TFast",
+      "provider_kind": "AUTHORIZED_BROKER_PLATFORM",
+      "authority_tier": "TIER_2_AUTHORIZED_BROKER",
+      "official_application_reference": "PROVIDER_CONNECTION_CENTER.md#galaxy",
+      "form_definition_status": "OFFICIAL_FIELD_SPEC_REQUIRED",
+      "supports_read_only_data": true,
+      "contains_execution_capability": true,
+      "fields": []
+    },
+    {
+      "provider_id": "zt_xtp",
+      "display_name": "中泰证券 XTP",
+      "provider_kind": "AUTHORIZED_BROKER_PLATFORM",
+      "authority_tier": "TIER_2_AUTHORIZED_BROKER",
+      "official_application_reference": "PROVIDER_CONNECTION_CENTER.md#xtp",
+      "form_definition_status": "OFFICIAL_FIELD_SPEC_REQUIRED",
+      "supports_read_only_data": true,
+      "contains_execution_capability": true,
+      "fields": []
+    },
+    {
+      "provider_id": "guosen_iquant",
+      "display_name": "国信证券 iQuant",
+      "provider_kind": "AUTHORIZED_BROKER_PLATFORM",
+      "authority_tier": "TIER_2_AUTHORIZED_BROKER",
+      "official_application_reference": "PROVIDER_CONNECTION_CENTER.md#iquant",
+      "form_definition_status": "OFFICIAL_FIELD_SPEC_REQUIRED",
+      "supports_read_only_data": true,
+      "contains_execution_capability": true,
+      "fields": []
+    },
+    {
+      "provider_id": "gf_touyitong",
+      "display_name": "广发证券投易通",
+      "provider_kind": "AUTHORIZED_BROKER_PLATFORM",
+      "authority_tier": "TIER_2_AUTHORIZED_BROKER",
+      "official_application_reference": "PROVIDER_CONNECTION_CENTER.md#gf",
+      "form_definition_status": "OFFICIAL_FIELD_SPEC_REQUIRED",
+      "supports_read_only_data": true,
+      "contains_execution_capability": true,
+      "fields": []
+    }
+  ],
+  "unbound_reference_templates": [
+    {
+      "template_id": "api_key_pair_v1",
+      "binding_status": "MUST_NOT_BIND_WITHOUT_OFFICIAL_DOCUMENTATION",
+      "fields": [
+        {
+          "field_id": "client_id",
+          "kind": "text",
+          "persist_mode": "configuration"
+        },
+        {
+          "field_id": "api_key",
+          "kind": "secret",
+          "persist_mode": "credential_reference"
+        },
+        {
+          "field_id": "api_secret",
+          "kind": "secret",
+          "persist_mode": "credential_reference"
+        }
+      ]
+    },
+    {
+      "template_id": "local_sdk_certificate_v1",
+      "binding_status": "MUST_NOT_BIND_WITHOUT_OFFICIAL_DOCUMENTATION",
+      "fields": [
+        {
+          "field_id": "sdk_directory",
+          "kind": "directory",
+          "persist_mode": "configuration"
+        },
+        {
+          "field_id": "certificate_file",
+          "kind": "file",
+          "persist_mode": "configuration"
+        },
+        {
+          "field_id": "certificate_password",
+          "kind": "secret",
+          "persist_mode": "credential_reference"
+        }
+      ]
+    }
+  ]
+}

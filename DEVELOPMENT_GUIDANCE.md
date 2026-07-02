@@ -1,5 +1,29 @@
 # DEVELOPMENT_GUIDANCE.md
 
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_GUIDANCE_START -->
+
+## 面向用户的Provider接入开发门禁
+
+涉及用户申请、填写或更新券商与数据源凭据的功能，必须先建设领域合同和可视化交互流程，不得把命令行、授权JSON或本机目录扫描器当作最终产品入口。
+
+固定开发顺序：
+
+```text
+官方接口文档与授权材料
+→ Provider字段映射
+→ JSON Schema动态表单
+→ 操作系统安全凭据引用
+→ 最小只读连接测试
+→ Canonical语义审查
+→ Readiness
+→ 研究用途启用
+```
+
+秘密字段必须标记`writeOnly`与`credential_reference`；后端响应、日志、测试快照和报告不得包含秘密原文。具体券商字段未经官方核验时，开发必须停在字段规范审查，不得用通用密钥框代替。
+
+<!-- TASK_024C_PROVIDER_CONNECTION_CENTER_GUIDANCE_END -->
+
+
 # A股量化投资辅助操作系统——开发指导原则
 
 ## 0. 开发最高优先级：先借鉴、再复用、最后才自研
